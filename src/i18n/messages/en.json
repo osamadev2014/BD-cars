@@ -219,5 +219,15 @@
     "completed": "Completed",
     "no_inspections": "No inspections yet",
     "minutes": "minutes"
+  },
+  "messages": {
+    "inbox": "Messages",
+    "empty": "No messages yet",
+    "conversation": "Conversation",
+    "back": "Back to messages",
+    "no_messages": "No messages in this conversation",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "not_found": "Conversation not found"
   }
 }
