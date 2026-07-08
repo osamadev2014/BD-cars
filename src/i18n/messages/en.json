@@ -189,7 +189,13 @@
     "year": "Year",
     "mileage": "Mileage",
     "anonymous": "Anonymous",
-    "terms": "Terms & Conditions"
+    "terms": "Terms & Conditions",
+    "selling": "Selling",
+    "bidding": "Bidding",
+    "my_auctions": "My Auctions",
+    "no_auctions_selling": "You haven't created any auctions yet",
+    "active": "Active",
+    "sold": "Sold"
   },
   "inspection": {
     "title": "Vehicle Inspection",

@@ -189,7 +189,13 @@
     "year": "السنة",
     "mileage": "عدد الكيلومترات",
     "anonymous": "مجهول",
-    "terms": "الشروط والأحكام"
+    "terms": "الشروط والأحكام",
+    "selling": "مزاداتي",
+    "bidding": "مشاركاتي",
+    "my_auctions": "مزاداتي",
+    "no_auctions_selling": "لم تنشئ أي مزاد بعد",
+    "active": "نشط",
+    "sold": "مباع"
   },
   "inspection": {
     "title": "فحص السيارات",
