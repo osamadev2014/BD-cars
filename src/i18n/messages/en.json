@@ -264,5 +264,14 @@
     "months": "months",
     "compatibility": "Compatibility",
     "gallery": "Gallery"
+  },
+  "dealers": {
+    "title": "Car Dealers",
+    "subtitle": "Browse certified car dealers and their inventory",
+    "no_dealers": "No dealers yet",
+    "inventory": "Inventory",
+    "no_listings": "No cars currently listed",
+    "no_image": "No image",
+    "reviews": "reviews"
   }
 }
