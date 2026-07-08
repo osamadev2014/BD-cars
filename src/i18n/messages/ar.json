@@ -263,7 +263,21 @@
     "warranty": "الضمان",
     "months": "شهر",
     "compatibility": "التوافق",
-    "gallery": "معرض الصور"
+    "gallery": "معرض الصور",
+    "new_part": "إضافة قطعة جديدة",
+    "my_parts": "قطع غياري",
+    "add_part": "إضافة قطعة",
+    "save_part": "حفظ القطعة",
+    "title_ar": "العنوان (عربي)",
+    "description_ar": "الوصف (عربي)",
+    "select_category": "اختر التصنيف",
+    "select_brand": "اختر العلامة التجارية",
+    "price": "السعر",
+    "stock_quantity": "الكمية",
+    "warranty_months": "الضمان (شهر)",
+    "return_days": "الإرجاع (يوم)",
+    "required_fields": "يرجى ملء الحقول المطلوبة",
+    "save_error": "حدث خطأ أثناء الحفظ"
   },
   "dealers": {
     "title": "تجار السيارات",

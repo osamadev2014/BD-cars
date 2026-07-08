@@ -263,7 +263,21 @@
     "warranty": "Warranty",
     "months": "months",
     "compatibility": "Compatibility",
-    "gallery": "Gallery"
+    "gallery": "Gallery",
+    "new_part": "Add New Part",
+    "my_parts": "My Parts",
+    "add_part": "Add Part",
+    "save_part": "Save Part",
+    "title_ar": "Title (Arabic)",
+    "description_ar": "Description (Arabic)",
+    "select_category": "Select Category",
+    "select_brand": "Select Brand",
+    "price": "Price",
+    "stock_quantity": "Stock Quantity",
+    "warranty_months": "Warranty (months)",
+    "return_days": "Return (days)",
+    "required_fields": "Please fill required fields",
+    "save_error": "Error saving part"
   },
   "dealers": {
     "title": "Car Dealers",
