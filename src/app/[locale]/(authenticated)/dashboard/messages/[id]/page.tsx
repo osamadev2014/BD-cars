@@ -75,9 +75,19 @@ export default function ConversationPage() {
         &larr; {t('back')}
       </button>
 
-      <h1 className="text-xl font-bold mb-4 truncate">
-        {conv.subject || conv.vehicle_listings?.title || conv.vehicle_listings?.title_ar || t('conversation')}
-      </h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-xl font-bold truncate">
+          {conv.subject || conv.vehicle_listings?.title || conv.vehicle_listings?.title_ar || t('conversation')}
+        </h1>
+        {conv.vehicle_listings?.slug && (
+          <a
+            href={`/listings/${conv.vehicle_listings.slug}`}
+            className="text-sm text-primary hover:underline shrink-0 ml-2"
+          >
+            {t('view_listing')}
+          </a>
+        )}
+      </div>
 
       <div className="border rounded-lg bg-card mb-4 max-h-[60vh] overflow-y-auto p-4 space-y-3">
         {messages.length === 0 && (

@@ -1,5 +1,5 @@
 ﻿-- =============================================
--- Ryon Platform - Seed Data
+-- BD Platform - Seed Data
 -- =============================================
 
 -- 1. ROLES
@@ -115,7 +115,7 @@ end $$;
 insert into public.app_settings (category, key, value, type, label, is_public) values
   ('general', 'app_name', '"Ryon"', 'string', 'Application Name', true),
   ('general', 'app_description', '"Saudi Automotive Marketplace"', 'string', 'Application Description', true),
-  ('general', 'support_email', '"support@ryon.sa"', 'string', 'Support Email', true),
+  ('general', 'support_email', '"support@bd.evico.sa"', 'string', 'Support Email', true),
   ('general', 'support_phone', '"966"', 'string', 'Support Phone', true),
   
   ('branding', 'brand_logo', 'null', 'string', 'Logo URL', true),
@@ -148,7 +148,7 @@ insert into public.app_settings (category, key, value, type, label, is_public) v
   
   ('inspection', 'inspection_enabled', 'true', 'boolean', 'Enable Inspection Module', true),
   ('inspection', 'default_inspection_price', '299', 'number', 'Default Inspection Price (SAR)', true),
-  ('inspection', 'ryon_inspection_percentage', '20', 'number', 'Ryon Share of Inspection Fee (%)', false),
+  ('inspection', 'ryon_inspection_percentage', '20', 'number', 'BD Share of Inspection Fee (%)', false),
   
   ('payment', 'payment_mode', '"sandbox"', 'string', 'Payment Mode (sandbox/live)', false),
   ('payment', 'default_payment_method', '"mada"', 'string', 'Default Payment Method', true),

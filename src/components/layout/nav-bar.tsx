@@ -1,10 +1,12 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/use-auth'
+import { NotificationBell } from '@/components/layout/notification-bell'
 
 export function NavBar() {
   const t = useTranslations('nav')
@@ -24,6 +26,10 @@ export function NavBar() {
     { href: `/${locale}/listings`, label: t('cars') },
     { href: `/${locale}/auctions`, label: t('auctions') },
     { href: `/${locale}/dealers`, label: t('dealers') },
+    { href: `/${locale}/plans`, label: t('plans') },
+    { href: `/${locale}/finance`, label: t('finance') },
+    { href: `/${locale}/insurance`, label: t('insurance') },
+    { href: `/${locale}/request`, label: t('request') },
     { href: `/${locale}/parts`, label: t('parts') },
   ]
 
@@ -31,8 +37,8 @@ export function NavBar() {
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
-          <Link href={`/${locale}`} className="text-xl font-bold tracking-tight">
-            RYON
+          <Link href={`/${locale}`} className="flex items-center gap-2">
+            <Image src="/logo.png" alt="BD" width={80} height={32} className="h-8 w-auto" />
           </Link>
           <div className="hidden md:flex items-center gap-1">
             {links.map((link) => (
@@ -53,6 +59,7 @@ export function NavBar() {
         <div className="flex items-center gap-3">
           {isLoading ? null : user ? (
             <>
+              <NotificationBell />
               <Link href={`/${locale}/dashboard`}>
                 <Button variant="ghost" size="sm">{t('dashboard')}</Button>
               </Link>

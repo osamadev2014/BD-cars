@@ -1,11 +1,14 @@
 import Link from 'next/link'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice, getThumbnailUrl, getOptimizedImageUrl } from '@/lib/utils'
 import type { Database } from '@/lib/database.types'
+import { CompareButton } from '@/components/compare/compare-button'
 
 type Listing = Database['public']['Tables']['vehicle_listings']['Row'] & {
   vehicle?: any
   seller?: any
   city?: any
+  avg_rating?: number
+  review_count?: number
 }
 
 export function VehicleCard({ listing }: { listing: Listing }) {
@@ -20,16 +23,20 @@ export function VehicleCard({ listing }: { listing: Listing }) {
       <div className="aspect-[4/3] bg-muted relative overflow-hidden">
         {primaryImage ? (
           <img
-            src={primaryImage.url}
+            src={getThumbnailUrl(primaryImage.url)}
             alt={vehicle?.make?.name}
             className="object-cover w-full h-full group-hover:scale-105 transition-transform"
+            loading="lazy"
           />
         ) : (
           <div className="flex items-center justify-center h-full text-muted-foreground">
             No Image
           </div>
         )}
-        {listing.status === 'featured' && (
+        <div className="absolute top-2 right-2">
+          <CompareButton listingId={listing.id} />
+        </div>
+        {listing.is_featured && (
           <span className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded">
             Featured
           </span>
@@ -49,6 +56,12 @@ export function VehicleCard({ listing }: { listing: Listing }) {
         <p className="text-lg font-bold text-primary">
           {formatPrice(listing.price)}
         </p>
+        {(listing.avg_rating ?? 0) > 0 && (
+          <p className="text-sm text-yellow-500">
+            {'★'.repeat(Math.round(listing.avg_rating ?? 0))}{'☆'.repeat(5 - Math.round(listing.avg_rating ?? 0))}
+            <span className="text-muted-foreground ml-1">({listing.review_count ?? 0})</span>
+          </p>
+        )}
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <span>{vehicle?.mileage_text || `${vehicle?.mileage?.toLocaleString()} km`}</span>
           <span>{vehicle?.transmission?.name}</span>

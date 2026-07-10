@@ -1,4 +1,4 @@
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || 'Ryon'
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || 'BD'
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 export const DEFAULT_LOCALE = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || 'ar'
 export const SUPPORTED_LOCALES = (process.env.NEXT_PUBLIC_SUPPORTED_LOCALES || 'ar,en').split(',')
@@ -26,3 +26,5 @@ export const ALLOWED_DOCUMENT_TYPES = ['application/pdf', 'image/jpeg', 'image/p
 export const DEALER_SLUG_PREFIX = 'dealer'
 export const INSPECTION_CENTER_SLUG_PREFIX = 'inspection'
 export const PART_SLUG_PREFIX = 'part'
+
+export const AI_MOCK_DELAY = 500

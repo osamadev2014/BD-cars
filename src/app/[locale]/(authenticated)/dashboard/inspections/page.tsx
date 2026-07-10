@@ -1,14 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useTranslations } from 'next-intl'
-import { useLocale } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/hooks/use-auth'
 import { getUserInspections, cancelInspection } from '@/lib/actions/inspection-actions'
+import { createInspectionReport } from '@/lib/actions/inspect-report-actions'
+import Link from 'next/link'
 
 const statusColors: Record<string, string> = {
   pending: 'text-yellow-600 bg-yellow-50',
   confirmed: 'text-blue-600 bg-blue-50',
+  in_progress: 'text-purple-600 bg-purple-50',
   completed: 'text-green-600 bg-green-50',
   cancelled: 'text-muted-foreground bg-muted',
 }
@@ -38,6 +40,12 @@ export default function InspectionsPage() {
     load()
   }
 
+  const handleStartReport = async (id: string) => {
+    const result = await createInspectionReport(id)
+    if (result.success) load()
+    else alert(result.error)
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
@@ -63,14 +71,17 @@ export default function InspectionsPage() {
                   <span className={`inline-block text-xs px-2 py-1 rounded-full ${statusColors[insp.status] || 'bg-muted text-muted-foreground'}`}>
                     {t(insp.status) || insp.status}
                   </span>
-                  {insp.status === 'pending' && (
-                    <button
-                      onClick={() => handleCancel(insp.id)}
-                      className="block text-xs text-destructive hover:underline w-full"
-                    >
-                      {t('cancel')}
-                    </button>
-                  )}
+                  <div className="flex flex-col gap-1">
+                    {insp.status === 'pending' && (
+                      <button onClick={() => handleCancel(insp.id)} className="text-xs text-destructive hover:underline">{t('cancel')}</button>
+                    )}
+                    {insp.status === 'confirmed' && (
+                      <button onClick={() => handleStartReport(insp.id)} className="text-xs text-primary hover:underline">{t('start_report')}</button>
+                    )}
+                    {insp.report && (
+                      <Link href={`/dashboard/inspections/${insp.id}`} className="text-xs text-primary hover:underline">{t('view_report')}</Link>
+                    )}
+                  </div>
                 </div>
               </div>
               {insp.listing && (

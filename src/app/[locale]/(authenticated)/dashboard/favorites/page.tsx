@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { getFavorites } from '@/lib/actions/vehicle-actions'
-import { VehicleCard } from '@/components/vehicles/vehicle-card'
+import { VehicleCard } from '@/components/vehicle/vehicle-card'
 
 export default async function FavoritesPage() {
   const t = await getTranslations('common')

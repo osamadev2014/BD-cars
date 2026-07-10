@@ -7,6 +7,7 @@ import { sendOtp } from '@/lib/auth/otp-service'
 import { normalizeSaudiPhone } from '@/lib/auth/phone-utils'
 import { SAUDI_PHONE_REGEX, OTP_RESEND_COOLDOWN_SECONDS } from '@/constants'
 import { useAuth } from '@/hooks/use-auth'
+import { Button } from '@/components/ui/button'
 
 export default function LoginPage() {
   const t = useTranslations('auth')
@@ -62,55 +63,58 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">{t('login_title')}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {t('login_subtitle')}
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium">
-            {t('phone_label')}
-          </label>
-          <div className="mt-1 flex">
-            <span className="inline-flex items-center rounded-l-md border border-r-0 bg-muted px-3 text-sm text-muted-foreground">
-              +966
-            </span>
-            <input
-              id="phone"
-              type="tel"
-              inputMode="numeric"
-              placeholder={t('phone_placeholder')}
-              value={phone}
-              onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))}
-              maxLength={9}
-              className="block w-full rounded-r-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              autoComplete="tel"
-              dir="ltr"
-            />
-          </div>
-          {error && (
-            <p className="mt-1 text-sm text-destructive">{error}</p>
-          )}
+    <div className="w-full max-w-sm mx-auto">
+      <div className="rounded-2xl border border-border/60 bg-card shadow-sm p-6 sm:p-8">
+        <div className="text-center mb-6">
+          <h1 className="text-xl font-bold text-foreground">{t('login_title')}</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            {t('login_subtitle')}
+          </p>
         </div>
 
-        <button
-          type="submit"
-          disabled={isLoading || phone.length < 9}
-          className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
-        >
-          {isLoading ? t('otp_sent') : t('send_otp')}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-1.5">
+              {t('phone_label')}
+            </label>
+            <div className="relative">
+              <span className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none text-sm text-muted-foreground border-e border-border/60 pe-3">
+                +966
+              </span>
+              <input
+                id="phone"
+                type="tel"
+                inputMode="numeric"
+                placeholder={t('phone_placeholder')}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))}
+                maxLength={9}
+                className="block w-full h-11 rounded-xl border border-border bg-background text-foreground ps-16 pe-4 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring transition-all"
+                autoComplete="tel"
+                dir="ltr"
+              />
+            </div>
+            {error && (
+              <p className="mt-1.5 text-sm text-destructive">{error}</p>
+            )}
+          </div>
 
-      {cooldown > 0 && (
-        <p className="text-center text-sm text-muted-foreground">
-          {t('resend_otp')} ({cooldown}s)
-        </p>
-      )}
+          <Button
+            type="submit"
+            disabled={isLoading || phone.length < 9}
+            fullWidth
+            size="lg"
+          >
+            {isLoading ? t('otp_sent') : t('send_otp')}
+          </Button>
+        </form>
+
+        {cooldown > 0 && (
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            {t('resend_otp')} ({cooldown}s)
+          </p>
+        )}
+      </div>
     </div>
   )
 }

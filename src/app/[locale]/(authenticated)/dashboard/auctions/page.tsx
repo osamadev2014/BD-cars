@@ -14,6 +14,7 @@ export default function MyAuctionsPage() {
   const { user } = useAuth()
   const searchParams = useSearchParams()
   const tab = searchParams.get('tab') || 'selling'
+  const error = searchParams.get('error')
   const [selling, setSelling] = useState<any[]>([])
   const [bidding, setBidding] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -66,7 +67,15 @@ export default function MyAuctionsPage() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-6">{t('my_auctions')}</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold">{t('my_auctions')}</h1>
+        <Link href="/dashboard/auctions/create" className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+          {t('create_auction')}
+        </Link>
+      </div>
+      {error === 'no_listings' && (
+        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">{t('no_listings_error')}</div>
+      )}
 
       {loading ? (
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto" />

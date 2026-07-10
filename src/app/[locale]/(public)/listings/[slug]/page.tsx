@@ -1,7 +1,36 @@
+import type { Metadata } from 'next'
 import { getVehicleDetail } from '@/lib/actions/vehicle-actions'
+import { getFinancePartners } from '@/lib/actions/finance-actions'
+import { getInsurancePartners } from '@/lib/actions/insurance-actions'
 import { getTranslations } from 'next-intl/server'
 import { formatPrice } from '@/lib/utils'
+import { buildMetadata, buildVehicleSchema } from '@/lib/seo'
+import { JsonLd } from '@/components/shared/json-ld'
 import { VehicleDetailClient } from './vehicle-detail-client'
+import { ListingReviews } from '@/components/listings/listing-reviews'
+import { AdBanner } from '@/components/ads/ad-banner'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const listing = await getVehicleDetail(slug)
+  if (!listing) return {}
+  const vehicle = listing.vehicle
+  const primaryImage = vehicle?.images?.find((img: any) => img.is_primary) || vehicle?.images?.[0]
+  const title = `${vehicle?.year} ${vehicle?.make?.name} ${vehicle?.model?.name}`
+  const desc = vehicle?.description || `${title} - ${listing.price?.toLocaleString()} SAR`
+  return buildMetadata({
+    title,
+    description: desc.slice(0, 160),
+    path: `/listings/${slug}`,
+    ogImage: primaryImage?.url,
+  })
+}
+
+export const revalidate = 300
 
 export default async function VehicleDetailPage({
   params,
@@ -11,12 +40,35 @@ export default async function VehicleDetailPage({
   const { slug } = await params
   const t = await getTranslations('common')
   const listing = await getVehicleDetail(slug)
+  const [financePartners, insurancePartners] = await Promise.all([
+    getFinancePartners(),
+    getInsurancePartners(),
+  ])
 
   const vehicle = listing.vehicle
   const primaryImage = vehicle?.images?.find((img: any) => img.is_primary) || vehicle?.images?.[0]
 
+  const vehicleSchema = buildVehicleSchema({
+    price: listing.price,
+    mileage: vehicle?.mileage,
+    year: vehicle?.year,
+    make: vehicle?.make?.name,
+    model: vehicle?.model?.name,
+    trim: vehicle?.trim?.name,
+    bodyType: vehicle?.body_type?.name,
+    fuelType: vehicle?.fuel_type?.name,
+    transmission: vehicle?.transmission?.name,
+    color: vehicle?.color?.name,
+    condition: vehicle?.condition?.name,
+    description: vehicle?.description,
+    image: primaryImage?.url,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/listings/${slug}`,
+    sellerName: listing.seller?.full_name,
+  })
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <JsonLd data={vehicleSchema} />
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <div className="lg:col-span-3 space-y-6">
           <div className="aspect-[16/10] bg-muted rounded-lg overflow-hidden">
@@ -63,9 +115,11 @@ export default async function VehicleDetailPage({
               <p className="text-sm text-muted-foreground whitespace-pre-wrap">{vehicle.description}</p>
             </div>
           )}
-          <VehicleDetailClient listing={listing} />
+          <ListingReviews listingId={listing.id} />
+          <VehicleDetailClient listing={listing} financePartners={financePartners} insurancePartners={insurancePartners} />
         </div>
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-6">
+          <AdBanner placementKey="listing_sidebar" />
           <div className="border rounded-lg p-6 space-y-4 sticky top-20">
             <div>
               <p className="text-3xl font-bold text-primary">{formatPrice(listing.price)}</p>

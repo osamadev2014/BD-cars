@@ -1,13 +1,15 @@
 import type { ReactNode } from 'react'
-import { NavBar } from '@/components/layout/nav-bar'
-import { Footer } from '@/components/layout/footer'
+import { PublicHeader } from '@/components/layout/public-header'
+import { PublicFooter } from '@/components/layout/public-footer'
+import { MobileBottomNav } from '@/components/layout/mobile-bottom-nav'
 
 export default function AuthenticatedLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <NavBar />
+      <PublicHeader />
       <main className="flex-1">{children}</main>
-      <Footer />
+      <PublicFooter />
+      <MobileBottomNav />
     </>
   )
 }

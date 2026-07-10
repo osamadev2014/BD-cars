@@ -1,0 +1,80 @@
+'use server'
+
+import { createServerSupabaseClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
+
+export async function getInsurancePartners(all?: boolean) {
+  const supabase = await createServerSupabaseClient()
+  let q = (supabase as any).from('insurance_partners').select('*').order('name')
+  if (!all) q = q.eq('is_active', true)
+  const { data } = await q
+  return (data as any[]) || []
+}
+
+export async function getAllInsuranceRequests(filters?: { status?: string }) {
+  const supabase = await createServerSupabaseClient()
+  let q = (supabase as any)
+    .from('insurance_requests')
+    .select('*, partner:insurance_partners(name, name_ar), profiles!customer_id(full_name, phone)')
+    .order('created_at', { ascending: false })
+  if (filters?.status) q = q.eq('status', filters.status)
+  const { data } = await q
+  return (data as any[]) || []
+}
+
+export async function getInsuranceRequests() {
+  const supabase = await createServerSupabaseClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return []
+  const { data } = await (supabase as any)
+    .from('insurance_requests')
+    .select('*, partner:insurance_partners(name, name_ar, logo_url), listing:vehicle_listings!listing_id(*, vehicle:vehicles(*, make:car_makes(*), model:car_models(*), images:vehicle_images(*)))')
+    .eq('customer_id', user.id)
+    .order('created_at', { ascending: false })
+  return (data as any[]) || []
+}
+
+export async function createInsuranceRequest(listingId: string, partnerId: string, vehiclePrice: number, insuranceType: string) {
+  const supabase = await createServerSupabaseClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'Unauthorized' }
+  const { error } = await (supabase as any)
+    .from('insurance_requests')
+    .insert({ listing_id: listingId, customer_id: user.id, partner_id: partnerId, vehicle_price: vehiclePrice, insurance_type: insuranceType })
+  if (error) return { success: false, error: error.message }
+  revalidatePath('/admin/insurance')
+  return { success: true }
+}
+
+export async function updateInsuranceRequestStatus(id: string, status: string) {
+  const supabase = await createServerSupabaseClient()
+  const { error } = await (supabase as any).from('insurance_requests').update({ status }).eq('id', id)
+  if (error) return { success: false, error: error.message }
+  revalidatePath('/admin/insurance')
+  return { success: true }
+}
+
+export async function upsertInsurancePartner(formData: FormData) {
+  const supabase = await createServerSupabaseClient()
+  const id = formData.get('id')
+  const payload: any = {
+    name: formData.get('name'),
+    name_ar: formData.get('name_ar'),
+    description: formData.get('description') || null,
+    description_ar: formData.get('description_ar') || null,
+    is_active: formData.get('is_active') === 'true',
+    revenue_model: formData.get('revenue_model') || 'per_lead',
+    revenue_per_lead: formData.get('revenue_per_lead') ? parseFloat(formData.get('revenue_per_lead') as string) : null,
+    revenue_percentage: formData.get('revenue_percentage') ? parseFloat(formData.get('revenue_percentage') as string) : null,
+  }
+  if (!id) {
+    payload.slug = (formData.get('name') as string).toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    const { error } = await (supabase as any).from('insurance_partners').insert(payload)
+    if (error) return { success: false, error: error.message }
+  } else {
+    const { error } = await (supabase as any).from('insurance_partners').update(payload).eq('id', id)
+    if (error) return { success: false, error: error.message }
+  }
+  revalidatePath('/admin/insurance')
+  return { success: true }
+}

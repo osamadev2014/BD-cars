@@ -2,6 +2,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { routing, locales } from '@/i18n/config'
 import { notFound } from 'next/navigation'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { AppProvidersWrapper } from './app-providers-wrapper'
 import { AuthProviderWrapper } from './auth-provider-wrapper'
 
@@ -32,6 +33,7 @@ export default async function LocaleLayout({
           <AppProvidersWrapper>
             <AuthProviderWrapper>
               {children}
+              <SpeedInsights />
             </AuthProviderWrapper>
           </AppProvidersWrapper>
         </NextIntlClientProvider>

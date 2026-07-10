@@ -1,5 +1,5 @@
 -- =============================================
--- Ryon Platform - Demo Data Reset
+-- BD Platform - Demo Data Reset
 -- Run this to remove all demo/test data
 -- while preserving roles, permissions, and settings
 -- =============================================
@@ -21,7 +21,7 @@ where id not in (
 -- Reset settings to defaults
 update public.app_settings set value = 
   case key
-    when 'app_name' then '"Ryon"'
+    when 'app_name' then '"BD"'
     when 'app_description' then '"Saudi Automotive Marketplace"'
     when 'payment_mode' then '"sandbox"'
     when 'vat_percentage' then '15'

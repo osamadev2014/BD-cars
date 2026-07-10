@@ -58,6 +58,8 @@ export type AuditAction =
   | 'permission_change'
   | 'export'
   | 'view_sensitive'
+  | 'impression'
+  | 'click'
 
 export type EntityType =
   | 'profile'
@@ -83,6 +85,28 @@ export type EntityType =
   | 'ad_campaign'
   | 'finance_request'
   | 'insurance_request'
+  | 'ai'
+
+export interface NotificationPreferences {
+  id: string
+  user_id: string
+  channel_in_app: boolean
+  channel_push: boolean
+  channel_email: boolean
+  channel_sms: boolean
+  pref_listing_updates: boolean
+  pref_messages: boolean
+  pref_inspection: boolean
+  pref_auctions: boolean
+  pref_purchase_requests: boolean
+  pref_finance: boolean
+  pref_spare_parts: boolean
+  pref_delivery: boolean
+  pref_admin_alerts: boolean
+  pref_marketing: boolean
+  created_at: string
+  updated_at: string
+}
 
 export type SettingCategory =
   | 'general'

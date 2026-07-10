@@ -1,9 +1,29 @@
+import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { getDealerBySlug, getDealerListings } from '@/lib/actions/dealer-actions'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { DealerRating } from '@/components/dealers/dealer-rating'
+import { buildMetadata, buildLocalBusinessSchema } from '@/lib/seo'
+import { JsonLd } from '@/components/shared/json-ld'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const dealer = await getDealerBySlug(slug)
+  if (!dealer) return {}
+  return buildMetadata({
+    title: dealer.name,
+    description: dealer.description || `${dealer.name} - ${dealer.cities?.name || ''} dealer in Saudi Arabia`,
+    path: `/dealers/${slug}`,
+    ogImage: dealer.logo_url || undefined,
+  })
+}
 
 export default async function DealerDetailPage({
   params,
@@ -17,8 +37,23 @@ export default async function DealerDetailPage({
 
   const listings = await getDealerListings(dealer.id)
 
+  const dealerSchema = buildLocalBusinessSchema({
+    name: dealer.name,
+    description: dealer.description,
+    logo: dealer.logo_url,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/dealers/${slug}`,
+    telephone: dealer.phone,
+    email: dealer.email,
+    address: dealer.cities?.name,
+    aggregateRating: dealer.rating > 0 ? {
+      ratingValue: dealer.rating,
+      reviewCount: dealer.review_count || 0,
+    } : undefined,
+  })
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <JsonLd data={dealerSchema} />
       <div className="bg-card border rounded-lg p-8 mb-8">
         <div className="flex items-center gap-6">
           <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center text-2xl font-bold text-muted-foreground overflow-hidden flex-shrink-0">
@@ -41,6 +76,10 @@ export default async function DealerDetailPage({
           </div>
         </div>
         {dealer.description && <p className="mt-4 text-muted-foreground">{dealer.description}</p>}
+      </div>
+
+      <div className="mb-8">
+        <DealerRating dealer={dealer} />
       </div>
 
       <div>

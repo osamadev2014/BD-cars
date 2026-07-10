@@ -296,6 +296,104 @@ export async function getUserAuctions() {
   }, { selling: [], selling_count: 0, bidding: [], bidding_count: 0 })
 }
 
+export async function getUserListings() {
+  const auth = await requireAuth()
+  if (!auth.allowed) return []
+
+  return safeDb(async () => {
+    const supabase = await createServerSupabaseClient()
+    const { data } = await (supabase as any)
+      .from('vehicle_listings')
+      .select('*, vehicle:vehicles(*, make:car_makes(*), model:car_models(*), images:vehicle_images(*))')
+      .eq('seller_id', auth.userId)
+      .in('status', ['active', 'pending'])
+      .order('created_at', { ascending: false })
+      .limit(50)
+    return data || []
+  }, [])
+}
+
+export async function createAuction(formData: FormData) {
+  const auth = await requireAuth()
+  if (!auth.allowed) return { success: false, error: 'auth_required' }
+
+  return safeDb(async () => {
+    const supabase = await createServerSupabaseClient()
+    const title = formData.get('title') as string
+    const listingId = formData.get('listing_id') as string
+    const startPrice = parseFloat(formData.get('start_price') as string)
+    const bidIncrement = parseFloat(formData.get('bid_increment') as string) || 100
+    const startTime = formData.get('start_time') as string
+    const endTime = formData.get('end_time') as string
+    const buyNowPrice = formData.get('buy_now_price') ? parseFloat(formData.get('buy_now_price') as string) : null
+    const reservePrice = formData.get('reserve_price') ? parseFloat(formData.get('reserve_price') as string) : null
+    const auctionType = (formData.get('auction_type') as string) || 'public'
+
+    if (!title || !listingId || !startPrice || !startTime || !endTime) {
+      return { success: false, error: 'missing_fields' }
+    }
+
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-' + Date.now()
+
+    const { data: auction, error } = await (supabase as any)
+      .from('auctions')
+      .insert({
+        title,
+        title_ar: formData.get('title_ar') || null,
+        slug,
+        auction_type: auctionType,
+        status: 'active',
+        start_price: startPrice,
+        reserve_price: reservePrice,
+        buy_now_price: buyNowPrice,
+        bid_increment: bidIncrement,
+        start_time: startTime,
+        end_time: endTime,
+        seller_id: auth.userId,
+        terms: formData.get('terms') || null,
+        terms_ar: formData.get('terms_ar') || null,
+      })
+      .select()
+      .single()
+
+    if (error) return { success: false, error: error.message }
+
+    await (supabase as any)
+      .from('auction_vehicles')
+      .insert({ auction_id: auction.id, listing_id: listingId })
+
+    revalidatePath('/auctions')
+    revalidatePath('/dashboard/auctions')
+    return { success: true, data: auction }
+  }, { success: false, data: null })
+}
+
+export async function getAllAuctionsAdmin(status?: string) {
+  return safeDb(async () => {
+    const supabase = await createServerSupabaseClient()
+    let q = (supabase as any)
+      .from('auctions')
+      .select('*, seller:profiles!seller_id(id, full_name, phone), vehicles:auction_vehicles(listing:vehicle_listings(*, vehicle:vehicles(*, make:car_makes(*), model:car_models(*)))), bids:auction_bids(count)')
+      .order('created_at', { ascending: false })
+      .limit(100)
+    if (status) q = q.eq('status', status)
+    const { data } = await q
+    return data || []
+  }, [])
+}
+
+export async function updateAuctionStatus(auctionId: string, status: string) {
+  const auth = await requireAuth()
+  if (!auth.allowed) return { success: false, error: 'auth_required' }
+
+  return safeDb(async () => {
+    const supabase = await createServerSupabaseClient()
+    await (supabase as any).from('auctions').update({ status }).eq('id', auctionId)
+    revalidatePath('/admin/auctions')
+    return { success: true }
+  }, { success: false })
+}
+
 export async function getAuctionStatuses() {
   return safeDb(async () => {
     const supabase = await createServerSupabaseClient()

@@ -29,3 +29,14 @@ export function slugify(text: string): string {
     .replace(/-+/g, '-')
     .trim()
 }
+
+export function getThumbnailUrl(url: string): string {
+  return url.replace(/\.\w+$/, '_thumb.jpg')
+}
+
+export function getOptimizedImageUrl(url: string, width = 800): string {
+  if (url.includes('supabase.co')) {
+    return `${url}?width=${width}&format=webp`
+  }
+  return url
+}

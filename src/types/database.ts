@@ -270,6 +270,245 @@ export interface Database {
           created_at?: string
         }
       }
+      advertisers: {
+        Row: {
+          id: string
+          name: string
+          name_ar: string | null
+          logo_url: string | null
+          website: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          name_ar?: string | null
+          logo_url?: string | null
+          website?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          name_ar?: string | null
+          logo_url?: string | null
+          website?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      advertiser_users: {
+        Row: {
+          id: string
+          advertiser_id: string
+          user_id: string
+          role: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          advertiser_id: string
+          user_id: string
+          role?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          advertiser_id?: string
+          user_id?: string
+          role?: string
+          created_at?: string
+        }
+      }
+      ad_campaigns: {
+        Row: {
+          id: string
+          advertiser_id: string
+          name: string
+          type: string
+          status: string
+          budget: number
+          spent: number
+          daily_budget: number | null
+          placement_id: string | null
+          target_url: string | null
+          image_url: string | null
+          start_date: string | null
+          end_date: string | null
+          created_at: string
+          updated_at: string
+          deleted_at: string | null
+        }
+        Insert: {
+          id?: string
+          advertiser_id: string
+          name: string
+          type: string
+          status?: string
+          budget: number
+          spent?: number
+          daily_budget?: number | null
+          placement_id?: string | null
+          target_url?: string | null
+          image_url?: string | null
+          start_date?: string | null
+          end_date?: string | null
+          created_at?: string
+          updated_at?: string
+          deleted_at?: string | null
+        }
+        Update: {
+          id?: string
+          advertiser_id?: string
+          name?: string
+          type?: string
+          status?: string
+          budget?: number
+          spent?: number
+          daily_budget?: number | null
+          placement_id?: string | null
+          target_url?: string | null
+          image_url?: string | null
+          start_date?: string | null
+          end_date?: string | null
+          created_at?: string
+          updated_at?: string
+          deleted_at?: string | null
+        }
+      }
+      ad_placements: {
+        Row: {
+          id: string
+          key: string
+          name: string
+          name_ar: string | null
+          description: string | null
+          width: number | null
+          height: number | null
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          key: string
+          name: string
+          name_ar?: string | null
+          description?: string | null
+          width?: number | null
+          height?: number | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          key?: string
+          name?: string
+          name_ar?: string | null
+          description?: string | null
+          width?: number | null
+          height?: number | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      ad_impressions: {
+        Row: {
+          id: string
+          campaign_id: string
+          ip_address: string | null
+          user_agent: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          campaign_id: string
+          ip_address?: string | null
+          user_agent?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          campaign_id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          created_at?: string
+        }
+      }
+      ad_clicks: {
+        Row: {
+          id: string
+          campaign_id: string
+          ip_address: string | null
+          user_agent: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          campaign_id: string
+          ip_address?: string | null
+          user_agent?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          campaign_id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          created_at?: string
+        }
+      }
+      sponsorship_packages: {
+        Row: {
+          id: string
+          name: string
+          name_ar: string | null
+          description: string | null
+          price: number
+          duration_days: number
+          placement_id: string | null
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          name_ar?: string | null
+          description?: string | null
+          price: number
+          duration_days: number
+          placement_id?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          name_ar?: string | null
+          description?: string | null
+          price?: number
+          duration_days?: number
+          placement_id?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>

@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ryon — Saudi Automotive Marketplace
+
+A bilingual (Arabic/English) automotive marketplace platform built with Next.js 16, Supabase, and Tailwind CSS 4.
+
+## Tech Stack
+
+- **Framework**: Next.js 16.2.10 (Turbopack)
+- **Database**: Supabase (PostgreSQL)
+- **Styling**: Tailwind CSS 4, Radix UI primitives
+- **i18n**: next-intl (Arabic/English, RTL/LTR)
+- **Auth**: Supabase Auth (OTP-based)
+- **Payments**: Stripe
 
 ## Getting Started
 
-First, run the development server:
+Copy `.env.example` to `.env.local` and fill in your Supabase project credentials:
+
+```bash
+cp .env.example .env.local
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/          # Next.js App Router pages and layouts
+│   ├── [locale]/ # i18n routes (ar/en)
+│   └── api/      # API routes
+├── components/   # UI components (ui/, ads/, layout/, vehicles/, etc.)
+├── lib/          # Utilities, actions, rate limiting
+├── proxy.ts      # Middleware: i18n routing, auth guards, rate limiting
+└── types/        # Database types
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+supabase/
+├── migrations/   # Database migrations
+└── seed/         # Demo seed data
+```
 
-## Learn More
+## Key Features
 
-To learn more about Next.js, take a look at the following resources:
+- Bilingual marketplace with RTL support
+- Vehicle listings with advanced search
+- Dealer profiles and management
+- Auction system
+- Inspection booking
+- Finance and insurance requests
+- Advertising campaigns
+- Admin dashboard with CRM
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## SEED DATA RUNNING ONLY
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx supabase db query --linked --file supabase/seed/00004_demo_data_corrected.sql
+```

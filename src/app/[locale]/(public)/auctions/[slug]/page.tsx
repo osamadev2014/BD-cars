@@ -1,9 +1,29 @@
+import type { Metadata } from 'next'
 import { getAuctionBySlug, placeBid, toggleWatchAuction } from '@/lib/actions/auction-actions'
 import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { AuctionDetailClient } from './auction-detail-client'
+import { buildMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const auction = await getAuctionBySlug(slug)
+  if (!auction) return {}
+  const vehicle = auction.vehicle
+  const title = `Auction: ${vehicle?.year} ${vehicle?.make?.name} ${vehicle?.model?.name}`
+  const desc = vehicle?.description || `Auction for ${vehicle?.year} ${vehicle?.make?.name} ${vehicle?.model?.name}`
+  return buildMetadata({
+    title,
+    description: desc.slice(0, 160),
+    path: `/auctions/${slug}`,
+  })
+}
 
 export default async function AuctionDetailPage({
   params,

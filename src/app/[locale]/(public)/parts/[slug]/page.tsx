@@ -1,8 +1,28 @@
+import type { Metadata } from 'next'
 import { getPartBySlug } from '@/lib/actions/part-actions'
 import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
+import { buildMetadata, buildProductSchema } from '@/lib/seo'
+import { JsonLd } from '@/components/shared/json-ld'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const part = await getPartBySlug(slug)
+  if (!part) return {}
+  const primaryImage = part.spare_part_images?.find((img: any) => img.is_primary) || part.spare_part_images?.[0]
+  return buildMetadata({
+    title: part.title,
+    description: part.description?.slice(0, 160) || `${part.title} - ${Number(part.price).toLocaleString()} SAR`,
+    path: `/parts/${slug}`,
+    ogImage: primaryImage?.url,
+  })
+}
 
 export default async function PartDetailPage({
   params,
@@ -16,8 +36,20 @@ export default async function PartDetailPage({
 
   const primaryImage = part.spare_part_images?.find((img: any) => img.is_primary) || part.spare_part_images?.[0]
 
+  const partSchema = buildProductSchema({
+    title: part.title,
+    description: part.description,
+    price: Number(part.price),
+    image: primaryImage?.url,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/parts/${slug}`,
+    condition: part.condition,
+    brand: part.part_brands?.name,
+    sku: part.part_number,
+  })
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <JsonLd data={partSchema} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="aspect-video bg-muted rounded-lg flex items-center justify-center text-muted-foreground overflow-hidden">
           {primaryImage ? (

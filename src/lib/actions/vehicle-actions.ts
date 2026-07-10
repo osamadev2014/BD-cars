@@ -3,6 +3,7 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { requireAuth } from '@/server/guards'
 import { revalidatePath } from 'next/cache'
+import { getSetting } from '@/lib/settings/settings-service'
 
 const DEFAULT_PAGE_SIZE = 20
 
@@ -12,6 +13,16 @@ async function safeDb<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   } catch {
     return fallback
   }
+}
+
+export async function getVehiclesForComparison(ids: string[]) {
+  const supabase = await createServerSupabaseClient()
+  const { data } = await (supabase as any)
+    .from('vehicle_listings')
+    .select('*, vehicle:vehicles(*, make:makes(*), model:models(*), body_type:body_types(*), transmission:transmissions(*), fuel_type:fuel_types(*), cylinders:cylinder_types(*), color:colors(*), images:vehicle_images(*)), city:cities(*), seller:profiles!seller_id(id, full_name, phone, city:cities(*)))')
+    .in('id', ids)
+    .in('status', ['active', 'published'])
+  return (data as any[]) || []
 }
 
 export async function getVehicles(params: {
@@ -56,7 +67,7 @@ export async function getVehicles(params: {
         city:cities(*)
       `, { count: 'exact' })
 
-    query = query.eq('status', 'active')
+    query = query.in('status', ['active', 'published'])
 
     if (search) query = query.ilike('vehicle.make.name', `%${search}%`)
     if (makeId) query = query.eq('vehicle.make_id', makeId)
@@ -72,6 +83,7 @@ export async function getVehicles(params: {
     if (cityId) query = query.eq('city_id', cityId)
 
     const [sortCol, sortDir] = sortBy.split('_')
+    query = query.order('is_featured', { ascending: false })
     query = query.order(sortCol || 'created_at', { ascending: sortDir === 'asc' })
 
     const from = (page - 1) * pageSize
@@ -127,36 +139,51 @@ export async function createVehicleListing(formData: FormData) {
   if (!auth.allowed) throw new Error(auth.error || 'Authentication required')
   const supabase = await createServerSupabaseClient()
 
-  const vehicleData = JSON.parse(formData.get('vehicle') as string)
-  const listingData = JSON.parse(formData.get('listing') as string)
-  const images = formData.getAll('images') as File[]
+  const make = formData.get('make') as string
+  const model = formData.get('model') as string
+  const year = parseInt(formData.get('year') as string)
+  const mileage = formData.get('mileage') ? parseInt(formData.get('mileage') as string) : null
+  const bodyType = formData.get('bodyType') as string
+  const transmission = formData.get('transmission') as string
+  const fuelType = formData.get('fuelType') as string
+  const color = formData.get('color') as string
+  const description = formData.get('description') as string
+  const price = parseFloat(formData.get('price') as string)
+  const negotiable = formData.get('negotiable') === 'on'
+  const imageUrls = formData.getAll('imageUrls') as string[]
+
+  const requireApproval = await getSetting<boolean>('require_listing_approval', false)
+  const initialStatus = requireApproval ? 'pending' : 'active'
 
   const { data: vehicle, error: vehicleError } = await (supabase as any)
     .from('vehicles')
     .insert({
-      ...vehicleData,
+      make_id: make,
+      model_id: model,
+      year,
+      mileage,
+      body_type_id: bodyType || null,
+      transmission_id: transmission || null,
+      fuel_type_id: fuelType || null,
+      color_id: color || null,
+      description,
       owner_id: auth.userId,
     })
     .select()
     .single()
   if (vehicleError) throw new Error(vehicleError.message)
 
-  if (images.length > 0) {
-    for (let i = 0; i < images.length; i++) {
-      const ext = images[i].name.split('.').pop()
-      const path = `vehicles/${vehicle.id}/${i}.${ext}`
-      const { error: uploadError } = await (supabase as any).storage
-        .from('vehicles')
-        .upload(path, images[i])
-      if (uploadError) throw new Error(uploadError.message)
-
-      await (supabase as any).from('vehicle_images').insert({
-        vehicle_id: vehicle.id,
-        url: path,
-        is_primary: i === 0,
-        sort_order: i,
-      })
-    }
+  if (imageUrls.length > 0) {
+    const rows = imageUrls.map((url, i) => ({
+      vehicle_id: vehicle.id,
+      url,
+      is_primary: i === 0,
+      sort_order: i,
+    }))
+    const { error: imgError } = await (supabase as any)
+      .from('vehicle_images')
+      .insert(rows)
+    if (imgError) throw new Error(imgError.message)
   }
 
   const { data: listing, error: listingError } = await (supabase as any)
@@ -164,14 +191,35 @@ export async function createVehicleListing(formData: FormData) {
     .insert({
       vehicle_id: vehicle.id,
       seller_id: auth.userId,
-      ...listingData,
+      price,
+      is_negotiable: negotiable,
+      status: initialStatus,
     })
     .select()
     .single()
   if (listingError) throw new Error(listingError.message)
 
+  await (supabase as any).from('listing_status_history').insert({
+    listing_id: listing.id,
+    status: initialStatus,
+    changed_by: auth.userId,
+    notes: requireApproval ? 'Pending admin approval' : 'Auto-approved',
+  })
+
+  if (requireApproval) {
+    const { error: reqError } = await (supabase as any)
+      .from('listing_approval_requests')
+      .insert({
+        listing_id: listing.id,
+        requested_by: auth.userId,
+        status: 'pending',
+      })
+    if (reqError) throw new Error(reqError.message)
+  }
+
   revalidatePath('/')
   revalidatePath('/listings')
+  revalidatePath('/admin/approvals')
   return listing
 }
 
@@ -189,6 +237,8 @@ export async function toggleFavorite(listingId: string) {
 
   if (existing) {
     await (supabase as any).from('favorites').delete().eq('id', existing.id)
+    const { data: cur } = await (supabase as any).from('vehicle_listings').select('favorite_count').eq('id', listingId).single()
+    await (supabase as any).from('vehicle_listings').update({ favorite_count: Math.max(0, (cur?.favorite_count || 1) - 1) }).eq('id', listingId)
     return { favorited: false }
   }
 
@@ -196,6 +246,8 @@ export async function toggleFavorite(listingId: string) {
     user_id: auth.userId,
     listing_id: listingId,
   })
+  const { data: cur } = await (supabase as any).from('vehicle_listings').select('favorite_count').eq('id', listingId).single()
+  await (supabase as any).from('vehicle_listings').update({ favorite_count: (cur?.favorite_count || 0) + 1 }).eq('id', listingId)
   revalidatePath('/favorites')
   return { favorited: true }
 }
@@ -231,10 +283,12 @@ export async function getFavorites(page = 1, pageSize = DEFAULT_PAGE_SIZE) {
 export async function recordView(listingId: string) {
   try {
     const supabase = await createServerSupabaseClient()
-    await (supabase as any).from('listing_views').insert({
+    await (supabase as any).from('vehicle_views').insert({
       listing_id: listingId,
       viewer_ip: 'server',
     })
+    const { data: cur } = await (supabase as any).from('vehicle_listings').select('views_count').eq('id', listingId).single()
+    await (supabase as any).from('vehicle_listings').update({ views_count: (cur?.views_count || 0) + 1 }).eq('id', listingId)
   } catch {
     // silently ignore
   }
@@ -248,6 +302,31 @@ export async function getMakes(search?: string) {
     const { data } = await query.limit(50)
     return data || []
   }, [])
+}
+
+export async function featureListing(listingId: string, days: number = 7) {
+  const supabase = await createServerSupabaseClient()
+  const featuredUntil = new Date(Date.now() + days * 86400000).toISOString()
+  const { error } = await (supabase as any)
+    .from('vehicle_listings')
+    .update({ is_featured: true, featured_until: featuredUntil })
+    .eq('id', listingId)
+  if (error) throw new Error(error.message)
+  revalidatePath('/[locale]/dashboard/listings')
+  revalidatePath('/[locale]/listings')
+  return { success: true }
+}
+
+export async function unfeatureListing(listingId: string) {
+  const supabase = await createServerSupabaseClient()
+  const { error } = await (supabase as any)
+    .from('vehicle_listings')
+    .update({ is_featured: false, featured_until: null })
+    .eq('id', listingId)
+  if (error) throw new Error(error.message)
+  revalidatePath('/[locale]/dashboard/listings')
+  revalidatePath('/[locale]/listings')
+  return { success: true }
 }
 
 export async function getModels(makeId: string, search?: string) {

@@ -6,7 +6,7 @@ export function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold mb-3">RYON</h3>
+            <h3 className="font-bold mb-3">BD</h3>
             <p className="text-sm text-muted-foreground">
               Saudi Automotive Marketplace
             </p>
@@ -32,15 +32,16 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Support</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/help">Help Center</Link></li>
               <li><Link href="/contact">Contact Us</Link></li>
-              <li><Link href="/terms">Terms of Service</Link></li>
-              <li><Link href="/privacy">Privacy Policy</Link></li>
+              <li><Link href="/pages/about">About Us</Link></li>
+              <li><Link href="/pages/faq">FAQ</Link></li>
+              <li><Link href="/pages/terms">Terms of Service</Link></li>
+              <li><Link href="/pages/privacy">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>
         <div className="border-t mt-8 pt-4 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} RYON. All rights reserved.
+          &copy; {new Date().getFullYear()} BD. All rights reserved.
         </div>
       </div>
     </footer>
