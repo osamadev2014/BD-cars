@@ -117,10 +117,10 @@ export async function getVehicleDetail(slug: string) {
           interior_color:car_colors(id,name,name_ar),
           condition:vehicle_condition_types(id,name,name_ar),
           images:vehicle_images(id,url,is_primary,sort_order),
-          features:vehicle_features(id,name,name_ar)
+          features:vehicle_features(id,name,name_ar),
+          city:cities(id,name,name_ar,slug),
+          district:districts(id,name,name_ar,slug)
         ),
-        city:cities(id,name,name_ar,slug),
-        district:districts(id,name,name_ar,slug),
         dealer:dealers(
           id,name,name_ar,slug,logo,description,description_ar,phone,email,website,is_verified,owner_id,subscription_tier_id,
           branches:dealer_branches(id,name,address,phone),

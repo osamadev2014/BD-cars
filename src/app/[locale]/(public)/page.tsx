@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getVehicles, getMakes } from '@/lib/actions/vehicle-actions'
+import { getMakes } from '@/lib/actions/vehicle-actions'
 import { VehicleCard } from '@/components/vehicle/vehicle-card'
 import { FeaturedVehicleCard } from '@/components/vehicle/featured-vehicle-card'
 import { HeroSearch } from '@/components/search/hero-search'
@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { JsonLd } from '@/components/shared/json-ld'
 import { buildMetadata, buildWebSiteSchema } from '@/lib/seo'
 import { Car, ShoppingCart, ClipboardCheck, Search, Wrench, Building2, Shield, Truck, Users } from 'lucide-react'
+import { fetchSupabase } from '@/lib/supabase/fetch-client'
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -23,36 +24,22 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const revalidate = 300
 
-async function getVehiclesFetch() {
-  try {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (!url || !anonKey) return []
-
-    const res = await fetch(`${url}/rest/v1/vehicle_listings?select=id,slug,title,title_ar,price,status&status=in.(published,published_with_trusted_badge,reserved)&limit=8`, {
-      headers: {
-        apikey: anonKey,
-        Authorization: `Bearer ${anonKey}`,
-      },
-      next: { revalidate: 0 },
-    })
-    if (!res.ok) { console.error('[fetch] error:', res.status, await res.text()); return [] }
-    const data = await res.json()
-    console.log('[fetch] got', data.length, 'listings')
-    return data
-  } catch (e) {
-    console.error('[fetch] exception:', e)
-    return []
-  }
+async function getRecentListings() {
+  const { data, error } = await fetchSupabase<any[]>('vehicle_listings', {
+    select: 'id,slug,title,title_ar,price',
+    status: 'in.(published,published_with_trusted_badge,reserved)',
+    limit: 8,
+    order: 'created_at.desc',
+  })
+  if (error || !data) return []
+  return data
 }
 
 export default async function HomePage() {
   const locale = 'ar'
-  const listings = await getVehiclesFetch()
-  const { data: vehiclesData } = await getVehicles({ pageSize: 8 })
-  const listingsToShow = listings.length > 0 ? listings : vehiclesData
+  const listings = await getRecentListings()
   const makes = await getMakes()
-  const listingCount = listingsToShow.length
+  const listingCount = listings.length
 
   const quickActions = [
     { icon: <Car className="h-6 w-6" />, title: 'شراء سيارة', description: 'تصفح آلاف السيارات المعروضة', href: '/listings' },
@@ -115,9 +102,9 @@ export default async function HomePage() {
               </Link>
             }
           />
-          {listingsToShow.length > 0 ? (
+          {listings.length > 0 ? (
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory">
-              {listingsToShow.slice(0, 6).map((listing: any) => (
+              {listings.slice(0, 6).map((listing: any) => (
                 <FeaturedVehicleCard key={listing.id} listing={listing} />
               ))}
             </div>
@@ -141,9 +128,9 @@ export default async function HomePage() {
             </Link>
           }
         />
-        {listingsToShow.length > 0 ? (
+        {listings.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {listingsToShow.map((listing: any) => (
+            {listings.map((listing: any) => (
               <VehicleCard key={listing.id} listing={listing} />
             ))}
           </div>
