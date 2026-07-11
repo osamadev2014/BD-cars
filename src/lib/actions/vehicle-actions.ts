@@ -1,6 +1,6 @@
 'use server'
 
-import { createServerSupabaseClient } from '@/lib/supabase/server'
+import { createServerSupabaseClient, createServerAdminClient } from '@/lib/supabase/server'
 import { requireAuth } from '@/server/guards'
 import { revalidatePath } from 'next/cache'
 import { getSetting } from '@/lib/settings/settings-service'
@@ -16,7 +16,7 @@ async function safeDb<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
 }
 
 export async function getVehiclesForComparison(ids: string[]) {
-  const supabase = await createServerSupabaseClient()
+  const supabase = createServerAdminClient()
   const { data } = await (supabase as any)
     .from('vehicle_listings')
     .select('*, vehicle:vehicles(*, make:makes(*), model:models(*), body_type:body_types(*), transmission:transmissions(*), fuel_type:fuel_types(*), cylinders:cylinder_types(*), color:colors(*), images:vehicle_images(*)), city:cities(*), seller:profiles!seller_id(id, full_name, phone, city:cities(*)))')
@@ -43,7 +43,7 @@ export async function getVehicles(params: {
   pageSize?: number
 }) {
   return safeDb(async () => {
-    const supabase = await createServerSupabaseClient()
+    const supabase = createServerAdminClient()
     const { search, makeId, modelId, minYear, maxYear, minPrice, maxPrice, bodyTypeId, fuelTypeId, transmissionId, conditionId, cityId, sortBy = 'created_at_desc', page = 1, pageSize = DEFAULT_PAGE_SIZE } = params
 
     let query = (supabase as any)
@@ -97,7 +97,7 @@ export async function getVehicles(params: {
 
 export async function getVehicleDetail(slug: string) {
   return safeDb(async () => {
-    const supabase = await createServerSupabaseClient()
+    const supabase = createServerAdminClient()
     const { data, error } = await (supabase as any)
       .from('vehicle_listings')
       .select(`

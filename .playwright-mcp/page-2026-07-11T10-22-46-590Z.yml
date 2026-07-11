@@ -1,0 +1,82 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - generic [ref=f1e5]:
+        - img "RYON" [ref=f1e7]
+        - button "Explorar mercado" [ref=f1e9]
+    - generic [ref=f1e11]:
+      - generic [ref=f1e12]:
+        - heading "Análise Inteligente de Criptomoedas" [level=1] [ref=f1e13]:
+          - text: Análise Inteligente de
+          - generic [ref=f1e14]: Criptomoedas
+        - paragraph [ref=f1e15]: Identifique os melhores momentos para acumular BTC, ETH, SOL e XRP com análises em tempo real, histórico de preços e indicadores técnicos avançados.
+      - generic [ref=f1e16]:
+        - generic [ref=f1e18]:
+          - generic [ref=f1e19]:
+            - img "Bitcoin" [ref=f1e20]
+            - generic [ref=f1e21]:
+              - heading "Bitcoin" [level=3] [ref=f1e22]
+              - paragraph [ref=f1e23]: btc
+          - generic [ref=f1e24]:
+            - paragraph [ref=f1e25]: $64,094.00
+            - generic [ref=f1e26]: 0.37%
+            - paragraph [ref=f1e31]: "Cap: $1.29T"
+        - generic [ref=f1e33]:
+          - generic [ref=f1e34]:
+            - img "Ethereum" [ref=f1e35]
+            - generic [ref=f1e36]:
+              - heading "Ethereum" [level=3] [ref=f1e37]
+              - paragraph [ref=f1e38]: eth
+          - generic [ref=f1e39]:
+            - paragraph [ref=f1e40]: $1,794.74
+            - generic [ref=f1e41]: 0.02%
+            - paragraph [ref=f1e46]: "Cap: $216.58B"
+        - generic [ref=f1e48]:
+          - generic [ref=f1e49]:
+            - img "XRP" [ref=f1e50]
+            - generic [ref=f1e51]:
+              - heading "XRP" [level=3] [ref=f1e52]
+              - paragraph [ref=f1e53]: xrp
+          - generic [ref=f1e54]:
+            - paragraph [ref=f1e55]: $1.11
+            - generic [ref=f1e56]: 0.68%
+            - paragraph [ref=f1e61]: "Cap: $69.08B"
+        - generic [ref=f1e63]:
+          - generic [ref=f1e64]:
+            - img "Solana" [ref=f1e65]
+            - generic [ref=f1e66]:
+              - heading "Solana" [level=3] [ref=f1e67]
+              - paragraph [ref=f1e68]: sol
+          - generic [ref=f1e69]:
+            - paragraph [ref=f1e70]: $77.76
+            - generic [ref=f1e71]: 1.81%
+            - paragraph [ref=f1e76]: "Cap: $45.27B"
+    - generic [ref=f1e78]:
+      - generic [ref=f1e79]:
+        - heading "Ferramentas Profissionais de Análise" [level=2] [ref=f1e80]
+        - paragraph [ref=f1e81]: Tudo que você precisa para tomar decisões inteligentes de investimento em criptomoedas
+      - generic [ref=f1e82]:
+        - generic [ref=f1e84]:
+          - generic [ref=f1e85]: Análise de Preços em Tempo Real
+          - paragraph [ref=f1e92]: Conectamos com múltiplas exchanges para encontrar os melhores preços de compra, sem revelar a fonte.
+        - generic [ref=f1e94]:
+          - generic [ref=f1e95]: Melhor Preço para Acumular
+          - paragraph [ref=f1e103]: Identificamos automaticamente os valores mais baixos disponíveis em R$ e USD para maximizar sua acumulação.
+        - generic [ref=f1e105]:
+          - generic [ref=f1e106]: Histórico e Gráficos Avançados
+          - paragraph [ref=f1e112]: Visualize tendências com gráficos de 7 dias, 30 dias, 90 dias e 1 ano com indicadores técnicos.
+        - generic [ref=f1e114]:
+          - generic [ref=f1e115]: Indicadores de Timing
+          - paragraph [ref=f1e122]: Saiba se o preço atual está abaixo ou acima da média histórica para timing perfeito de compra.
+    - generic [ref=f1e125]:
+      - heading "Pare de Perder Oportunidades de Acumulação" [level=2] [ref=f1e126]
+      - paragraph [ref=f1e127]: Junte-se a milhares de holders que já usam nossa plataforma para identificar os melhores momentos de compra sem monitorar o mercado 24/7.
+      - button "Acessar Dashboard" [ref=f1e128]
+    - contentinfo [ref=f1e129]:
+      - paragraph [ref=f1e132]: © 2025 RYON. Análise inteligente de criptomoedas.
+  - generic [ref=f1e133]:
+    - link "Built with" [ref=f1e134] [cursor=pointer]:
+      - /url: https://v0.app/chat/api/open/built-with-v0/b_CtbN7cc4E3s
+    - button "Close" [ref=f1e138] [cursor=pointer]
+    - generic [ref=f1e141]: v0
+  - alert [ref=f1e142]
