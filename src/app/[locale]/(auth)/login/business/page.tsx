@@ -3,15 +3,16 @@
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
+import Link from 'next/link'
 import { sendOtp } from '@/lib/auth/otp-service'
 import { normalizeSaudiPhone } from '@/lib/auth/phone-utils'
 import { SAUDI_PHONE_REGEX, OTP_RESEND_COOLDOWN_SECONDS } from '@/constants'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { Building2 } from 'lucide-react'
 import { useLocale } from 'next-intl'
 
-export default function LoginPage() {
+export default function BusinessLoginPage() {
   const t = useTranslations('auth')
   const locale = useLocale()
   const router = useRouter()
@@ -48,8 +49,9 @@ export default function LoginPage() {
       return
     }
 
+    sessionStorage.setItem('login_type', 'business')
     startCooldown()
-    router.push(`/verify?phone=${encodeURIComponent(normalized)}`)
+    router.push(`/${locale}/verify?phone=${encodeURIComponent(normalized)}`)
   }
 
   const startCooldown = () => {
@@ -69,9 +71,12 @@ export default function LoginPage() {
     <div className="w-full max-w-sm mx-auto">
       <div className="rounded-2xl border border-border/60 bg-card shadow-sm p-6 sm:p-8">
         <div className="text-center mb-6">
-          <h1 className="text-xl font-bold text-foreground">{t('login_title')}</h1>
+          <div className="h-12 w-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-4">
+            <Building2 className="h-6 w-6" />
+          </div>
+          <h1 className="text-xl font-bold text-foreground">تسجيل دخول الشركات</h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
-            {t('login_subtitle')}
+            أدخل رقم هاتفك المسجل في حساب الشركة
           </p>
         </div>
 
@@ -118,13 +123,24 @@ export default function LoginPage() {
           </p>
         )}
 
-        <div className="mt-6 pt-6 border-t border-border/60 text-center">
+        <div className="mt-6 pt-6 border-t border-border/60 text-center space-y-2">
+          <p className="text-sm text-muted-foreground">
+            ليس لديك حساب شركة؟
+          </p>
           <Link
-            href={`/${locale}/login/business`}
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            href={`/${locale}/register/business`}
+            className="text-sm font-medium text-accent hover:underline"
           >
-            تسجيل دخول الشركات
+            إنشاء حساب شركة جديد
           </Link>
+          <div className="pt-2">
+            <Link
+              href={`/${locale}/login`}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              تسجيل دخول الأفراد
+            </Link>
+          </div>
         </div>
       </div>
     </div>

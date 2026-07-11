@@ -7,9 +7,12 @@ import { sendOtp } from '@/lib/auth/otp-service'
 import { normalizeSaudiPhone } from '@/lib/auth/phone-utils'
 import { SAUDI_PHONE_REGEX, OTP_RESEND_COOLDOWN_SECONDS } from '@/constants'
 import { useAuth } from '@/hooks/use-auth'
+import Link from 'next/link'
+import { useLocale } from 'next-intl'
 
 export default function RegisterPage() {
   const t = useTranslations('auth')
+  const locale = useLocale()
   const router = useRouter()
   const { user, isLoading: authLoading } = useAuth()
   const [name, setName] = useState('')
@@ -140,6 +143,15 @@ export default function RegisterPage() {
           {t('resend_otp')} ({cooldown}s)
         </p>
       )}
+
+      <div className="mt-6 pt-6 border-t border-border/60 text-center">
+        <Link
+          href={`/${locale}/register/business`}
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          إنشاء حساب شركة
+        </Link>
+      </div>
     </div>
   )
 }
