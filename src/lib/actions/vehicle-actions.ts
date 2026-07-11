@@ -10,7 +10,8 @@ const DEFAULT_PAGE_SIZE = 20
 async function safeDb<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   try {
     return await fn()
-  } catch {
+  } catch (e) {
+    console.error('[safeDb] Error:', e)
     return fallback
   }
 }
@@ -51,19 +52,19 @@ export async function getVehicles(params: {
       .select(`
         *,
         vehicle:vehicles(
-          *,
-          make:car_makes(*),
-          model:car_models(*),
-          trim:car_trims(*),
-          body_type:body_types(*),
-          fuel_type:fuel_types(*),
-          transmission:transmission_types(*),
-          drivetrain:drivetrain_types(*),
-          color:car_colors(*),
-          condition:vehicle_condition_types(*),
-          images:vehicle_images(*)
+          id,year,mileage,description,owner_id,created_at,updated_at,
+          make:car_makes(id,name,name_ar,slug),
+          model:car_models(id,name,name_ar,slug),
+          trim:car_trims(id,name,name_ar),
+          body_type:body_types(id,name,name_ar,slug),
+          fuel_type:fuel_types(id,name,name_ar,slug),
+          transmission:transmission_types(id,name,name_ar,slug),
+          drivetrain:drivetrain_types(id,name,name_ar,slug),
+          color:car_colors(id,name,name_ar),
+          condition:vehicle_condition_types(id,name,name_ar),
+          images:vehicle_images(id,url,is_primary,sort_order)
         ),
-        city:cities(*)
+        city:cities(id,name,name_ar,slug)
       `, { count: 'exact' })
 
     query = query.in('status', ['active', 'published'])
