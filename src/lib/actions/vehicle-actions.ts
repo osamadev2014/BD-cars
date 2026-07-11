@@ -44,13 +44,14 @@ export async function getVehicles(params: {
   pageSize?: number
 }) {
   return safeDb(async () => {
+    console.log('[DEBUG] getVehicles called')
     const supabase = createPublicClient()
     const { search, makeId, modelId, minYear, maxYear, minPrice, maxPrice, bodyTypeId, fuelTypeId, transmissionId, conditionId, cityId, sortBy = 'created_at_desc', page = 1, pageSize = DEFAULT_PAGE_SIZE } = params
 
     let query = (supabase as any)
       .from('vehicle_listings')
       .select(`
-        *,
+        id,slug,title,title_ar,price,status,is_featured,is_negotiable,created_at,description,description_ar,seller_type,has_inspection,updated_at,views_count,favorite_count,
         vehicle:vehicles(
           id,year,mileage,description,owner_id,created_at,updated_at,
           make:car_makes(id,name,name_ar,slug),
