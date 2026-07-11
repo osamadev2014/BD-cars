@@ -38,3 +38,17 @@ export async function createServerSupabaseClient() {
     }
   )
 }
+
+export function createPublicClient() {
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      global: { fetch: fetchWithTimeout },
+      cookies: {
+        getAll() { return [] },
+        setAll() {},
+      },
+    }
+  )
+}

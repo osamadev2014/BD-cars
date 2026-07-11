@@ -1,6 +1,6 @@
 'use server'
 
-import { createServerSupabaseClient } from '@/lib/supabase/server'
+import { createServerSupabaseClient, createPublicClient } from '@/lib/supabase/server'
 import { requireAuth } from '@/server/guards'
 import { revalidatePath } from 'next/cache'
 import { getSetting } from '@/lib/settings/settings-service'
@@ -44,7 +44,7 @@ export async function getVehicles(params: {
   pageSize?: number
 }) {
   return safeDb(async () => {
-    const supabase = await createServerSupabaseClient()
+    const supabase = createPublicClient()
     const { search, makeId, modelId, minYear, maxYear, minPrice, maxPrice, bodyTypeId, fuelTypeId, transmissionId, conditionId, cityId, sortBy = 'created_at_desc', page = 1, pageSize = DEFAULT_PAGE_SIZE } = params
 
     let query = (supabase as any)
@@ -97,33 +97,33 @@ export async function getVehicles(params: {
 
 export async function getVehicleDetail(slug: string) {
   return safeDb(async () => {
-    const supabase = await createServerSupabaseClient()
+    const supabase = createPublicClient()
     const { data, error } = await (supabase as any)
       .from('vehicle_listings')
       .select(`
         *,
         vehicle:vehicles(
-          *,
-          make:car_makes(*),
-          model:car_models(*),
-          trim:car_trims(*),
-          generation:car_generations(*),
-          body_type:body_types(*),
-          fuel_type:fuel_types(*),
-          transmission:transmission_types(*),
-          drivetrain:drivetrain_types(*),
-          color:car_colors(*),
-          interior_color:car_colors(*),
-          condition:vehicle_condition_types(*),
-          images:vehicle_images(*),
-          features:vehicle_features(*)
+          id,year,mileage,description,owner_id,created_at,updated_at,
+          make:car_makes(id,name,name_ar,slug),
+          model:car_models(id,name,name_ar,slug),
+          trim:car_trims(id,name,name_ar),
+          generation:car_generations(id,name,name_ar),
+          body_type:body_types(id,name,name_ar,slug),
+          fuel_type:fuel_types(id,name,name_ar,slug),
+          transmission:transmission_types(id,name,name_ar,slug),
+          drivetrain:drivetrain_types(id,name,name_ar,slug),
+          color:car_colors(id,name,name_ar),
+          interior_color:car_colors(id,name,name_ar),
+          condition:vehicle_condition_types(id,name,name_ar),
+          images:vehicle_images(id,url,is_primary,sort_order),
+          features:vehicle_features(id,name,name_ar)
         ),
-        city:cities(*),
-        district:districts(*),
+        city:cities(id,name,name_ar,slug),
+        district:districts(id,name,name_ar,slug),
         dealer:dealers(
-          *,
-          branches:dealer_branches(*),
-          subscription:dealer_subscriptions(*)
+          id,name,name_ar,slug,logo,description,description_ar,phone,email,website,is_verified,owner_id,subscription_tier_id,
+          branches:dealer_branches(id,name,address,phone),
+          subscription:dealer_subscriptions(id,tier,status,starts_at,expires_at)
         )
       `)
       .eq('slug', slug)
