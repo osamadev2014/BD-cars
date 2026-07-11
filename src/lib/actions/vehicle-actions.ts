@@ -1,6 +1,6 @@
 'use server'
 
-import { createServerSupabaseClient, createServerAdminClient } from '@/lib/supabase/server'
+import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { requireAuth } from '@/server/guards'
 import { revalidatePath } from 'next/cache'
 import { getSetting } from '@/lib/settings/settings-service'
@@ -16,10 +16,10 @@ async function safeDb<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
 }
 
 export async function getVehiclesForComparison(ids: string[]) {
-  const supabase = createServerAdminClient()
+  const supabase = await createServerSupabaseClient()
   const { data } = await (supabase as any)
     .from('vehicle_listings')
-    .select('*, vehicle:vehicles(*, make:makes(*), model:models(*), body_type:body_types(*), transmission:transmissions(*), fuel_type:fuel_types(*), cylinders:cylinder_types(*), color:colors(*), images:vehicle_images(*)), city:cities(*), seller:profiles!seller_id(id, full_name, phone, city:cities(*)))')
+    .select('*, vehicle:vehicles(*, make:makes(*), model:models(*), body_type:body_types(*), transmission:transmissions(*), fuel_type:fuel_types(*), cylinders:cylinder_types(*), color:colors(*), images:vehicle_images(*)), city:cities(*)')
     .in('id', ids)
     .in('status', ['active', 'published'])
   return (data as any[]) || []
@@ -43,7 +43,7 @@ export async function getVehicles(params: {
   pageSize?: number
 }) {
   return safeDb(async () => {
-    const supabase = createServerAdminClient()
+    const supabase = await createServerSupabaseClient()
     const { search, makeId, modelId, minYear, maxYear, minPrice, maxPrice, bodyTypeId, fuelTypeId, transmissionId, conditionId, cityId, sortBy = 'created_at_desc', page = 1, pageSize = DEFAULT_PAGE_SIZE } = params
 
     let query = (supabase as any)
@@ -63,7 +63,6 @@ export async function getVehicles(params: {
           condition:vehicle_condition_types(*),
           images:vehicle_images(*)
         ),
-        seller:profiles(id, full_name, avatar_url, phone),
         city:cities(*)
       `, { count: 'exact' })
 
@@ -97,7 +96,7 @@ export async function getVehicles(params: {
 
 export async function getVehicleDetail(slug: string) {
   return safeDb(async () => {
-    const supabase = createServerAdminClient()
+    const supabase = await createServerSupabaseClient()
     const { data, error } = await (supabase as any)
       .from('vehicle_listings')
       .select(`
@@ -118,7 +117,6 @@ export async function getVehicleDetail(slug: string) {
           images:vehicle_images(*),
           features:vehicle_features(*)
         ),
-        seller:profiles(id, full_name, avatar_url, phone, created_at),
         city:cities(*),
         district:districts(*),
         dealer:dealers(
