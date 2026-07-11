@@ -1,0 +1,46 @@
+- generic [active] [ref=f19e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - generic [ref=f19e3]:
+    - banner [ref=f19e4]:
+      - link "Vercel logo":
+        - /url: /home
+        - button "Vercel Logo":
+          - img "Vercel Logo"
+      - navigation [ref=f19e5]:
+        - navigation [ref=f19e6]:
+          - link [ref=f19e7] [cursor=pointer]:
+            - /url: /signup?next=%2Fsso-api%3Furl%3Dhttps%253A%252F%252Fryon-jo8a4m7e7-furiesesport2121-3675s-projects.vercel.app%252Far%26nonce%3D838a2e7458d9256bc7becf68276e772fd6439f4071ddcf04cda60be20933423b
+            - paragraph [ref=f19e9]: Sign Up
+    - main [ref=f19e10]:
+      - generic [ref=f19e12]:
+        - heading "Log in to Vercel" [level=1] [ref=f19e15]
+        - generic [ref=f19e16]:
+          - generic [ref=f19e17]:
+            - textbox "Email Address" [ref=f19e19]
+            - button "Continue with Email" [ref=f19e21] [cursor=pointer]
+          - generic [ref=f19e24]:
+            - button "Continue with Google" [ref=f19e25] [cursor=pointer]:
+              - generic [ref=f19e30]:
+                - generic [ref=f19e31]: Continue with
+                - text: Google
+            - button "Continue with GitHub" [ref=f19e32] [cursor=pointer]:
+              - generic [ref=f19e36]:
+                - generic [ref=f19e37]: Continue with
+                - text: GitHub
+            - button "Continue with Apple" [ref=f19e38] [cursor=pointer]:
+              - generic [ref=f19e42]:
+                - generic [ref=f19e43]: Continue with
+                - text: Apple
+            - button "Continue with SAML SSO" [ref=f19e45] [cursor=pointer]
+            - button "Continue with Passkey" [ref=f19e50] [cursor=pointer]
+            - button "Show other options" [ref=f19e55] [cursor=pointer]
+        - paragraph [ref=f19e58]:
+          - text: Don't have an account?
+          - link "Sign Up" [ref=f19e59] [cursor=pointer]:
+            - /url: /signup?next=%2Fsso-api%3Furl%3Dhttps%253A%252F%252Fryon-jo8a4m7e7-furiesesport2121-3675s-projects.vercel.app%252Far%26nonce%3D838a2e7458d9256bc7becf68276e772fd6439f4071ddcf04cda60be20933423b
+      - generic [ref=f19e62]:
+        - link "Terms" [ref=f19e63] [cursor=pointer]:
+          - /url: /legal/terms
+        - link "Privacy Policy" [ref=f19e64] [cursor=pointer]:
+          - /url: /legal/privacy-policy

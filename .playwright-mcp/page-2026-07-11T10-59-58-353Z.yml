@@ -1,0 +1,237 @@
+- generic [active] [ref=f17e1]:
+  - generic [ref=f17e2]:
+    - banner [ref=f17e3]:
+      - generic [ref=f17e4]:
+        - generic [ref=f17e5]:
+          - link [ref=f17e6] [cursor=pointer]:
+            - /url: /ar
+            - img "BD" [ref=f17e7]
+          - navigation [ref=f17e8]:
+            - link "السيارات" [ref=f17e9] [cursor=pointer]:
+              - /url: /ar/listings
+            - link "المزادات" [ref=f17e10] [cursor=pointer]:
+              - /url: /ar/auctions
+            - link "التجار" [ref=f17e11] [cursor=pointer]:
+              - /url: /ar/dealers
+            - link "الباقات" [ref=f17e12] [cursor=pointer]:
+              - /url: /ar/plans
+            - link "قطع الغيار" [ref=f17e13] [cursor=pointer]:
+              - /url: /ar/parts
+        - generic [ref=f17e14]:
+          - link [ref=f17e15] [cursor=pointer]:
+            - /url: /ar/listings/new
+            - button [ref=f17e16]
+          - generic [ref=f17e19]:
+            - link [ref=f17e20] [cursor=pointer]:
+              - /url: /ar/login
+              - button "تسجيل دخول" [ref=f17e21]
+            - link [ref=f17e22] [cursor=pointer]:
+              - /url: /ar/register
+              - button "إنشاء حساب" [ref=f17e23]
+    - main [ref=f17e24]:
+      - generic [ref=f17e25]:
+        - generic [ref=f17e29]:
+          - heading "سوق السيارات في المملكة" [level=1] [ref=f17e30]
+          - paragraph [ref=f17e31]: اشترِ، بيع، أو فحص سيارتك بكل ثقة
+          - generic [ref=f17e32]:
+            - generic [ref=f17e33]:
+              - textbox "ابحث بالعلامة التجارية، الموديل..." [ref=f17e35]
+              - combobox [ref=f17e36] [cursor=pointer]:
+                - option "جميع الماركات" [selected]
+                - option "ط£ظˆط¯ظٹ"
+                - option "ط¨ظٹ ط§ظ… ط¯ط¨ظ„ظٹظˆ"
+                - option "بي واي دي"
+                - option "ظƒط§ط¯ظٹظ„ط§ظƒ"
+                - option "ط´ظٹظپط±ظˆظ„ظٹظ‡"
+                - option "ظƒط±ط§ظٹط³ظ„ط±"
+                - option "ط¯ظˆط¯ط¬"
+                - option "ظپظˆط±ط¯"
+                - option "ط¬ظٹ ط§ظ… ط³ظٹ"
+                - option "ظ‡ظˆظ†ط¯ط§"
+                - option "ظ‡ظٹظˆظ†ط¯ط§ظٹ"
+                - option "ط¬ظٹط¨"
+                - option "ظƒظٹط§"
+                - option "ظ„ظƒط²ط³"
+                - option "ظ…ط§ط²ط¯ط§"
+                - option "ظ…ط±ط³ظٹط¯ط³"
+                - option "ظ…ظٹطھط³ظˆط¨ظٹط´ظٹ"
+                - option "ظ†ظٹط³ط§ظ†"
+                - option "ط¨ظˆط±ط´"
+                - option "تسلا"
+                - option "طھظˆظٹظˆطھط§"
+                - option "ظپظˆظ„ظƒط³ ظپط§ط¬ظ†"
+              - combobox [ref=f17e37] [cursor=pointer]:
+                - option "أي سعر" [selected]
+                - option "أقل من 50,000"
+                - option "50,000 - 100,000"
+                - option "100,000 - 200,000"
+                - option "200,000 - 500,000"
+                - option "أكثر من 500,000"
+              - button [ref=f17e38]
+            - generic [ref=f17e43]:
+              - generic [ref=f17e44]: "روابط سريعة:"
+              - link "Toyota" [ref=f17e45] [cursor=pointer]:
+                - /url: /ar/listings?make=toyota
+              - link "الرياض" [ref=f17e46] [cursor=pointer]:
+                - /url: /ar/listings?city=riyadh
+              - link "أقل من 50,000" [ref=f17e47] [cursor=pointer]:
+                - /url: /ar/listings?max_price=50000
+        - generic [ref=f17e49]:
+          - link [ref=f17e50] [cursor=pointer]:
+            - /url: /ar/listings
+            - generic [ref=f17e56]:
+              - heading "شراء سيارة" [level=3] [ref=f17e57]
+              - paragraph [ref=f17e58]: تصفح آلاف السيارات المعروضة
+          - link [ref=f17e62] [cursor=pointer]:
+            - /url: /ar/listings/new
+            - generic [ref=f17e68]:
+              - heading "بيع سيارة" [level=3] [ref=f17e69]
+              - paragraph [ref=f17e70]: اعرض سيارتك للبيع الآن
+          - link [ref=f17e74] [cursor=pointer]:
+            - /url: /ar/inspect
+            - generic [ref=f17e80]:
+              - heading "فحص سيارة" [level=3] [ref=f17e81]
+              - paragraph [ref=f17e82]: افحص سيارتك عند خبراء
+          - link [ref=f17e86] [cursor=pointer]:
+            - /url: /ar/request
+            - generic [ref=f17e91]:
+              - heading "اطلب سيارة" [level=3] [ref=f17e92]
+              - paragraph [ref=f17e93]: نحن نبحث عن سيارتك المثالية
+          - link [ref=f17e97] [cursor=pointer]:
+            - /url: /ar/parts
+            - generic [ref=f17e101]:
+              - heading "قطع الغيار" [level=3] [ref=f17e102]
+              - paragraph [ref=f17e103]: قطع غيار أصلية ومضمونة
+          - link [ref=f17e107] [cursor=pointer]:
+            - /url: /ar/dealers
+            - generic [ref=f17e113]:
+              - heading "المعارض" [level=3] [ref=f17e114]
+              - paragraph [ref=f17e115]: تعامل مع أفضل المعارض
+        - generic [ref=f17e120]:
+          - generic [ref=f17e121]:
+            - generic [ref=f17e122]:
+              - heading "سيارات مميزة" [level=2] [ref=f17e123]
+              - paragraph [ref=f17e124]: اختياراتنا المميزة من أفضل السيارات المعروضة
+            - link [ref=f17e126] [cursor=pointer]:
+              - /url: /ar/listings
+              - button "عرض الكل" [ref=f17e127]
+          - generic [ref=f17e133]:
+            - heading "لا توجد سيارات مميزة بعد" [level=3] [ref=f17e134]
+            - paragraph [ref=f17e135]: سوف تظهر السيارات المميزة هنا قريباً
+        - generic [ref=f17e136]:
+          - generic [ref=f17e137]:
+            - generic [ref=f17e138]:
+              - heading "أحدث الإعلانات" [level=2] [ref=f17e139]
+              - paragraph [ref=f17e140]: أحدث السيارات المضافة إلى منصتنا
+            - link [ref=f17e142] [cursor=pointer]:
+              - /url: /ar/listings
+              - button "عرض الكل" [ref=f17e143]
+          - generic [ref=f17e144]:
+            - generic [ref=f17e149]:
+              - heading "لا توجد إعلانات حالياً" [level=3] [ref=f17e150]
+              - paragraph [ref=f17e151]: كن أول من يضيف إعلاناً لسيارته
+            - link [ref=f17e153] [cursor=pointer]:
+              - /url: /ar/listings/new
+              - button "أضف إعلانك الآن" [ref=f17e154]
+        - generic [ref=f17e156]:
+          - generic [ref=f17e157]:
+            - generic [ref=f17e158]: كيف تعمل المنصة
+            - heading "اشترِ سيارتك في ٣ خطوات بسيطة" [level=2] [ref=f17e159]
+            - paragraph [ref=f17e160]: عملية سهلة وآمنة من البداية إلى النهاية
+          - generic [ref=f17e161]:
+            - generic [ref=f17e162]:
+              - generic [ref=f17e167]: "01"
+              - heading "ابحث" [level=3] [ref=f17e168]
+              - paragraph [ref=f17e169]: ابحث عن سيارتك المثالية من بين آلاف الخيارات
+            - generic [ref=f17e170]:
+              - generic [ref=f17e176]: "02"
+              - heading "قارن وافحص" [level=3] [ref=f17e177]
+              - paragraph [ref=f17e178]: قارن الأسعار واطلب فحصاً احترافياً للسيارة
+            - generic [ref=f17e179]:
+              - generic [ref=f17e185]: "03"
+              - heading "اشترِ بأمان" [level=3] [ref=f17e186]
+              - paragraph [ref=f17e187]: تواصل مع البائع وأكمل عملية الشراء بكل ثقة
+        - generic [ref=f17e189]:
+          - generic [ref=f17e190]:
+            - generic [ref=f17e196]: 0+
+            - paragraph [ref=f17e197]: سيارة معروضة
+          - generic [ref=f17e198]:
+            - generic [ref=f17e205]: 10,000+
+            - paragraph [ref=f17e206]: مستخدم نشط
+          - generic [ref=f17e207]:
+            - generic [ref=f17e213]: 500+
+            - paragraph [ref=f17e214]: معرض ووكيل
+          - generic [ref=f17e215]:
+            - generic [ref=f17e219]: 100%
+            - paragraph [ref=f17e220]: عملية آمنة
+        - generic [ref=f17e223]:
+          - heading "هل أنت معرض سيارات؟" [level=2] [ref=f17e229]
+          - paragraph [ref=f17e230]: انضم إلى منصتنا واعرض سياراتك لآلاف المشترين المحتملين
+          - generic [ref=f17e231]:
+            - link [ref=f17e232] [cursor=pointer]:
+              - /url: /ar/dealers/register
+              - button "سجل معرضك الآن" [ref=f17e233]
+            - link [ref=f17e234] [cursor=pointer]:
+              - /url: /ar/plans
+              - button "عرض الباقات" [ref=f17e235]
+    - contentinfo [ref=f17e236]:
+      - generic [ref=f17e237]:
+        - generic [ref=f17e238]:
+          - generic [ref=f17e239]:
+            - link [ref=f17e240] [cursor=pointer]:
+              - /url: /ar
+              - img "BD" [ref=f17e241]
+            - paragraph [ref=f17e242]: منصة رائدة لبيع وشراء السيارات في المملكة العربية السعودية
+          - generic [ref=f17e243]:
+            - heading "بيع وشراء" [level=4] [ref=f17e244]
+            - list [ref=f17e245]:
+              - listitem [ref=f17e246]:
+                - link "تصفح السيارات" [ref=f17e247] [cursor=pointer]:
+                  - /url: /ar/listings
+              - listitem [ref=f17e248]:
+                - link "بيع سيارتك" [ref=f17e249] [cursor=pointer]:
+                  - /url: /ar/listings/new
+              - listitem [ref=f17e250]:
+                - link "المزادات" [ref=f17e251] [cursor=pointer]:
+                  - /url: /ar/auctions
+              - listitem [ref=f17e252]:
+                - link "البحث عن معرض" [ref=f17e253] [cursor=pointer]:
+                  - /url: /ar/dealers
+          - generic [ref=f17e254]:
+            - heading "الخدمات" [level=4] [ref=f17e255]
+            - list [ref=f17e256]:
+              - listitem [ref=f17e257]:
+                - link "الفحص" [ref=f17e258] [cursor=pointer]:
+                  - /url: /ar/inspection
+              - listitem [ref=f17e259]:
+                - link "قطع الغيار" [ref=f17e260] [cursor=pointer]:
+                  - /url: /ar/parts
+              - listitem [ref=f17e261]:
+                - link "التمويل" [ref=f17e262] [cursor=pointer]:
+                  - /url: /ar/finance
+              - listitem [ref=f17e263]:
+                - link "التأمين" [ref=f17e264] [cursor=pointer]:
+                  - /url: /ar/insurance
+          - generic [ref=f17e265]:
+            - heading "الدعم" [level=4] [ref=f17e266]
+            - list [ref=f17e267]:
+              - listitem [ref=f17e268]:
+                - link "اتصل بنا" [ref=f17e269] [cursor=pointer]:
+                  - /url: /ar/contact
+              - listitem [ref=f17e270]:
+                - link "من نحن" [ref=f17e271] [cursor=pointer]:
+                  - /url: /ar/pages/about
+              - listitem [ref=f17e272]:
+                - link "الأسئلة الشائعة" [ref=f17e273] [cursor=pointer]:
+                  - /url: /ar/pages/faq
+              - listitem [ref=f17e274]:
+                - link "شروط الخدمة" [ref=f17e275] [cursor=pointer]:
+                  - /url: /ar/pages/terms
+        - generic [ref=f17e276]:
+          - paragraph [ref=f17e277]: © 2026 BD. جميع الحقوق محفوظة
+          - generic [ref=f17e278]:
+            - link "سياسة الخصوصية" [ref=f17e279] [cursor=pointer]:
+              - /url: /ar/pages/privacy
+            - link "شروط الاستخدام" [ref=f17e280] [cursor=pointer]:
+              - /url: /ar/pages/terms
+  - alert [ref=f17e281]

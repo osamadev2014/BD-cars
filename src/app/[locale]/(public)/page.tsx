@@ -23,11 +23,36 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const revalidate = 300
 
+async function getVehiclesFetch() {
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (!url || !anonKey) return []
+
+    const res = await fetch(`${url}/rest/v1/vehicle_listings?select=id,slug,title,title_ar,price,status&status=in.(published,published_with_trusted_badge,reserved)&limit=8`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+      next: { revalidate: 0 },
+    })
+    if (!res.ok) { console.error('[fetch] error:', res.status, await res.text()); return [] }
+    const data = await res.json()
+    console.log('[fetch] got', data.length, 'listings')
+    return data
+  } catch (e) {
+    console.error('[fetch] exception:', e)
+    return []
+  }
+}
+
 export default async function HomePage() {
   const locale = 'ar'
-  const { data: listings } = await getVehicles({ pageSize: 8 })
+  const listings = await getVehiclesFetch()
+  const { data: vehiclesData } = await getVehicles({ pageSize: 8 })
+  const listingsToShow = listings.length > 0 ? listings : vehiclesData
   const makes = await getMakes()
-  const listingCount = listings?.length ?? 0
+  const listingCount = listingsToShow.length
 
   const quickActions = [
     { icon: <Car className="h-6 w-6" />, title: 'شراء سيارة', description: 'تصفح آلاف السيارات المعروضة', href: '/listings' },
@@ -90,9 +115,9 @@ export default async function HomePage() {
               </Link>
             }
           />
-          {listings && listings.length > 0 ? (
+          {listingsToShow.length > 0 ? (
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory">
-              {listings.slice(0, 6).map((listing: any) => (
+              {listingsToShow.slice(0, 6).map((listing: any) => (
                 <FeaturedVehicleCard key={listing.id} listing={listing} />
               ))}
             </div>
@@ -116,9 +141,9 @@ export default async function HomePage() {
             </Link>
           }
         />
-        {listings && listings.length > 0 ? (
+        {listingsToShow.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {listings.map((listing: any) => (
+            {listingsToShow.map((listing: any) => (
               <VehicleCard key={listing.id} listing={listing} />
             ))}
           </div>
