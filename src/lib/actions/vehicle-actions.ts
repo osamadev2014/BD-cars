@@ -20,7 +20,7 @@ export async function getVehiclesForComparison(ids: string[]) {
   const supabase = await createServerSupabaseClient()
   const { data } = await (supabase as any)
     .from('vehicle_listings')
-    .select('*, vehicle:vehicles(*, make:makes(*), model:models(*), body_type:body_types(*), transmission:transmissions(*), fuel_type:fuel_types(*), cylinders:cylinder_types(*), color:colors(*), images:vehicle_images(*)), city:cities(*)')
+    .select('*, vehicle:vehicles(*, make:makes(*), model:models(*), body_type:body_types(*), transmission:transmissions(*), fuel_type:fuel_types(*), cylinders:cylinder_types(*), color:colors(*), images:vehicle_images(*))')
     .in('id', ids)
     .in('status', ['active', 'published'])
   return (data as any[]) || []
@@ -62,9 +62,9 @@ export async function getVehicles(params: {
           drivetrain:drivetrain_types(id,name,name_ar,slug),
           color:car_colors(id,name,name_ar),
           condition:vehicle_condition_types(id,name,name_ar),
-          images:vehicle_images(id,url,is_primary,sort_order)
-        ),
-        city:cities(id,name,name_ar,slug)
+          images:vehicle_images(id,url,is_primary,sort_order),
+          city:cities(id,name,name_ar,slug)
+        )
       `, { count: 'exact' })
 
     query = query.in('status', ['active', 'published'])
