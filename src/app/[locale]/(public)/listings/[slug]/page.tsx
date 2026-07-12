@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { getVehicleDetail } from '@/lib/actions/vehicle-actions'
 import { getFinancePartners } from '@/lib/actions/finance-actions'
 import { getInsurancePartners } from '@/lib/actions/insurance-actions'
@@ -40,6 +41,8 @@ export default async function VehicleDetailPage({
   const { slug } = await params
   const t = await getTranslations('common')
   const listing = await getVehicleDetail(slug)
+  if (!listing) return notFound()
+
   const [financePartners, insurancePartners] = await Promise.all([
     getFinancePartners(),
     getInsurancePartners(),

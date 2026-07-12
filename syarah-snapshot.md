@@ -1,0 +1,1049 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - generic [ref=f5e1622]:
+      - banner [ref=f5e1623]:
+        - generic [ref=f5e1624]:
+          - link [ref=f5e1626] [cursor=pointer]:
+            - /url: /
+          - list [ref=f5e1633]:
+            - listitem [ref=f5e1634]:
+              - img "T" [ref=f5e1636] [cursor=pointer]
+      - main [ref=f5e1637]:
+        - generic [ref=f5e1639]:
+          - link "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1782920669-899.webp" [ref=f5e1640] [cursor=pointer]:
+            - /url: /filters?deal_id=213&is_online=1#referral_location=Home&browse_variant=hero_area&variant_value=40
+            - generic:
+              - generic:
+                - img "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1782920669-899.webp"
+          - link "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1779486282-139.webp" [ref=f5e1641] [cursor=pointer]:
+            - /url: /filters?deal_id=197&is_online=1#referral_location=Home&browse_variant=hero_area&variant_value=48
+            - generic:
+              - generic:
+                - img "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1779486282-139.webp"
+          - link "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1783603723-43.webp" [ref=f5e1642] [cursor=pointer]:
+            - /url: /filters?deal_id=49&is_online=1#referral_location=Home&browse_variant=hero_area&variant_value=53
+            - generic:
+              - generic:
+                - img "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1783603723-43.webp"
+          - link "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1782804444-722.webp" [ref=f5e1643] [cursor=pointer]:
+            - /url: /sell-trade?referral=DEEP_LINK#referral_location=Home&browse_variant=hero_area&variant_value=46
+            - generic:
+              - generic:
+                - img "https://cdn.syarah.com/photos-thumbs/hero-v2/0x960/syarah/online/hero-v2/1782804444-722.webp"
+          - generic [ref=f5e1644] [cursor=pointer]:
+            - img "a"
+          - generic [ref=f5e1645] [cursor=pointer]:
+            - img "a"
+          - list [ref=f5e1646]:
+            - listitem [ref=f5e1647] [cursor=pointer]
+            - listitem [ref=f5e3162] [cursor=pointer]
+            - listitem [ref=f5e1648] [cursor=pointer]
+            - listitem
+        - generic [ref=f5e1651]:
+          - generic [ref=f5e1652]:
+            - textbox "ابحث عن الماركة او الموديل" [ref=f5e1653]
+            - img "search" [ref=f5e1654] [cursor=pointer]
+          - generic [ref=f5e1655]:
+            - link "السيارات المستعملة السيارات المستعملة مضمونة ومفحوصة" [ref=f5e1656] [cursor=pointer]:
+              - /url: /filters?condition_id=0#referral_location=home&browse_variant=main_area&variant_value=cta_used
+              - img "السيارات المستعملة"
+              - strong [ref=f5e1657]: السيارات المستعملة
+              - generic [ref=f5e1658]: مضمونة ومفحوصة
+            - link "السيارات الجديدة السيارات الجديدة ضمان الوكالة" [ref=f5e1659] [cursor=pointer]:
+              - /url: /filters?condition_id=1#referral_location=home&browse_variant=main_area&variant_value=cta_new
+              - img "السيارات الجديدة"
+              - strong [ref=f5e1660]: السيارات الجديدة
+              - generic [ref=f5e1661]: ضمان الوكالة
+            - link "بيعنا سيارتك بيعنا سيارتك نشتريها بافضل سعر" [ref=f5e1662] [cursor=pointer]:
+              - /url: /sell-trade
+              - img "بيعنا سيارتك"
+              - strong [ref=f5e1663]: بيعنا سيارتك
+              - generic [ref=f5e1664]: نشتريها بافضل سعر
+            - link "تمويل السيارات تمويل السيارات خيارات تمويل متعددة" [ref=f5e1665] [cursor=pointer]:
+              - /url: /financing
+              - img "تمويل السيارات"
+              - strong [ref=f5e1666]: تمويل السيارات
+              - generic [ref=f5e1667]: خيارات تمويل متعددة
+          - generic [ref=f5e1668]:
+            - heading "تصفح السيارات حسب الماركة" [level=2] [ref=f5e1669]
+            - generic [ref=f5e1670]:
+              - link "تويوتا" [ref=f5e1671] [cursor=pointer]:
+                - /url: /autos/toyota#referral_location=Home&browse_variant=make&variant_value=toyota
+                - generic [ref=f5e1672]:
+                  - img "تويوتا"
+                - heading "تويوتا" [level=3] [ref=f5e1673]
+              - link "هيونداي" [ref=f5e1674] [cursor=pointer]:
+                - /url: /autos/hyundai#referral_location=Home&browse_variant=make&variant_value=hyundai
+                - generic [ref=f5e1675]:
+                  - img "هيونداي"
+                - heading "هيونداي" [level=3] [ref=f5e1676]
+              - link "كيا" [ref=f5e1677] [cursor=pointer]:
+                - /url: /autos/kia#referral_location=Home&browse_variant=make&variant_value=kia
+                - generic [ref=f5e1678]:
+                  - img "كيا"
+                - heading "كيا" [level=3] [ref=f5e1679]
+              - link "نيسان" [ref=f5e1680] [cursor=pointer]:
+                - /url: /autos/nissan#referral_location=Home&browse_variant=make&variant_value=nissan
+                - generic [ref=f5e1681]:
+                  - img "نيسان"
+                - heading "نيسان" [level=3] [ref=f5e1682]
+              - link "مازدا" [ref=f5e1683] [cursor=pointer]:
+                - /url: /autos/mazda#referral_location=Home&browse_variant=make&variant_value=mazda
+                - generic [ref=f5e1684]:
+                  - img "مازدا"
+                - heading "مازدا" [level=3] [ref=f5e1685]
+              - link "ام جي" [ref=f5e1686] [cursor=pointer]:
+                - /url: /autos/mg#referral_location=Home&browse_variant=make&variant_value=mg
+                - generic [ref=f5e1687]:
+                  - img "ام جي"
+                - heading "ام جي" [level=3] [ref=f5e1688]
+              - link "سوزوكي" [ref=f5e1689] [cursor=pointer]:
+                - /url: /autos/suzuki#referral_location=Home&browse_variant=make&variant_value=suzuki
+                - generic [ref=f5e1690]:
+                  - img "سوزوكي"
+                - heading "سوزوكي" [level=3] [ref=f5e1691]
+              - link "جيلي" [ref=f5e1692] [cursor=pointer]:
+                - /url: /autos/geely#referral_location=Home&browse_variant=make&variant_value=geely
+                - generic [ref=f5e1693]:
+                  - img "جيلي"
+                - heading "جيلي" [level=3] [ref=f5e1694]
+              - link "شفروليه" [ref=f5e1695] [cursor=pointer]:
+                - /url: /autos/chevrolet#referral_location=Home&browse_variant=make&variant_value=chevrolet
+                - generic [ref=f5e1696]:
+                  - img "شفروليه"
+                - heading "شفروليه" [level=3] [ref=f5e1697]
+            - generic [ref=f5e1699] [cursor=pointer]:
+              - text: شاهد جميع الماركات
+              - img "arrow"
+        - generic [ref=f5e1701]:
+          - generic [ref=f5e1702]:
+            - heading "اختر السيارة اللي تناسب قسطك الشهري" [level=2] [ref=f5e1704]
+            - generic [ref=f5e1706]:
+              - generic [ref=f5e1707]:
+                - generic [ref=f5e1708]:
+                  - img "Bank Albilad"
+                - generic [ref=f5e1709]:
+                  - img "Al Rajhi Bank"
+                - generic [ref=f5e1710]:
+                  - img "Riyad Bank"
+                - generic [ref=f5e1711]:
+                  - img "Alinma Bank"
+                - generic [ref=f5e1712]:
+                  - img "Tamweel Al-Oula"
+                - generic [ref=f5e1713]:
+                  - img "Aljabr Finance"
+                - generic [ref=f5e1714]:
+                  - img "Abdul Latif Jameel Finance"
+                - generic [ref=f5e1715]:
+                  - img "Banque Saudi Fransi"
+                - generic [ref=f5e1716]:
+                  - img "Emkan Finance"
+                - generic [ref=f5e1717]:
+                  - img "Bank AlJazira"
+                - generic [ref=f5e1718]:
+                  - img "SNB"
+              - generic [ref=f5e1719]:
+                - generic [ref=f5e1720]:
+                  - img "Bank Albilad"
+                - generic [ref=f5e1721]:
+                  - img "Al Rajhi Bank"
+                - generic [ref=f5e1722]:
+                  - img "Riyad Bank"
+                - generic [ref=f5e1723]:
+                  - img "Alinma Bank"
+                - generic [ref=f5e1724]:
+                  - img "Tamweel Al-Oula"
+                - generic [ref=f5e1725]:
+                  - img "Aljabr Finance"
+                - generic [ref=f5e1726]:
+                  - img "Abdul Latif Jameel Finance"
+                - generic [ref=f5e1727]:
+                  - img "Banque Saudi Fransi"
+                - generic [ref=f5e1728]:
+                  - img "Emkan Finance"
+                - generic [ref=f5e1729]:
+                  - img "Bank AlJazira"
+                - generic [ref=f5e1730]:
+                  - img "SNB"
+              - generic [ref=f5e1731]:
+                - generic [ref=f5e1732]:
+                  - img "Bank Albilad"
+                - generic [ref=f5e1733]:
+                  - img "Al Rajhi Bank"
+                - generic [ref=f5e1734]:
+                  - img "Riyad Bank"
+                - generic [ref=f5e1735]:
+                  - img "Alinma Bank"
+                - generic [ref=f5e1736]:
+                  - img "Tamweel Al-Oula"
+                - generic [ref=f5e1737]:
+                  - img "Aljabr Finance"
+                - generic [ref=f5e1738]:
+                  - img "Abdul Latif Jameel Finance"
+                - generic [ref=f5e1739]:
+                  - img "Banque Saudi Fransi"
+                - generic [ref=f5e1740]:
+                  - img "Emkan Finance"
+                - generic [ref=f5e1741]:
+                  - img "Bank AlJazira"
+                - generic [ref=f5e1742]:
+                  - img "SNB"
+              - generic [ref=f5e1743]:
+                - generic [ref=f5e1744]:
+                  - img "Bank Albilad"
+                - generic [ref=f5e1745]:
+                  - img "Al Rajhi Bank"
+                - generic [ref=f5e1746]:
+                  - img "Riyad Bank"
+                - generic [ref=f5e1747]:
+                  - img "Alinma Bank"
+                - generic [ref=f5e1748]:
+                  - img "Tamweel Al-Oula"
+                - generic [ref=f5e1749]:
+                  - img "Aljabr Finance"
+                - generic [ref=f5e1750]:
+                  - img "Abdul Latif Jameel Finance"
+                - generic [ref=f5e1751]:
+                  - img "Banque Saudi Fransi"
+                - generic [ref=f5e1752]:
+                  - img "Emkan Finance"
+                - generic [ref=f5e1753]:
+                  - img "Bank AlJazira"
+                - generic [ref=f5e1754]:
+                  - img "SNB"
+              - generic [ref=f5e1755]:
+                - generic [ref=f5e1756]:
+                  - img "Bank Albilad"
+                - generic [ref=f5e1757]:
+                  - img "Al Rajhi Bank"
+                - generic [ref=f5e1758]:
+                  - img "Riyad Bank"
+                - generic [ref=f5e1759]:
+                  - img "Alinma Bank"
+                - generic [ref=f5e1760]:
+                  - img "Tamweel Al-Oula"
+                - generic [ref=f5e1761]:
+                  - img "Aljabr Finance"
+                - generic [ref=f5e1762]:
+                  - img "Abdul Latif Jameel Finance"
+                - generic [ref=f5e1763]:
+                  - img "Banque Saudi Fransi"
+                - generic [ref=f5e1764]:
+                  - img "Emkan Finance"
+                - generic [ref=f5e1765]:
+                  - img "Bank AlJazira"
+                - generic [ref=f5e1766]:
+                  - img "SNB"
+            - generic [ref=f5e1767]:
+              - generic "Scroll forward" [ref=f5e1768] [cursor=pointer]
+              - generic [ref=f5e1771] [cursor=pointer]:
+                - button "أقل من 1,000" [ref=f5e1772]
+                - button "من 1,000 - 1,500" [ref=f5e1778]
+                - button "من 1,500 - 2,000" [ref=f5e1784]
+                - button "من 2,000 - 2,500" [ref=f5e1790]
+                - button "من 2,500 - 3,000" [ref=f5e1796]
+                - button "من 3,000 - 3,500" [ref=f5e1802]
+                - button "من 3,500 - 4,000" [ref=f5e1808]
+                - button "من 4,000 - 4,500" [ref=f5e1814]
+                - button "من 4,500 - 5,000" [ref=f5e1820]
+                - button "أكثر من 5,000" [ref=f5e1826]
+            - list [ref=f5e1832]:
+              - listitem [ref=f5e1833]:
+                - generic [ref=f5e1834] [cursor=pointer]:
+                  - generic [ref=f5e1835]:
+                    - generic [ref=f5e1836]
+                    - generic [ref=f5e1840]
+                  - link "ماكسيوس D60 luxury 2022 سعر الكاش (شامل الضريبة) 35,700  التقسيط 778  / شهري key مستعملة key 32,519 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e1854]:
+                    - /url: /cardetail/maxus-d60-used-306026#page_number=1&product_position=1&listing_type=home&logged_in=false&section_type=finance_home
+                    - generic [ref=f5e1855]
+                    - generic [ref=f5e1878]
+              - listitem [ref=f5e1901]:
+                - generic [ref=f5e1902] [cursor=pointer]:
+                  - generic [ref=f5e1903]:
+                    - generic [ref=f5e1904]
+                    - generic [ref=f5e1908]
+                  - link "GAC GS3 GS 2023 سعر الكاش (شامل الضريبة) 33,000  التقسيط 721  / شهري key مستعملة key 100,225 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e1922]:
+                    - /url: /cardetail/gac-gs3-used-307878#page_number=1&product_position=2&listing_type=home&logged_in=false&section_type=finance_home
+                    - generic [ref=f5e1923]
+                    - generic [ref=f5e1946]
+              - listitem [ref=f5e1966]:
+                - generic [ref=f5e1967] [cursor=pointer]:
+                  - generic [ref=f5e1968]:
+                    - generic [ref=f5e1969]
+                    - generic [ref=f5e1973]
+                  - link "GAC GS3 GS 2023 سعر الكاش (شامل الضريبة) 33,500  التقسيط 731  / شهري key مستعملة key 89,625 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1 bnpl-option-2" [ref=f5e1987]:
+                    - /url: /cardetail/gac-gs3-used-307061#page_number=1&product_position=3&listing_type=home&logged_in=false&section_type=finance_home
+                    - generic [ref=f5e1988]
+                    - generic [ref=f5e2011]
+              - listitem [ref=f5e2032]:
+                - generic [ref=f5e2033] [cursor=pointer]:
+                  - generic [ref=f5e2034]:
+                    - generic [ref=f5e2035]
+                    - generic [ref=f5e2039]
+                  - link "GAC GS3 GS 2023 سعر الكاش (شامل الضريبة) 32,500  التقسيط 710  / شهري key مستعملة key 63,814 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e2053]:
+                    - /url: /cardetail/gac-gs3-used-306874#page_number=1&product_position=4&listing_type=home&logged_in=false&section_type=finance_home
+                    - generic [ref=f5e2054]
+                    - generic [ref=f5e2077]
+          - link "اعرض الكل" [ref=f5e2098] [cursor=pointer]:
+            - /url: /filters?monthly_installment_from=0&monthly_installment_to=1000#referral_location=home&is_filter_search=1
+        - link [ref=f5e2100] [cursor=pointer]:
+          - /url: /products/oil
+          - generic [ref=f5e2101]:
+            - heading "اطلب زيت سيارتك الآن و استلمه من أقرب محطة لك" [level=2] [ref=f5e2102]: اطلب زيت سيارتك الآنو استلمه من أقرب محطة لك
+            - paragraph [ref=f5e2103]: تطبق الشروط و الأحكام
+            - button "اطلب الآن" [ref=f5e2104]
+        - generic [ref=f5e2106]:
+          - heading "سيارات لك" [level=2] [ref=f5e2108]
+          - list [ref=f5e2109]:
+            - listitem [ref=f5e2110]:
+              - generic [ref=f5e2111] [cursor=pointer]:
+                - generic [ref=f5e2112]:
+                  - generic [ref=f5e2113]:
+                    - button [ref=f5e2114]
+                    - paragraph [ref=f5e2116]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e2117]:
+                    - link "ام جي 5 كمفورت الشكل الجديد 2025 ام جي 5 كمفورت الشكل الجديد 2025 ام جي 5 كمفورت الشكل الجديد 2025 ام جي 5 كمفورت الشكل الجديد 2025 ام جي 5 كمفورت الشكل الجديد 2025":
+                      - /url: /cardetail/mg-5-new-286057#page_number=1&product_position=1&listing_type=browse&logged_in=false&section_type=recomended
+                - link "ام جي 5 كمفورت الشكل الجديد 2025 سعر الكاش (شامل الضريبة) 54,510  التقسيط 1,090  / شهري key جديدة warranty ضمان الوكيل bnpl-option-0" [ref=f5e2131]:
+                  - /url: /cardetail/mg-5-new-286057#page_number=1&product_position=1&listing_type=browse&logged_in=false&section_type=recomended
+                  - generic [ref=f5e2132]:
+                    - heading "ام جي 5 كمفورت الشكل الجديد 2025" [level=3] [ref=f5e2133]
+                    - generic [ref=f5e2135]
+                  - generic [ref=f5e2155]:
+                    - generic [ref=f5e2159]
+                    - generic [ref=f5e2163]
+            - listitem [ref=f5e2171]:
+              - generic [ref=f5e2172] [cursor=pointer]:
+                - generic [ref=f5e2173]:
+                  - generic [ref=f5e2174]:
+                    - button [ref=f5e2175]
+                    - paragraph [ref=f5e2177]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e2178]:
+                    - link "ام جي 3 STD 2025 ام جي 3 STD 2025 ام جي 3 STD 2025 ام جي 3 STD 2025 ام جي 3 STD 2025":
+                      - /url: /cardetail/mg-3-new-286982#page_number=1&product_position=2&listing_type=browse&logged_in=false&section_type=recomended
+                - link "ام جي 3 STD 2025 سعر الكاش (شامل الضريبة) 41,860  التقسيط 837  / شهري key جديدة warranty ضمان الوكيل bnpl-option-0" [ref=f5e2192]:
+                  - /url: /cardetail/mg-3-new-286982#page_number=1&product_position=2&listing_type=browse&logged_in=false&section_type=recomended
+                  - generic [ref=f5e2193]:
+                    - heading "ام جي 3 STD 2025" [level=3] [ref=f5e2194]
+                    - generic [ref=f5e2196]
+                  - generic [ref=f5e2216]:
+                    - generic [ref=f5e2220]
+                    - generic [ref=f5e2224]
+            - listitem [ref=f5e2232]:
+              - generic [ref=f5e2233] [cursor=pointer]:
+                - generic [ref=f5e2234]:
+                  - generic [ref=f5e2235]:
+                    - button [ref=f5e2236]
+                    - paragraph [ref=f5e2238]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e2239]:
+                    - link "هافال جوليان برو بريميوم 2025 هافال جوليان برو بريميوم 2025 هافال جوليان برو بريميوم 2025 هافال جوليان برو بريميوم 2025 هافال جوليان برو بريميوم 2025":
+                      - /url: /cardetail/haval-jolion-pro-new-299884#page_number=1&product_position=3&listing_type=browse&logged_in=false&section_type=recomended
+                - link "هافال جوليان برو بريميوم 2025 سعر الكاش (شامل الضريبة) 71,400  key جديدة key ملوحة warranty ضمان الوكيل bnpl-option-0" [ref=f5e2253]:
+                  - /url: /cardetail/haval-jolion-pro-new-299884#page_number=1&product_position=3&listing_type=browse&logged_in=false&section_type=recomended
+                  - generic [ref=f5e2254]:
+                    - heading "هافال جوليان برو بريميوم 2025" [level=3] [ref=f5e2255]
+                    - generic [ref=f5e2259]
+                  - generic [ref=f5e2266]:
+                    - generic [ref=f5e2269]
+                    - generic [ref=f5e2277]
+            - listitem [ref=f5e2285]:
+              - generic [ref=f5e2286] [cursor=pointer]:
+                - generic [ref=f5e2287]:
+                  - generic [ref=f5e2288]:
+                    - button [ref=f5e2289]
+                    - paragraph [ref=f5e2291]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e2292]:
+                    - link "كيا K5 EX 2026 كيا K5 EX 2026 كيا K5 EX 2026 كيا K5 EX 2026 كيا K5 EX 2026":
+                      - /url: /cardetail/kia-k5-new-292660#page_number=1&product_position=4&listing_type=browse&logged_in=false&section_type=recomended
+                  - generic [ref=f5e2305]:
+                    - img "discount"
+                    - generic [ref=f5e2306]
+                - link "كيا K5 EX 2026 سعر الكاش (شامل الضريبة) 115,300  117,300  key جديدة key ملوحة warranty ضمان الوكيل bnpl-option-0" [ref=f5e2308]:
+                  - /url: /cardetail/kia-k5-new-292660#page_number=1&product_position=4&listing_type=browse&logged_in=false&section_type=recomended
+                  - generic [ref=f5e2309]:
+                    - heading "كيا K5 EX 2026" [level=3] [ref=f5e2310]
+                    - generic [ref=f5e2314]
+                  - generic [ref=f5e2325]:
+                    - generic [ref=f5e2328]
+                    - generic [ref=f5e2336]
+          - link "شاهد السيارات المقترحة" [ref=f5e2345] [cursor=pointer]:
+            - /url: /site/recommendation-list
+        - generic [ref=f5e2348]:
+          - heading "ليه تشتري سيارتك المستعملة من سيارة؟" [level=2] [ref=f5e2352]
+          - generic [ref=f5e2354]:
+            - generic [ref=f5e2355]:
+              - generic [ref=f5e2356]:
+                - img "تقدر تجربها 10 أيام"
+              - paragraph [ref=f5e2357]: تقدر تجربها 10 أيام
+            - generic [ref=f5e2358]:
+              - generic [ref=f5e2359]:
+                - img "ضمان حتى 3 سنوات"
+              - paragraph [ref=f5e2360]: ضمان حتى 3 سنوات
+            - generic [ref=f5e2361]:
+              - generic [ref=f5e2362]:
+                - img "مفحوصة لأكثر من 200 نقطة"
+              - paragraph [ref=f5e2363]: مفحوصة لأكثر من 200 نقطة
+            - generic [ref=f5e2364]:
+              - generic [ref=f5e2365]:
+                - img "نوصلها لين عندك"
+              - paragraph [ref=f5e2366]: نوصلها لين عندك
+          - generic [ref=f5e2367] [cursor=pointer]: اعرف أكثر عن مزايا سيارة
+        - generic [ref=f5e2371]:
+          - generic [ref=f5e2372]:
+            - heading "قسطها مع تمارا" [level=2] [ref=f5e2375]
+            - list [ref=f5e2377]:
+              - listitem [ref=f5e2378]:
+                - generic [ref=f5e2379] [cursor=pointer]:
+                  - generic [ref=f5e2380]:
+                    - generic [ref=f5e2381]
+                    - generic [ref=f5e2385]
+                    - generic [ref=f5e2398]
+                  - link "دونج فينج Forthing T5 Evo 2022 سعر الكاش (شامل الضريبة) 50,000  51,000  التقسيط 1,080  / شهري key مستعملة key 82,725 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e2401]:
+                    - /url: /cardetail/dongfeng-forthing-t5-evo-used-302468#section_type=marketing_carousel1
+                    - generic [ref=f5e2402]
+                    - generic [ref=f5e2429]
+              - listitem [ref=f5e2449]:
+                - generic [ref=f5e2450] [cursor=pointer]:
+                  - generic [ref=f5e2451]:
+                    - generic [ref=f5e2452]
+                    - generic [ref=f5e2456]
+                  - link "ماكسيوس D60 luxury 2022 سعر الكاش (شامل الضريبة) 35,700  التقسيط 778  / شهري key مستعملة key 32,519 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e2470]:
+                    - /url: /cardetail/maxus-d60-used-306026#section_type=marketing_carousel1
+                    - generic [ref=f5e2471]
+                    - generic [ref=f5e2494]
+              - listitem [ref=f5e2517]:
+                - generic [ref=f5e2518] [cursor=pointer]:
+                  - generic [ref=f5e2519]:
+                    - generic [ref=f5e2520]
+                    - generic [ref=f5e2524]
+                  - link "ماكسيوس D60 Exactive Luxury 2023 سعر الكاش (شامل الضريبة) 55,300  التقسيط 1,192  / شهري key مستعملة key 64,257 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e2538]:
+                    - /url: /cardetail/maxus-d60-used-302946#section_type=marketing_carousel1
+                    - generic [ref=f5e2539]
+                    - generic [ref=f5e2562]
+              - listitem [ref=f5e2582]:
+                - generic [ref=f5e2583] [cursor=pointer]:
+                  - generic [ref=f5e2584]:
+                    - generic [ref=f5e2585]
+                    - generic [ref=f5e2589]
+                  - link "GAC GS3 GS 2023 سعر الكاش (شامل الضريبة) 33,000  التقسيط 721  / شهري key مستعملة key 100,225 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e2603]:
+                    - /url: /cardetail/gac-gs3-used-307878#section_type=marketing_carousel1
+                    - generic [ref=f5e2604]
+                    - generic [ref=f5e2627]
+          - link "اعرض الكل" [ref=f5e2648] [cursor=pointer]:
+            - /url: /deal/197
+        - generic [ref=f5e2651]:
+          - heading "كيف تشتري سيارتك من سيارة؟" [level=2] [ref=f5e2653]
+          - generic [ref=f5e2654]:
+            - generic [ref=f5e2655]:
+              - generic [ref=f5e2656]:
+                - img "اختر السيارة اللي تناسبك"
+              - generic [ref=f5e2657]:
+                - generic [ref=f5e2658]:
+                  - paragraph [ref=f5e2659]: "01"
+                  - heading "اختر السيارة اللي تناسبك" [level=3] [ref=f5e2660]
+                - paragraph [ref=f5e2661]: تشكيلة واسعة من السيارات الجديدة والمستعملة.
+            - generic [ref=f5e2662]:
+              - generic [ref=f5e2663]:
+                - img "احجزها بضغطة زر"
+              - generic [ref=f5e2664]:
+                - generic [ref=f5e2665]:
+                  - paragraph [ref=f5e2666]: "02"
+                  - heading "احجزها بضغطة زر" [level=3] [ref=f5e2667]
+                - paragraph [ref=f5e2668]: اختر الطريق اللي يريحك ان كان كاش او تمويل ووفرنالك حلول تمويلية متكاملة تناسب احتياجاتك.
+            - generic [ref=f5e2669]:
+              - generic [ref=f5e2670]:
+                - img "ادفع باقي المبلغ"
+              - generic [ref=f5e2671]:
+                - generic [ref=f5e2672]:
+                  - paragraph [ref=f5e2673]: "03"
+                  - heading "ادفع باقي المبلغ" [level=3] [ref=f5e2674]
+                - paragraph [ref=f5e2675]: كمّل باقي المبلغ بالطريقة اللي تناسبك بكل سهولة وأمان، سواء كاش أو تمويل.
+            - generic [ref=f5e2676]:
+              - generic [ref=f5e2677]:
+                - img "توصلك لين عندك!"
+              - generic [ref=f5e2678]:
+                - generic [ref=f5e2679]:
+                  - paragraph [ref=f5e2680]: "04"
+                  - heading "توصلك لين عندك!" [level=3] [ref=f5e2681]
+                - paragraph [ref=f5e2682]: نوصّل السيارة للعنوان اللي تختاره، وتسلمها لين باب بيتك بكل راحة.
+        - generic [ref=f5e3175]:
+          - heading "سيارات للبيع في السعودية" [level=2] [ref=f5e3176]
+          - list [ref=f5e3177]:
+            - listitem [ref=f5e3178]:
+              - generic [ref=f5e3179] [cursor=pointer]:
+                - generic [ref=f5e3180]:
+                  - generic [ref=f5e3181]:
+                    - button [ref=f5e3182]
+                    - paragraph [ref=f5e3184]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e3185]:
+                    - link "جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026":
+                      - /url: /cardetail/jetour-x50-new-307665#section_type=home page
+                - link "جيتور X50 Premium 2026 سعر الكاش (شامل الضريبة) 65,550  التقسيط 1,310  / شهري key جديدة warranty ضمان الوكيل bnpl-option-0 bnpl-option-1" [ref=f5e3199]:
+                  - /url: /cardetail/jetour-x50-new-307665#section_type=home page
+                  - generic [ref=f5e3200]:
+                    - heading "جيتور X50 Premium 2026" [level=3] [ref=f5e3201]
+                    - generic [ref=f5e3203]
+                  - generic [ref=f5e3223]:
+                    - generic [ref=f5e3227]
+                    - generic [ref=f5e3231]
+            - listitem [ref=f5e3240]:
+              - generic [ref=f5e3241] [cursor=pointer]:
+                - generic [ref=f5e3242]:
+                  - generic [ref=f5e3243]:
+                    - button [ref=f5e3244]
+                    - paragraph [ref=f5e3246]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e3247]:
+                    - link "بي ام دبليو الفئة السابعة 735i 2023 بي ام دبليو الفئة السابعة 735i 2023 بي ام دبليو الفئة السابعة 735i 2023 بي ام دبليو الفئة السابعة 735i 2023 بي ام دبليو الفئة السابعة 735i 2023":
+                      - /url: /cardetail/bmw-7-series-used-298546#page_number=1&product_position=1&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3260]:
+                    - img "discount"
+                    - generic [ref=f5e3261]
+                - link "بي ام دبليو الفئة السابعة 735i 2023 سعر الكاش (شامل الضريبة) 329,000  336,000  التقسيط 6,976  / شهري key مستعملة key 26,292 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0" [ref=f5e3263]:
+                  - /url: /cardetail/bmw-7-series-used-298546#page_number=1&product_position=1&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3264]:
+                    - heading "بي ام دبليو الفئة السابعة 735i 2023" [level=3] [ref=f5e3265]
+                    - generic [ref=f5e3267]
+                  - generic [ref=f5e3291]:
+                    - generic [ref=f5e3294]
+                    - generic [ref=f5e3305]
+            - listitem [ref=f5e3313]:
+              - generic [ref=f5e3314] [cursor=pointer]:
+                - generic [ref=f5e3315]:
+                  - generic [ref=f5e3316]:
+                    - button [ref=f5e3317]
+                    - paragraph [ref=f5e3319]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e3320]:
+                    - link "جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026":
+                      - /url: /cardetail/jetour-x50-new-307664#page_number=1&product_position=2&listing_type=browse&logged_in=false&section_type=home page
+                - link "جيتور X50 Premium 2026 سعر الكاش (شامل الضريبة) 65,550  التقسيط 1,310  / شهري key جديدة warranty ضمان الوكيل bnpl-option-0 bnpl-option-1" [ref=f5e3334]:
+                  - /url: /cardetail/jetour-x50-new-307664#page_number=1&product_position=2&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3335]:
+                    - heading "جيتور X50 Premium 2026" [level=3] [ref=f5e3336]
+                    - generic [ref=f5e3338]
+                  - generic [ref=f5e3358]:
+                    - generic [ref=f5e3362]
+                    - generic [ref=f5e3366]
+            - listitem [ref=f5e3375]:
+              - generic [ref=f5e3376] [cursor=pointer]:
+                - generic [ref=f5e3377]:
+                  - generic [ref=f5e3378]:
+                    - button [ref=f5e3379]
+                    - paragraph [ref=f5e3381]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e3382]:
+                    - link "مازدا 6 Skyactive G 2023 مازدا 6 Skyactive G 2023 مازدا 6 Skyactive G 2023 مازدا 6 Skyactive G 2023 مازدا 6 Skyactive G 2023":
+                      - /url: /cardetail/mazda-6-used-267872#page_number=1&product_position=3&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3395]:
+                    - img "discount"
+                    - generic [ref=f5e3396]
+                - link "مازدا 6 Skyactive G 2023 سعر الكاش (شامل الضريبة) 69,500  78,500  التقسيط 1,492  / شهري key مستعملة key 27,675 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0" [ref=f5e3398]:
+                  - /url: /cardetail/mazda-6-used-267872#page_number=1&product_position=3&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3399]:
+                    - heading "مازدا 6 Skyactive G 2023" [level=3] [ref=f5e3400]
+                    - generic [ref=f5e3402]
+                  - generic [ref=f5e3426]:
+                    - generic [ref=f5e3429]
+                    - generic [ref=f5e3440]
+            - listitem [ref=f5e3448]:
+              - generic [ref=f5e3449] [cursor=pointer]:
+                - generic [ref=f5e3450]:
+                  - generic [ref=f5e3451]:
+                    - button [ref=f5e3452]
+                    - paragraph [ref=f5e3454]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e3455]:
+                    - link "جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026":
+                      - /url: /cardetail/jetour-x50-new-307661#page_number=1&product_position=4&listing_type=browse&logged_in=false&section_type=home page
+                - link "جيتور X50 Premium 2026 سعر الكاش (شامل الضريبة) 65,550  التقسيط 1,310  / شهري key جديدة warranty ضمان الوكيل bnpl-option-0 bnpl-option-1" [ref=f5e3469]:
+                  - /url: /cardetail/jetour-x50-new-307661#page_number=1&product_position=4&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3470]:
+                    - heading "جيتور X50 Premium 2026" [level=3] [ref=f5e3471]
+                    - generic [ref=f5e3473]
+                  - generic [ref=f5e3493]:
+                    - generic [ref=f5e3497]
+                    - generic [ref=f5e3501]
+            - listitem [ref=f5e3510]:
+              - generic [ref=f5e3511] [cursor=pointer]:
+                - generic [ref=f5e3512]:
+                  - button [ref=f5e3514]
+                  - generic [ref=f5e3516]:
+                    - link "دونج فينج Forthing T5 Evo 2022 دونج فينج Forthing T5 Evo 2022 دونج فينج Forthing T5 Evo 2022 دونج فينج Forthing T5 Evo 2022 دونج فينج Forthing T5 Evo 2022":
+                      - /url: /cardetail/dongfeng-forthing-t5-evo-used-302468#page_number=1&product_position=5&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3529]:
+                    - img "discount"
+                    - generic [ref=f5e3530]
+                - link "دونج فينج Forthing T5 Evo 2022 سعر الكاش (شامل الضريبة) 50,000  51,000  التقسيط 1,080  / شهري key مستعملة key 82,725 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e3532]:
+                  - /url: /cardetail/dongfeng-forthing-t5-evo-used-302468#page_number=1&product_position=5&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3533]:
+                    - heading "دونج فينج Forthing T5 Evo 2022" [level=3] [ref=f5e3534]
+                    - generic [ref=f5e3536]
+                  - generic [ref=f5e3560]:
+                    - generic [ref=f5e3563]
+                    - generic [ref=f5e3571]
+            - listitem [ref=f5e3580]:
+              - generic [ref=f5e3581] [cursor=pointer]:
+                - generic [ref=f5e3582]:
+                  - generic [ref=f5e3583]:
+                    - button [ref=f5e3584]
+                    - paragraph [ref=f5e3586]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e3587]:
+                    - link "جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026 جيتور X50 Premium 2026":
+                      - /url: /cardetail/jetour-x50-new-307657#page_number=1&product_position=6&listing_type=browse&logged_in=false&section_type=home page
+                - link "جيتور X50 Premium 2026 سعر الكاش (شامل الضريبة) 65,550  التقسيط 1,310  / شهري key جديدة warranty ضمان الوكيل bnpl-option-0 bnpl-option-1" [ref=f5e3601]:
+                  - /url: /cardetail/jetour-x50-new-307657#page_number=1&product_position=6&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3602]:
+                    - heading "جيتور X50 Premium 2026" [level=3] [ref=f5e3603]
+                    - generic [ref=f5e3605]
+                  - generic [ref=f5e3625]:
+                    - generic [ref=f5e3629]
+                    - generic [ref=f5e3633]
+            - listitem [ref=f5e3642]:
+              - generic [ref=f5e3643] [cursor=pointer]:
+                - generic [ref=f5e3644]:
+                  - generic [ref=f5e3645]:
+                    - button [ref=f5e3646]
+                    - paragraph [ref=f5e3648]: قسط بالبطاقة الإئتمانية
+                  - generic [ref=f5e3649]:
+                    - link "جينيسيس GV70 بريستيج بلس 2021 جينيسيس GV70 بريستيج بلس 2021 جينيسيس GV70 بريستيج بلس 2021 جينيسيس GV70 بريستيج بلس 2021 جينيسيس GV70 بريستيج بلس 2021":
+                      - /url: /cardetail/genesis-gv70-used-277431#page_number=1&product_position=7&listing_type=browse&logged_in=false&section_type=home page
+                - link "جينيسيس GV70 بريستيج بلس 2021 سعر الكاش (شامل الضريبة) 112,200  التقسيط 2,394  / شهري key مستعملة key 36,597 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0" [ref=f5e3663]:
+                  - /url: /cardetail/genesis-gv70-used-277431#page_number=1&product_position=7&listing_type=browse&logged_in=false&section_type=home page
+                  - generic [ref=f5e3664]:
+                    - heading "جينيسيس GV70 بريستيج بلس 2021" [level=3] [ref=f5e3665]
+                    - generic [ref=f5e3667]
+                  - generic [ref=f5e3687]:
+                    - generic [ref=f5e3690]
+                    - generic [ref=f5e3701]
+          - link "شاهد جميع السيارات" [ref=f5e3709] [cursor=pointer]:
+            - /url: /filters#referral_location=Home&browse_variant=view_all&variant_value=view all
+        - generic [ref=f5e2684]:
+          - generic [ref=f5e2685]:
+            - heading "قسمها مع اموال" [level=2] [ref=f5e2688]
+            - list [ref=f5e2690]:
+              - listitem [ref=f5e2691]:
+                - generic [ref=f5e2692] [cursor=pointer]:
+                  - generic [ref=f5e2693]:
+                    - generic [ref=f5e2694]
+                    - generic [ref=f5e2698]
+                    - generic [ref=f5e2711]
+                  - link "بي ام دبليو الفئة السابعة 735i 2023 سعر الكاش (شامل الضريبة) 329,000  336,000  التقسيط 6,976  / شهري key مستعملة key 26,292 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0" [ref=f5e2714]:
+                    - /url: /cardetail/bmw-7-series-used-298546#section_type=marketing_carousel2
+                    - generic [ref=f5e2715]
+                    - generic [ref=f5e2742]
+              - listitem [ref=f5e2764]:
+                - generic [ref=f5e2765] [cursor=pointer]:
+                  - generic [ref=f5e2766]:
+                    - generic [ref=f5e2767]
+                    - generic [ref=f5e2771]
+                    - generic [ref=f5e2784]
+                  - link "مازدا 6 Skyactive G 2023 سعر الكاش (شامل الضريبة) 69,500  78,500  التقسيط 1,492  / شهري key مستعملة key 27,675 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0" [ref=f5e2787]:
+                    - /url: /cardetail/mazda-6-used-267872#section_type=marketing_carousel2
+                    - generic [ref=f5e2788]
+                    - generic [ref=f5e2815]
+              - listitem [ref=f5e2837]:
+                - generic [ref=f5e2838] [cursor=pointer]:
+                  - generic [ref=f5e2839]:
+                    - generic [ref=f5e2840]
+                    - generic [ref=f5e2844]
+                    - generic [ref=f5e2857]
+                  - link "دونج فينج Forthing T5 Evo 2022 سعر الكاش (شامل الضريبة) 50,000  51,000  التقسيط 1,080  / شهري key مستعملة key 82,725 كم warranty مفحوصة ومضمونة bnpl-option-0 bnpl-option-1" [ref=f5e2860]:
+                    - /url: /cardetail/dongfeng-forthing-t5-evo-used-302468#section_type=marketing_carousel2
+                    - generic [ref=f5e2861]
+                    - generic [ref=f5e2888]
+              - listitem [ref=f5e2908]:
+                - generic [ref=f5e2909] [cursor=pointer]:
+                  - generic [ref=f5e2910]:
+                    - generic [ref=f5e2911]
+                    - generic [ref=f5e2915]
+                  - link "جينيسيس GV70 بريستيج بلس 2021 سعر الكاش (شامل الضريبة) 112,200  التقسيط 2,394  / شهري key مستعملة key 36,597 كم key ممشى قليل warranty مفحوصة ومضمونة bnpl-option-0" [ref=f5e2929]:
+                    - /url: /cardetail/genesis-gv70-used-277431#section_type=marketing_carousel2
+                    - generic [ref=f5e2930]
+                    - generic [ref=f5e2953]
+          - link "اعرض الكل" [ref=f5e2976] [cursor=pointer]:
+            - /url: /deal/213
+        - generic [ref=f5e2980]:
+          - heading "أفضل العروض" [level=2] [ref=f5e2981]
+          - generic [ref=f5e2982]:
+            - link "قسمها مع اموال قسمها مع اموال" [ref=f5e2984] [cursor=pointer]:
+              - /url: /deal/213#referral_location=Home&browse_variant=deals&variant_value=213
+              - generic [ref=f5e2985]:
+                - img "قسمها مع اموال"
+              - heading "قسمها مع اموال" [level=3] [ref=f5e2987]
+            - link "قسطها مع تمارا قسطها مع تمارا" [ref=f5e2989] [cursor=pointer]:
+              - /url: /deal/197#referral_location=Home&browse_variant=deals&variant_value=197
+              - generic [ref=f5e2990]:
+                - img "قسطها مع تمارا"
+              - heading "قسطها مع تمارا" [level=3] [ref=f5e2992]
+            - link "سيارات مستعملة بأقل من 30,000 ريال سيارات مستعملة بأقل من 30,000 " [ref=f5e2994] [cursor=pointer]:
+              - /url: /deal/49#referral_location=Home&browse_variant=deals&variant_value=49
+              - generic [ref=f5e2995]:
+                - img "سيارات مستعملة بأقل من 30,000 ريال"
+              - heading "سيارات مستعملة بأقل من 30,000 " [level=3] [ref=f5e2997]:
+                - text: سيارات مستعملة بأقل من 30,000
+                - generic [ref=f5e2998]: 
+            - link "بي واي دي تبهرك بإمكانياتها بي واي دي تبهرك بإمكانياتها" [ref=f5e3000] [cursor=pointer]:
+              - /url: /deal/209#referral_location=Home&browse_variant=deals&variant_value=209
+              - generic [ref=f5e3001]:
+                - img "بي واي دي تبهرك بإمكانياتها"
+              - heading "بي واي دي تبهرك بإمكانياتها" [level=3] [ref=f5e3003]
+          - link "شاهد جميع العروض" [ref=f5e3004] [cursor=pointer]:
+            - /url: /offerspage
+        - generic [ref=f5e3007]:
+          - heading "فخورين بعملائنا" [level=2] [ref=f5e3008]
+          - generic [ref=f5e3009]:
+            - generic [ref=f5e3010] [cursor=pointer]:
+              - generic [ref=f5e3011]:
+                - strong [ref=f5e3012]: خالد
+                - generic [ref=f5e3013]: صبيا
+              - generic [ref=f5e3015]:
+                - generic [ref=f5e3016]: هونداي سنتافي GL 2018 دبل 2018
+                - text: مستعملة
+              - paragraph [ref=f5e3017]: كل شي تمام
+            - generic [ref=f5e3018] [cursor=pointer]:
+              - generic [ref=f5e3019]:
+                - strong [ref=f5e3020]: منصور الريامي
+                - generic [ref=f5e3021]: الجبيل
+              - generic [ref=f5e3023]:
+                - generic [ref=f5e3024]: تويوتا شاص LX 2022 دبل 2022
+                - text: جديدة
+              - paragraph [ref=f5e3025]: بالتوفيق
+            - generic [ref=f5e3026] [cursor=pointer]:
+              - generic [ref=f5e3027]:
+                - strong [ref=f5e3028]: عبدالاله الحربي
+                - generic [ref=f5e3029]: الرياض
+              - generic [ref=f5e3031]:
+                - generic [ref=f5e3032]: تويوتا راش STD 2022 2022
+                - text: جديدة
+              - paragraph [ref=f5e3033]: الخدمه مميزة جدا وكذلك العروض .. شكرا لكم
+          - link "اعرض المزيد" [ref=f5e3034] [cursor=pointer]:
+            - /url: /feedback
+        - generic [ref=f5e3038]:
+          - heading "اسئلة متكررة" [level=2] [ref=f5e3039]
+          - generic [ref=f5e3040]:
+            - generic [ref=f5e3041]:
+              - strong [ref=f5e3042] [cursor=pointer]: كيف طريقة شراء سيارة؟
+              - paragraph [ref=f5e3043]: تتم في البداية عملية شراء السيارة من خلال دفع عربون, هذا العربون مخصوم من سعر السيارة الاجمالي و مسترد في حال عدم اتمام عملية الشراء شرط عدم تثبيت حجز السيارة.
+            - strong [ref=f5e3045] [cursor=pointer]: كيف أدفع قيمة السيارة؟
+            - strong [ref=f5e3047] [cursor=pointer]: هل موقعكم معتمد من قبل وزارة التجارة؟
+          - link "اعرض المزيد" [ref=f5e3048] [cursor=pointer]:
+            - /url: /faq
+        - generic [ref=f5e3053]:
+          - generic [ref=f5e3054]:
+            - generic [ref=f5e3055]: 
+            - generic: 
+          - strong [ref=f5e3056]: عندك أي استفسار؟
+          - paragraph [ref=f5e3057]: نخدمك طيلة أيام الاسبوع خلال اوقات العمل التالية:من السبت حتى الخميس من الساعة 9 صباحاً حتى 11مساءً, الجمعة من 1 مساءً الى 11 مساءً
+          - generic [ref=f5e3058]: "920005379"
+          - generic [ref=f5e3060] [cursor=pointer]:
+            - generic [ref=f5e3061]:
+              - generic [ref=f5e3062]: 
+              - generic: 
+              - generic: 
+              - generic: 
+            - generic [ref=f5e3063]: تواصل عبر واتساب
+      - contentinfo [ref=f5e3064]:
+        - generic [ref=f5e3065]:
+          - generic [ref=f5e3073]:
+            - generic [ref=f5e3074]:
+              - navigation [ref=f5e3075]:
+                - list [ref=f5e3076]:
+                  - listitem [ref=f5e3077]:
+                    - link "الرئيسية" [ref=f5e3078] [cursor=pointer]:
+                      - /url: /
+                  - listitem [ref=f5e3079]:
+                    - link "من نحن" [ref=f5e3080] [cursor=pointer]:
+                      - /url: /about-us
+                  - listitem [ref=f5e3081]:
+                    - link "اتصل بنا" [ref=f5e3082] [cursor=pointer]:
+                      - /url: /contact-us
+                  - listitem [ref=f5e3083]:
+                    - link "دليل سيارة" [ref=f5e3084] [cursor=pointer]:
+                      - /url: https://syarah.com/carsguide/
+                  - listitem [ref=f5e3085]:
+                    - link "برنامج سيارة للتسويق بالعمولة" [ref=f5e3086] [cursor=pointer]:
+                      - /url: /network
+                  - listitem
+                  - listitem [ref=f5e3087]:
+                    - link "سيارة ترند" [ref=f5e3088] [cursor=pointer]:
+                      - /url: /trend
+                  - listitem [ref=f5e3089]:
+                    - link "أسعار السيارات" [ref=f5e3090] [cursor=pointer]:
+                      - /url: /prices
+                  - listitem [ref=f5e3091]:
+                    - link "مبيعات الشركات" [ref=f5e3092] [cursor=pointer]:
+                      - /url: /fleet?referral_location=footer
+                  - listitem [ref=f5e3093]:
+                    - link "الصفحات المساعدة" [ref=f5e3094] [cursor=pointer]:
+                      - /url: /landing
+              - generic [ref=f5e3095]:
+                - link "عنوان الشركة" [ref=f5e3096] [cursor=pointer]:
+                  - /url: /contact-us?scrollTo=contact-map
+                - generic [ref=f5e3098]:
+                  - link "snapchat" [ref=f5e3099] [cursor=pointer]:
+                    - /url: https://www.snapchat.com/add/syarah_ksa
+                    - img "snapchat"
+                  - link "youtube" [ref=f5e3100] [cursor=pointer]:
+                    - /url: https://www.youtube.com/channel/UCAceZ20JD3qef5OQSVc95Bw
+                    - img "youtube"
+                  - link "twitter" [ref=f5e3101] [cursor=pointer]:
+                    - /url: https://twitter.com/Syarah_ksa
+                    - img "twitter"
+                  - link "linkedin" [ref=f5e3102] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/company/syarah-ltd
+                    - img "linkedin"
+                  - link "facebook" [ref=f5e3103] [cursor=pointer]:
+                    - /url: https://www.facebook.com/syarah.KSA
+                    - img "facebook"
+            - separator [ref=f5e3104]
+            - generic [ref=f5e3106]:
+              - paragraph [ref=f5e3107]: شركة سعوديه بسجل تجاري 1010538980 مصدره الرياض
+              - generic [ref=f5e3108]:
+                - link "الشروط والأحكام" [ref=f5e3109] [cursor=pointer]:
+                  - /url: /terms-landing
+                - text: "|"
+                - link "سياسة الخصوصية" [ref=f5e3110] [cursor=pointer]:
+                  - /url: /privacy-policy
+                - text: "|"
+                - link "سياسة الإرجاع" [ref=f5e3111] [cursor=pointer]:
+                  - /url: /return-policy
+            - generic [ref=f5e3112]:
+              - generic [ref=f5e3114]:
+                - iframe [ref=f5e3115]:
+                  - generic [ref=f7e1]:
+                    - link "Maps (opens in new tab)" [ref=f7e4] [cursor=pointer]:
+                      - /url: https://maps.google.com/maps?ll=24.760479,46.834615&z=15&t=m&hl=en&gl=JO&mapclient=embed&cid=13165894433513500854
+                    - generic [ref=f7e9]
+                - generic [ref=f5e3117]:
+                  - paragraph [ref=f5e3118]: حي النهضة، طريق خريص 13222 الرياض
+                  - paragraph [ref=f5e3119]: المملكة العربية السعودية
+              - generic [ref=f5e3121]:
+                - strong [ref=f5e3122]:
+                  - generic [ref=f5e3123]: طرق دفع إلكترونية آمنة
+                - list [ref=f5e3124]:
+                  - listitem [ref=f5e3125]:
+                    - generic [ref=f5e3126]
+                  - listitem [ref=f5e3128]:
+                    - generic [ref=f5e3129]
+                  - listitem [ref=f5e3131]:
+                    - generic [ref=f5e3132]
+                  - listitem [ref=f5e3134]:
+                    - generic [ref=f5e3135]
+                - list [ref=f5e3137]:
+                  - listitem [ref=f5e3138]:
+                    - img "tabby"
+                  - listitem [ref=f5e3139]:
+                    - img "tamara"
+                  - listitem [ref=f5e3140]:
+                    - img "amwal"
+                  - listitem [ref=f5e3141]:
+                    - generic [ref=f5e3142]
+                  - listitem [ref=f5e3144]:
+                    - generic [ref=f5e3145]
+            - generic [ref=f5e3148]:
+              - paragraph [ref=f5e3149]: حمل التطبيق الآن لتجربة أذكى لبيع وشراء السيارات بالمملكة
+              - generic [ref=f5e3150]:
+                - link "App Store" [ref=f5e3151] [cursor=pointer]:
+                  - /url: https://apps.apple.com/us/app/id1066260672
+                  - img "App Store"
+                - link "Google Play" [ref=f5e3152] [cursor=pointer]:
+                  - /url: https://play.google.com/store/apps/details?id=app.com.syarah
+                  - img "Google Play"
+          - paragraph [ref=f5e3154]: جميع الحقوق محفوظة لشركة موقع سيارة المحدودة © 2026
+        - generic [ref=f5e3156]:
+          - paragraph [ref=f5e3157]: هذا الموقع موثق من وزارة التجارة والاستثمار وبدعم من شركة علم, بسجل تجاري رقم 1010538980
+          - generic [ref=f5e3158]:
+            - link "vat icon" [ref=f5e3159] [cursor=pointer]:
+              - /url: https://cdn-frontend-r2.syarah.com/prod/assets/bundles/GAZT_VAT_Certificate.pdf
+              - img "vat icon"
+            - img "saudi_elm icon"
+    - complementary:
+      - generic:
+        - generic:
+          - generic:
+            - img "close"
+          - link "بيعنا سيارتك":
+            - /url: /sell-trade
+        - generic:
+          - generic:
+            - generic:
+              - link "تسجيل الدخول/إنشاء حساب":
+                - /url: /user/signup
+            - link "English globe":
+              - /url: https://syarah.com/en
+              - generic: English
+              - img "globe"
+          - generic:
+            - strong: خدماتنا
+            - list:
+              - listitem:
+                - link "icon سيارات ومركبات":
+                  - /url: /autos
+                  - img "icon"
+                  - generic: سيارات ومركبات
+              - listitem:
+                - link "icon عروض السيارات":
+                  - /url: /offerspage
+                  - img "icon"
+                  - generic: عروض السيارات
+              - listitem:
+                - link "icon عروض السيارات المستعملة":
+                  - /url: /filters?condition_id=0
+                  - img "icon"
+                  - generic: عروض السيارات المستعملة
+              - listitem:
+                - link "icon عروض السيارات الجديدة":
+                  - /url: /filters?condition_id=1
+                  - img "icon"
+                  - generic: عروض السيارات الجديدة
+              - listitem:
+                - link "icon تعقب طلب سيارتك":
+                  - /url: /tracking-landing
+                  - img "icon"
+                  - generic: تعقب طلب سيارتك
+              - listitem:
+                - link "icon تمويل سيارات":
+                  - /url: /financing
+                  - img "icon"
+                  - generic: تمويل سيارات
+              - listitem:
+                - link "icon حاسبة تمويل السيارات":
+                  - /url: /financing/calculator
+                  - img "icon"
+                  - generic: حاسبة تمويل السيارات
+              - listitem:
+                - link "icon مقارنة السيارات":
+                  - /url: /compare
+                  - img "icon"
+                  - generic: مقارنة السيارات
+              - listitem:
+                - link "icon مبيعات الشركات":
+                  - /url: /fleet?referral_location=sub_menu
+                  - img "icon"
+                  - generic: مبيعات الشركات
+          - generic:
+            - strong: موقع سيارة
+            - list:
+              - listitem:
+                - link "icon اتصل بنا":
+                  - /url: /contact-us
+                  - img "icon"
+                  - generic: اتصل بنا
+              - listitem:
+                - link "icon من نحن":
+                  - /url: /about-us
+                  - img "icon"
+                  - generic: من نحن
+              - listitem:
+                - link "icon خدماتنا":
+                  - /url: /about-us/services
+                  - img "icon"
+                  - generic: خدماتنا
+              - listitem:
+                - link "icon سيارة ترند":
+                  - /url: /trend
+                  - img "icon"
+                  - generic: سيارة ترند
+              - listitem:
+                - link "icon معرض سيارة":
+                  - /url: /car-showrooms
+                  - img "icon"
+                  - generic: معرض سيارة
+              - listitem:
+                - link "icon المدن":
+                  - /url: /city
+                  - img "icon"
+                  - generic: المدن
+              - listitem:
+                - link "icon دليل سيارة":
+                  - /url: https://syarah.com/carsguide/
+                  - img "icon"
+                  - generic: دليل سيارة
+              - listitem:
+                - link "icon أسعار السيارات":
+                  - /url: /prices
+                  - img "icon"
+                  - generic: أسعار السيارات
+              - listitem:
+                - link "icon برنامج سيارة للتسويق بالعمولة":
+                  - /url: /network
+                  - img "icon"
+                  - generic: برنامج سيارة للتسويق بالعمولة
+              - listitem:
+                - link "icon مراكز الصيانة و الخدمات":
+                  - /url: /service-centers
+                  - img "icon"
+                  - generic: مراكز الصيانة و الخدمات
+              - listitem:
+                - link "icon وظائف":
+                  - /url: https://apply.workable.com/syarah/
+                  - img "icon"
+                  - generic: وظائف
+          - link "عنوان الشركة":
+            - /url: /contact-us?scrollTo=contact-map
+          - generic:
+            - strong:
+              - generic: طرق دفع إلكترونية آمنة
+            - list:
+              - listitem:
+                - generic:
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+              - listitem:
+                - generic:
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+              - listitem:
+                - generic:
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+              - listitem:
+                - generic:
+                  - generic: 
+                  - generic: 
+              - listitem:
+                - generic:
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+              - listitem:
+                - generic:
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+                  - generic: 
+            - generic: تابعنا لتصلك آخر عروض السيارات
+            - generic:
+              - link "الأحكام والشروط":
+                - /url: /terms-landing
+              - text: "|"
+              - link "سياسة الخصوصية":
+                - /url: /privacy-policy
+            - generic:
+              - generic:
+                - text: "version:"
+                - strong: FE-v1.77.1-559
+          - generic:
+            - generic:
+              - generic:
+                - paragraph: شركة موقع سيارة للتجارة شركة موثقة لدى وزارة التجارة والاستثمار وبدعم من شركة علم, بسجل تجاري رقم 1010538980
+                - generic:
+                  - link "vat icon":
+                    - /url: https://cdn-frontend-r2.syarah.com/prod/assets/bundles/GAZT_VAT_Certificate.pdf
+                    - img "vat icon"
+                  - img "saudi_elm icon"
+  - region "Notifications alt+T"

@@ -1,6 +1,7 @@
 'use server'
 
 import { createServerSupabaseClient, createPublicClient } from '@/lib/supabase/server'
+import { fetchSupabase } from '@/lib/supabase/fetch-client'
 import { requireAuth } from '@/server/guards'
 import { revalidatePath } from 'next/cache'
 import { getSetting } from '@/lib/settings/settings-service'
@@ -44,13 +45,10 @@ export async function getVehicles(params: {
   pageSize?: number
 }) {
   return safeDb(async () => {
-    console.log('[DEBUG] getVehicles called')
-    const supabase = createPublicClient()
     const { search, makeId, modelId, minYear, maxYear, minPrice, maxPrice, bodyTypeId, fuelTypeId, transmissionId, conditionId, cityId, sortBy = 'created_at_desc', page = 1, pageSize = DEFAULT_PAGE_SIZE } = params
 
-    let query = (supabase as any)
-      .from('vehicle_listings')
-      .select(`
+    const filters: Record<string, string> = {
+      select: `
         id,slug,title,title_ar,price,status,is_featured,is_negotiable,created_at,description,description_ar,seller_type,has_inspection,updated_at,views_count,favorite_count,
         vehicle:vehicles(
           id,year,mileage,description,owner_id,created_at,updated_at,
@@ -66,42 +64,41 @@ export async function getVehicles(params: {
           images:vehicle_images(id,url,is_primary,sort_order),
           city:cities(id,name,name_ar,slug)
         )
-      `, { count: 'exact' })
-
-    query = query.in('status', ['active', 'published'])
-
-    if (search) query = query.ilike('vehicle.make.name', `%${search}%`)
-    if (makeId) query = query.eq('vehicle.make_id', makeId)
-    if (modelId) query = query.eq('vehicle.model_id', modelId)
-    if (minYear) query = query.gte('vehicle.year', minYear)
-    if (maxYear) query = query.lte('vehicle.year', maxYear)
-    if (minPrice) query = query.gte('price', minPrice)
-    if (maxPrice) query = query.lte('price', maxPrice)
-    if (bodyTypeId) query = query.eq('vehicle.body_type_id', bodyTypeId)
-    if (fuelTypeId) query = query.eq('vehicle.fuel_type_id', fuelTypeId)
-    if (transmissionId) query = query.eq('vehicle.transmission_id', transmissionId)
-    if (conditionId) query = query.eq('vehicle.condition_type_id', conditionId)
-    if (cityId) query = query.eq('city_id', cityId)
+      `,
+      status: 'in.(active,published)',
+    }
+    if (search) filters['vehicle.make.name'] = `ilike.*${search}*`
+    if (makeId) filters['vehicle.make_id'] = `eq.${makeId}`
+    if (modelId) filters['vehicle.model_id'] = `eq.${modelId}`
+    if (minYear) filters['vehicle.year'] = `gte.${minYear}`
+    if (maxYear) filters['vehicle.year'] = `lte.${maxYear}`
+    if (minPrice) filters['price'] = `gte.${minPrice}`
+    if (maxPrice) filters['price'] = `lte.${maxPrice}`
+    if (bodyTypeId) filters['vehicle.body_type_id'] = `eq.${bodyTypeId}`
+    if (fuelTypeId) filters['vehicle.fuel_type_id'] = `eq.${fuelTypeId}`
+    if (transmissionId) filters['vehicle.transmission_id'] = `eq.${transmissionId}`
+    if (conditionId) filters['vehicle.condition_type_id'] = `eq.${conditionId}`
+    if (cityId) filters['city_id'] = `eq.${cityId}`
 
     const [sortCol, sortDir] = sortBy.split('_')
-    query = query.order('is_featured', { ascending: false })
-    query = query.order(sortCol || 'created_at', { ascending: sortDir === 'asc' })
+    const order = `is_featured.desc,${sortCol || 'created_at'}.${sortDir === 'asc' ? 'asc' : 'desc'}`
 
     const from = (page - 1) * pageSize
-    query = query.range(from, from + pageSize - 1)
-
-    const { data, count, error } = await query
-    if (error) throw new Error(error.message)
-    return { data: data || [], count: count || 0, page, pageSize }
+    const { data, error } = await fetchSupabase<any[]>('vehicle_listings', {
+      ...filters,
+      order,
+      limit: pageSize,
+      offset: from,
+    })
+    if (error) throw new Error(error)
+    return { data: data || [], count: (data || []).length, page, pageSize }
   }, { data: [], count: 0, page: 1, pageSize: DEFAULT_PAGE_SIZE })
 }
 
 export async function getVehicleDetail(slug: string) {
   return safeDb(async () => {
-    const supabase = createPublicClient()
-    const { data, error } = await (supabase as any)
-      .from('vehicle_listings')
-      .select(`
+    const { data, error } = await fetchSupabase<any[]>('vehicle_listings', {
+      select: `
         *,
         vehicle:vehicles(
           id,year,mileage,description,owner_id,created_at,updated_at,
@@ -126,11 +123,12 @@ export async function getVehicleDetail(slug: string) {
           branches:dealer_branches(id,name,address,phone),
           subscription:dealer_subscriptions(id,tier,status,starts_at,expires_at)
         )
-      `)
-      .eq('slug', slug)
-      .single()
-    if (error) throw new Error(error.message)
-    return data
+      `,
+      slug: `eq.${slug}`,
+      limit: 1,
+    })
+    if (error) throw new Error(error)
+    return (data && data.length > 0) ? data[0] : null
   }, null)
 }
 

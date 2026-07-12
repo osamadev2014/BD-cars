@@ -93,6 +93,8 @@ function VerifyForm() {
   }
 
   return (
+    <div className="flex min-h-[80vh] items-center justify-center px-4 py-12">
+    <div className="w-full max-w-md mx-auto">
     <div className="space-y-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t('verify_title')}</h1>
@@ -146,6 +148,8 @@ function VerifyForm() {
             : t('resend_otp')}
         </button>
       </div>
+    </div>
+    </div>
     </div>
   )
 }

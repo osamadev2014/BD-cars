@@ -72,6 +72,8 @@ export default function RegisterPage() {
   }
 
   return (
+    <div className="flex min-h-[80vh] items-center justify-center px-4 py-12">
+    <div className="w-full max-w-md mx-auto">
     <div className="space-y-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold">{t('register_title')}</h1>
@@ -133,7 +135,7 @@ export default function RegisterPage() {
 
       <p className="text-center text-sm text-muted-foreground">
         {t('have_account')}{' '}
-        <a href="/login" className="text-primary hover:underline">
+        <a href={`/${locale}/login`} className="text-primary hover:underline">
           {t('login_link')}
         </a>
       </p>
@@ -152,6 +154,8 @@ export default function RegisterPage() {
           إنشاء حساب شركة
         </Link>
       </div>
+    </div>
+    </div>
     </div>
   )
 }
