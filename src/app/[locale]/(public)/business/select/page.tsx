@@ -59,14 +59,17 @@ export default function BusinessSelectPage() {
       .then((data) => {
         setOrgs(data)
         if (data.length === 0) {
-          router.replace(`/${locale}/dashboard`)
+          // Stay on this page — user needs to register an org first
+          setLoading(false)
+          return
         } else if (data.length === 1) {
           localStorage.setItem('selected_org_id', data[0].id)
           localStorage.setItem('selected_org_type', data[0].org_type)
           router.replace(`/${locale}/dashboard`)
         }
+        setLoading(false)
       })
-      .catch(() => router.replace(`/${locale}/dashboard`))
+      .catch(() => setLoading(false))
       .finally(() => setLoading(false))
   }, [user, authLoading])
 
@@ -89,7 +92,26 @@ export default function BusinessSelectPage() {
     )
   }
 
-  if (orgs.length <= 1) return null
+  if (orgs.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-lg mx-auto text-center">
+          <div className="h-14 w-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+            <Building2 className="h-7 w-7" />
+          </div>
+          <h1 className="text-2xl font-bold">{isRtl ? 'مرحباً بك' : 'Welcome'}</h1>
+          <p className="text-muted-foreground mt-2">
+            {isRtl ? 'لم تإنشاء أي منشأة بعد. أنشئ منشأة للبدء.' : 'You haven\'t created an organization yet. Create one to get started.'}
+          </p>
+          <Button onClick={goToRegister} className="mt-6">
+            {isRtl ? 'تسجيل منشأة جديدة' : 'Register New Organization'}
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  if (orgs.length === 1) return null
 
   return (
     <div className="container mx-auto px-4 py-12">

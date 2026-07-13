@@ -30,6 +30,7 @@ export function OrgTopNav() {
 
   const [orgs, setOrgs] = useState<any[]>([])
   const [selectedOrg, setSelectedOrg] = useState<any | null>(null)
+  const [loading, setLoading] = useState(true)
   const [showOrgMenu, setShowOrgMenu] = useState(false)
   const [showLangMenu, setShowLangMenu] = useState(false)
   const [showProfileMenu, setShowProfileMenu] = useState(false)
@@ -37,15 +38,42 @@ export function OrgTopNav() {
   useEffect(() => {
     getMyOrganizations().then((data) => {
       setOrgs(data)
+      if (data.length === 0) {
+        router.replace(`/${locale}/business/register`)
+        return
+      }
       const orgId = localStorage.getItem('selected_org_id')
       if (orgId) {
         const found = data.find((o: any) => o.id === orgId)
-        setSelectedOrg(found || null)
+        if (found) {
+          setSelectedOrg(found)
+        } else {
+          setSelectedOrg(data[0])
+          localStorage.setItem('selected_org_id', data[0].id)
+          localStorage.setItem('selected_org_type', data[0].org_type)
+        }
+      } else {
+        setSelectedOrg(data[0])
+        localStorage.setItem('selected_org_id', data[0].id)
+        localStorage.setItem('selected_org_type', data[0].org_type)
       }
+      setLoading(false)
+    }).catch(() => {
+      setLoading(false)
     })
   }, [])
 
-  const typeLabel = ORG_TYPE_LABELS[selectedOrg.org_type]
+  if (loading) {
+    return (
+      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 flex h-14 items-center">
+          <div className="h-8 w-8 rounded-lg bg-primary/10 animate-pulse" />
+        </div>
+      </header>
+    )
+  }
+
+  const typeLabel = selectedOrg ? ORG_TYPE_LABELS[selectedOrg.org_type] : null
   const otherLocales = (['ar', 'en'] as const).filter((l) => l !== locale)
 
   const switchOrg = (org: any) => {
