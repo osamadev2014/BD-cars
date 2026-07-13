@@ -62,26 +62,26 @@ alter table public.homepage_banners enable row level security;
 -- public can only read published pages
 create policy "content_pages_select_published" on public.content_pages
   for select using (is_published = true or 
-    exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+    exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 
 -- only admins can write
 create policy "content_pages_insert" on public.content_pages
-  for insert with check (exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for insert with check (exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 create policy "content_pages_update" on public.content_pages
-  for update using (exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for update using (exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 create policy "content_pages_delete" on public.content_pages
-  for delete using (exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for delete using (exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 
 -- banners: public can read active, only admins can write
 create policy "banners_select_active" on public.homepage_banners
   for select using (is_active = true or 
-    exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+    exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 create policy "banners_insert" on public.homepage_banners
-  for insert with check (exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for insert with check (exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 create policy "banners_update" on public.homepage_banners
-  for update using (exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for update using (exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 create policy "banners_delete" on public.homepage_banners
-  for delete using (exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for delete using (exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 
 -- SEED BANNERS
 

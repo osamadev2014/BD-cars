@@ -1,0 +1,69 @@
+# =============================================
+# Ryon - Docker Compose for Local Development
+# =============================================
+# This file extends Supabase's local stack with
+# additional development services.
+#
+# Usage:
+#   docker-compose up -d mailpit redis
+#   docker-compose down
+#
+# NOTE: Supabase services (DB, Auth, Storage, Realtime)
+# are managed by `supabase start`. This compose file
+# only adds supplementary services.
+
+version: '3.8'
+
+services:
+  # =============================================
+  # Mailpit - Email Testing
+  # =============================================
+  # Captures all emails sent by the app.
+  # View at: http://localhost:8025
+  mailpit:
+    image: axllent/mailpit
+    container_name: ryon-mailpit
+    ports:
+      - "8025:8025"   # Web UI
+      - "1025:1025"   # SMTP
+    restart: unless-stopped
+
+  # =============================================
+  # Redis - Caching & Rate Limiting (Future)
+  # =============================================
+  # Can replace in-memory rate limiter.
+  # Connection: redis://localhost:6379
+  redis:
+    image: redis:7-alpine
+    container_name: ryon-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  # =============================================
+  # MinIO - S3-Compatible Object Storage (Future)
+  # =============================================
+  # Alternative to Supabase Storage for S3 compatibility.
+  # View at: http://localhost:9001
+  # Login: minioadmin / minioadmin
+  minio:
+    image: minio/minio
+    container_name: ryon-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # API
+      - "9001:9001"   # Console
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    restart: unless-stopped
+    profiles:
+      - storage  # Only starts with: docker-compose --profile storage up
+
+volumes:
+  redis-data:
+  minio-data:

@@ -25,13 +25,13 @@ create index if not exists idx_vehicle_requests_status on public.vehicle_request
 alter table public.vehicle_requests enable row level security;
 
 create policy "req_select_own" on public.vehicle_requests
-  for select using (user_id = auth.uid() or exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for select using (user_id = auth.uid() or exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 
 create policy "req_insert_own" on public.vehicle_requests
   for insert with check (user_id = auth.uid());
 
 create policy "req_update_admin" on public.vehicle_requests
-  for update using (exists (select 1 from public.user_roles where user_id = auth.uid() and role = 'admin'));
+  for update using (exists (select 1 from public.user_roles ur join public.roles r on r.id = ur.role_id where ur.user_id = auth.uid() and r.slug in ('admin', 'super_admin', 'system_owner')));
 
 -- NOTIFICATION ON STATUS CHANGE
 create or replace function public.handle_request_status_change()

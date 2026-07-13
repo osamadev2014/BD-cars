@@ -1,10 +1,38 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const migrationsDir = join(__dirname, '..', 'supabase', 'migrations');
-const outputPath = join(__dirname, '..', 'src', 'lib', 'database.types.ts');
+const rootDir = join(__dirname, '..');
+const migrationsDir = join(rootDir, 'supabase', 'migrations');
+const outputPath = join(rootDir, 'src', 'lib', 'database.types.ts');
+
+// =============================================
+// PRIMARY METHOD: Use Supabase CLI (recommended)
+// =============================================
+// This produces the most accurate types, including
+// enums, views, functions, and all tables.
+console.log('Attempting type generation via Supabase CLI...');
+try {
+  const types = execSync('npx supabase gen types typescript --local', {
+    cwd: rootDir,
+    encoding: 'utf-8',
+    timeout: 30000,
+  });
+  writeFileSync(outputPath, types, 'utf-8');
+  console.log(`✅ Generated types via Supabase CLI -> ${outputPath}`);
+  process.exit(0);
+} catch (e) {
+  console.log(`⚠️  Supabase CLI not available: ${e.message}`);
+  console.log('   Falling back to SQL file parser...\n');
+}
+
+// =============================================
+// FALLBACK: Parse SQL migration files
+// =============================================
+// This is less accurate but works without Supabase CLI.
+console.log('Using SQL file parser fallback...');
 
 const COLUMN_TYPE_MAP = {
   uuid: 'string',

@@ -41,14 +41,14 @@ create index if not exists idx_org_permissions_category on public.organization_p
 comment on table public.organization_permissions is 'Flat list of all granular permissions available in the system';
 
 -- ============ ROLE-PERMISSION BRIDGE ============
-create table if not exists public.role_permissions (
+create table if not exists public.organization_role_permissions (
   role_id uuid not null references public.organization_roles(id) on delete cascade,
   permission_id uuid not null references public.organization_permissions(id) on delete cascade,
   created_at timestamptz not null default now(),
   primary key (role_id, permission_id)
 );
 
-comment on table public.role_permissions is 'Maps roles to their granted permissions';
+comment on table public.organization_role_permissions is 'Maps organization roles to their granted permissions';
 
 -- ============ SEED PERMISSIONS ============
 insert into public.organization_permissions (slug, name_en, name_ar, category, description) values
@@ -99,7 +99,7 @@ on conflict (slug) do nothing;
 -- ============ RLS ============
 alter table public.organization_roles enable row level security;
 alter table public.organization_permissions enable row level security;
-alter table public.role_permissions enable row level security;
+alter table public.organization_role_permissions enable row level security;
 
 -- Organization Roles: members can view their org's roles
 create policy "org_roles_select_member" on public.organization_roles
@@ -127,7 +127,7 @@ create policy "org_permissions_select_all" on public.organization_permissions
   for select using (true);
 
 -- Role-Permissions: members can view their org's role-permission mappings
-create policy "role_permissions_select_member" on public.role_permissions
+create policy "org_role_permissions_select_member" on public.organization_role_permissions
   for select using (
     exists (
       select 1 from public.organization_roles r
@@ -135,7 +135,7 @@ create policy "role_permissions_select_member" on public.role_permissions
     )
   );
 
-create policy "role_permissions_insert_admin" on public.role_permissions
+create policy "org_role_permissions_insert_admin" on public.organization_role_permissions
   for insert with check (
     exists (
       select 1 from public.organization_roles r
@@ -144,7 +144,7 @@ create policy "role_permissions_insert_admin" on public.role_permissions
     )
   );
 
-create policy "role_permissions_delete_admin" on public.role_permissions
+create policy "org_role_permissions_delete_admin" on public.organization_role_permissions
   for delete using (
     exists (
       select 1 from public.organization_roles r
@@ -157,7 +157,7 @@ create policy "role_permissions_delete_admin" on public.role_permissions
 create policy "org_roles_all_admin" on public.organization_roles
   for all using (public.is_super_admin());
 
-create policy "role_permissions_all_admin" on public.role_permissions
+create policy "org_role_permissions_all_admin" on public.organization_role_permissions
   for all using (public.is_super_admin());
 
 -- ============ HELPER: Check permission ============
@@ -176,7 +176,7 @@ begin
     select 1
     from public.organization_members om
     join public.organization_roles r on r.organization_id = om.organization_id and r.slug = om.role
-    join public.role_permissions rp on rp.role_id = r.id
+    join public.organization_role_permissions rp on rp.role_id = r.id
     join public.organization_permissions p on p.id = rp.permission_id
     where om.organization_id = has_org_permission.org_id
     and om.user_id = auth.uid()
@@ -191,6 +191,6 @@ comment on function public.has_org_permission is 'Returns true if the current us
 
 -- ============ DOWN ============
 -- drop function if exists public.has_org_permission;
--- drop table if exists public.role_permissions;
+-- drop table if exists public.organization_role_permissions;
 -- drop table if exists public.organization_permissions;
 -- drop table if exists public.organization_roles;

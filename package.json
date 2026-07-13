@@ -11,6 +11,18 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:ui": "vitest --ui",
+
+    "setup": "node scripts/setup.mjs",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:seed": "supabase db seed",
+    "db:status": "supabase status",
+    "db:studio": "supabase studio",
+    "db:types": "npx supabase gen types typescript --local > src/lib/database.types.ts",
+    "seed:users": "node scripts/create-demo-users.mjs",
+    "validate:prod": "node scripts/validate-no-prod.mjs",
+
     "migrate:entities": "node scripts/migrate-entities.mjs",
     "migrate:check": "node scripts/migrate-check.mjs"
   },
