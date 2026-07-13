@@ -16,7 +16,7 @@ function VerifyForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const phone = searchParams.get('phone') || ''
-  const { user, isLoading: authLoading } = useAuth()
+  const { user, isLoading: authLoading, refresh } = useAuth()
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
@@ -74,6 +74,8 @@ function VerifyForm() {
       sessionStorage.removeItem('reg_name')
     }
 
+    // Refresh auth state so AuthProvider picks up the new dev session cookie
+    await refresh()
     router.push('/business/select')
   }
 

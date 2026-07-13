@@ -35,7 +35,7 @@ export async function GET(
     `
 
     const compactSelect = `
-      id, slug, title, description, price, status, year, mileage,
+      id, slug, title, description, price, status,
       is_featured, featured_until, views_count, inquiry_count, favorite_count,
       created_at, updated_at,
       vehicle:vehicles(

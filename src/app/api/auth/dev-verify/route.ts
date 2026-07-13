@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAdminClient } from '@/lib/supabase/admin'
-import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { normalizeSaudiPhone } from '@/lib/auth/phone-utils'
 import { DEV_OTP } from '@/constants'
 import crypto from 'crypto'
@@ -45,15 +44,7 @@ export async function POST(request: NextRequest) {
 
     await ensureDevProfile(adminClient, user.id, normalized)
 
-    const serverClient = await createServerSupabaseClient()
-    const { error: signInError } = await serverClient.auth.signInWithOtp({
-      phone: phoneWithCode,
-    })
-
-    if (!signInError) {
-      return NextResponse.json({ success: true, data: { user } })
-    }
-
+    // Always set dev session cookie — this is the auth mechanism in dev mode
     const sessionToken = signSession({
       sub: user.id,
       phone: normalized,

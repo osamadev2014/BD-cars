@@ -24,11 +24,11 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status') || 'active'
     const featured = searchParams.get('featured')
     const { page, perPage, offset } = parsePagination(searchParams)
-    const sort = parseSort(searchParams, ['created_at', 'price', 'year', 'views_count'], 'created_at', 'desc')
+    const sort = parseSort(searchParams, ['created_at', 'price', 'views_count'], 'created_at', 'desc')
     const fields = searchParams.get('fields')
 
     const defaultSelect = `
-      id, slug, title, price, status, year, mileage, created_at, updated_at,
+      id, slug, title, price, status, created_at, updated_at,
       is_featured, featured_until, views_count, inquiry_count, favorite_count,
       vehicle:vehicles(
         id, make_id, model_id, year, mileage,
@@ -68,14 +68,14 @@ export async function GET(request: NextRequest) {
     if (modelId) query = query.eq('vehicle.model_id', modelId)
     if (minPrice) query = query.gte('price', parseInt(minPrice))
     if (maxPrice) query = query.lte('price', parseInt(maxPrice))
-    if (minYear) query = query.gte('year', parseInt(minYear))
-    if (maxYear) query = query.lte('year', parseInt(maxYear))
+    if (minYear) query = query.gte('vehicle.year', parseInt(minYear))
+    if (maxYear) query = query.lte('vehicle.year', parseInt(maxYear))
     if (bodyTypeId) query = query.eq('vehicle.body_type_id', bodyTypeId)
     if (fuelTypeId) query = query.eq('vehicle.fuel_type_id', fuelTypeId)
     if (transmissionId) query = query.eq('vehicle.transmission_id', transmissionId)
     if (conditionId) query = query.eq('vehicle.condition_type_id', conditionId)
     if (cityId) query = query.eq('city_id', cityId)
-    if (dealerId) query = query.eq('user_id', dealerId)
+    if (dealerId) query = query.eq('seller_id', dealerId)
     if (featured === 'true') {
       query = query.not('is_featured', 'is', false)
       query = query.gte('featured_until', new Date().toISOString())

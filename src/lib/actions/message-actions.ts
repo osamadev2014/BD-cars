@@ -113,11 +113,11 @@ export async function startConversation(params: { listingId: string; content: st
     const supabase = await createServerSupabaseClient()
     const { data: listing } = await (supabase as any)
       .from('vehicle_listings')
-      .select('id, user_id, title, title_ar, slug')
+      .select('id, seller_id, title, title_ar, slug')
       .eq('id', params.listingId)
       .single()
     if (!listing) return { success: false, error: 'Listing not found' } as const
-    if (listing.user_id === user.userId) return { success: false, error: 'Cannot message yourself' } as const
+    if (listing.seller_id === user.userId) return { success: false, error: 'Cannot message yourself' } as const
 
     const { data: existing } = await (supabase as any)
       .from('conversation_participants')
@@ -128,7 +128,7 @@ export async function startConversation(params: { listingId: string; content: st
     const { data: match } = await (supabase as any)
       .from('conversation_participants')
       .select('conversation_id')
-      .eq('user_id', listing.user_id)
+      .eq('user_id', listing.seller_id)
       .in('conversation_id', convIds)
       .maybeSingle()
 
@@ -148,7 +148,7 @@ export async function startConversation(params: { listingId: string; content: st
 
     await (supabase as any).from('conversation_participants').insert([
       { conversation_id: conv.id, user_id: user.userId },
-      { conversation_id: conv.id, user_id: listing.user_id },
+      { conversation_id: conv.id, user_id: listing.seller_id },
     ])
 
     await (supabase as any).from('messages').insert({

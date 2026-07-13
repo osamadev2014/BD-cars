@@ -49,7 +49,7 @@ export async function getVehicles(params: {
 
     const filters: Record<string, string> = {
       select: `
-        id,slug,title,title_ar,price,status,is_featured,is_negotiable,created_at,description,description_ar,seller_type,has_inspection,updated_at,views_count,favorite_count,
+        id,slug,title,title_ar,price,status,is_featured,created_at,description,description_ar,seller_type,has_inspection,updated_at,views_count,favorite_count,
         vehicle:vehicles(
           id,year,mileage,description,owner_id,created_at,updated_at,
           make:car_makes(id,name,name_ar,slug),
@@ -78,7 +78,7 @@ export async function getVehicles(params: {
     if (fuelTypeId) filters['vehicle.fuel_type_id'] = `eq.${fuelTypeId}`
     if (transmissionId) filters['vehicle.transmission_id'] = `eq.${transmissionId}`
     if (conditionId) filters['vehicle.condition_type_id'] = `eq.${conditionId}`
-    if (cityId) filters['city_id'] = `eq.${cityId}`
+    if (cityId) filters['vehicle.city_id'] = `eq.${cityId}`
 
     const [sortCol, sortDir] = sortBy.split('_')
     const order = `is_featured.desc,${sortCol || 'created_at'}.${sortDir === 'asc' ? 'asc' : 'desc'}`
@@ -119,9 +119,9 @@ export async function getVehicleDetail(slug: string) {
           district:districts(id,name,name_ar,slug)
         ),
         dealer:dealers(
-          id,name,name_ar,slug,logo,description,description_ar,phone,email,website,is_verified,owner_id,subscription_tier_id,
+          id,name,name_ar,slug,logo_url,description,description_ar,phone,email,website,is_approved,owner_id,
           branches:dealer_branches(id,name,address,phone),
-          subscription:dealer_subscriptions(id,tier,status,starts_at,expires_at)
+          subscription:dealer_subscriptions(id,plan_id,status,start_date,end_date)
         )
       `,
       slug: `eq.${slug}`,
@@ -190,7 +190,6 @@ export async function createVehicleListing(formData: FormData) {
       vehicle_id: vehicle.id,
       seller_id: auth.userId,
       price,
-      is_negotiable: negotiable,
       status: initialStatus,
     })
     .select()
@@ -283,7 +282,7 @@ export async function recordView(listingId: string) {
     const supabase = await createServerSupabaseClient()
     await (supabase as any).from('vehicle_views').insert({
       listing_id: listingId,
-      viewer_ip: 'server',
+      ip_address: 'server',
     })
     const { data: cur } = await (supabase as any).from('vehicle_listings').select('views_count').eq('id', listingId).single()
     await (supabase as any).from('vehicle_listings').update({ views_count: (cur?.views_count || 0) + 1 }).eq('id', listingId)

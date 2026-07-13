@@ -64,7 +64,7 @@ export async function getInspectionCenterStats(orgId: string): Promise<Dashboard
   const { count: pending } = await supabase.from(from).select('*', { count: 'exact', head: true }).eq('org_id', orgId).eq('status', 'pending')
   const { data: revenue } = await supabase.from(from).select('price').eq('org_id', orgId)
   const totalRevenue = (revenue || []).reduce((s: number, r: any) => s + Number(r.price || 0), 0)
-  const { data: recent } = await supabase.from('inspection_reports').select('title, created_at').eq('org_id', orgId).order('created_at', { ascending: false }).limit(5)
+  const { data: recent } = await supabase.from('inspection_reports').select('summary, created_at').eq('org_id', orgId).order('created_at', { ascending: false }).limit(5)
 
   return {
     stats: [
@@ -74,7 +74,7 @@ export async function getInspectionCenterStats(orgId: string): Promise<Dashboard
       { label: 'Revenue', value: `${totalRevenue.toLocaleString()} SAR` },
     ],
     recent: (recent || []).map((r: any) => ({
-      action: r.title || 'Inspection report',
+      action: r.summary || 'Inspection report',
       time: timeAgo(new Date(r.created_at)),
     })),
   }
@@ -85,9 +85,9 @@ export async function getFinanceCompanyStats(orgId: string): Promise<DashboardSt
   if (!auth.allowed) return { stats: [], recent: [] }
   const supabase = (await createServerSupabaseClient()) as any
 
-  const { count: requests } = await supabase.from('finance_requests').select('*', { count: 'exact', head: true }).eq('org_id', orgId)
-  const { count: approved } = await supabase.from('finance_offers').select('*', { count: 'exact', head: true }).eq('org_id', orgId).eq('status', 'approved')
-  const { data: recent } = await supabase.from('finance_requests').select('id, status, created_at').eq('org_id', orgId).order('created_at', { ascending: false }).limit(5)
+  const { count: requests } = await supabase.from('finance_requests').select('*', { count: 'exact', head: true }).eq('partner_id', orgId)
+  const { count: approved } = await supabase.from('finance_offers').select('*', { count: 'exact', head: true }).eq('status', 'approved')
+  const { data: recent } = await supabase.from('finance_requests').select('id, status, created_at').eq('partner_id', orgId).order('created_at', { ascending: false }).limit(5)
 
   return {
     stats: [
@@ -106,9 +106,9 @@ export async function getInsuranceCompanyStats(orgId: string): Promise<Dashboard
   if (!auth.allowed) return { stats: [], recent: [] }
   const supabase = (await createServerSupabaseClient()) as any
 
-  const { count: requests } = await supabase.from('insurance_requests').select('*', { count: 'exact', head: true }).eq('org_id', orgId)
-  const { count: active } = await supabase.from('insurance_offers').select('*', { count: 'exact', head: true }).eq('org_id', orgId).eq('status', 'active')
-  const { data: recent } = await supabase.from('insurance_requests').select('id, status, created_at').eq('org_id', orgId).order('created_at', { ascending: false }).limit(5)
+  const { count: requests } = await supabase.from('insurance_requests').select('*', { count: 'exact', head: true }).eq('partner_id', orgId)
+  const { count: active } = await supabase.from('insurance_offers').select('*', { count: 'exact', head: true }).eq('status', 'active')
+  const { data: recent } = await supabase.from('insurance_requests').select('id, status, created_at').eq('partner_id', orgId).order('created_at', { ascending: false }).limit(5)
 
   return {
     stats: [
@@ -155,7 +155,7 @@ export async function getPartsSupplierStats(orgId: string): Promise<DashboardSta
 
   const { count: total } = await supabase.from('spare_parts').select('*', { count: 'exact', head: true }).eq('org_id', orgId)
   const { count: outOfStock } = await supabase.from('spare_parts').select('*', { count: 'exact', head: true }).eq('org_id', orgId).eq('stock_status', 'out_of_stock')
-  const { count: orders } = await supabase.from('part_orders').select('*', { count: 'exact', head: true }).eq('org_id', orgId)
+  const { count: orders } = await supabase.from('spare_part_orders').select('*', { count: 'exact', head: true }).eq('supplier_id', orgId)
   const { data: recent } = await supabase.from('spare_parts').select('title, stock_status, created_at').eq('org_id', orgId).order('created_at', { ascending: false }).limit(5)
 
   return {
@@ -198,10 +198,10 @@ export async function getCarRentalStats(orgId: string): Promise<DashboardStats> 
   const supabase = (await createServerSupabaseClient()) as any
 
   const { count: fleetSize } = await supabase.from('vehicles').select('*', { count: 'exact', head: true }).eq('org_id', orgId)
-  const { data: bookings } = await supabase.from('rental_bookings').select('id, total_amount, status, created_at').eq('org_id', orgId).order('created_at', { ascending: false })
-  const activeBookings = (bookings || []).filter((b: any) => b.status === 'active').length
-  const monthlyRevenue = (bookings || []).reduce((s: number, b: any) => s + Number(b.total_amount || 0), 0)
-  const available = fleetSize ? fleetSize - activeBookings : 0
+  // rental_bookings table doesn't exist yet - return zeroed stats
+  const activeBookings = 0
+  const monthlyRevenue = 0
+  const available = fleetSize || 0
 
   return {
     stats: [
@@ -210,10 +210,7 @@ export async function getCarRentalStats(orgId: string): Promise<DashboardStats> 
       { label: 'Available Vehicles', value: String(Math.max(available, 0)) },
       { label: 'Monthly Revenue', value: `${(monthlyRevenue / 1000).toFixed(0)}K SAR` },
     ],
-    recent: (bookings || []).slice(0, 5).map((b: any) => ({
-      action: `Booking ${b.id?.slice(0, 8)}: ${b.status}`,
-      time: timeAgo(new Date(b.created_at)),
-    })),
+    recent: [] as Array<{ action: string; time: string }>,
   }
 }
 
