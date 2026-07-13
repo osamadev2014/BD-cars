@@ -102,14 +102,23 @@ try {
   });
   console.log(output);
 
-  // Extract keys from output
-  const anonMatch = output.match(/anon key:\s*(\S+)/i);
-  const serviceRoleMatch = output.match(/service_role key:\s*(\S+)/i);
-  const apiUrlMatch = output.match(/API URL:\s*(\S+)/i);
+  // Extract keys from output (CLI 2.109.1 outputs JSON, older versions text)
+  let anonKey, serviceRoleKey, apiUrl = 'http://127.0.0.1:54321';
 
-  const anonKey = anonMatch?.[1];
-  const serviceRoleKey = serviceRoleMatch?.[1];
-  const apiUrl = apiUrlMatch?.[1] || 'http://127.0.0.1:54321';
+  try {
+    const json = JSON.parse(output);
+    anonKey = json.ANON_KEY;
+    serviceRoleKey = json.SERVICE_ROLE_KEY;
+    apiUrl = json.API_URL || apiUrl;
+  } catch {
+    // Fallback: try text format
+    const anonMatch = output.match(/anon key:\s*(\S+)/i);
+    const serviceRoleMatch = output.match(/service_role key:\s*(\S+)/i);
+    const apiUrlMatch = output.match(/API URL:\s*(\S+)/i);
+    anonKey = anonMatch?.[1];
+    serviceRoleKey = serviceRoleMatch?.[1];
+    apiUrl = apiUrlMatch?.[1] || apiUrl;
+  }
 
   if (!anonKey || !serviceRoleKey) {
     console.log('\n⚠️  Could not auto-extract keys from supabase start output.');
@@ -165,7 +174,27 @@ if (existsSync(demoUsersPath)) {
 }
 
 // =============================================
-// Step 6: Generate TypeScript Types
+// Step 6: Seed Vehicles, Listings, Dealers
+// =============================================
+console.log('\n🚗  Seeding vehicles, listings, and dealers...\n');
+
+const seedAfterPath = join(rootDir, 'supabase', 'seed-after-users.sql');
+if (existsSync(seedAfterPath)) {
+  try {
+    execSync(
+      `docker cp "${seedAfterPath.replace(/\\/g, '/')}" supabase_db_ryon-local:/tmp/seed-after.sql && docker exec supabase_db_ryon-local psql -U postgres -d postgres -f /tmp/seed-after.sql`,
+      { cwd: rootDir, encoding: 'utf-8', stdio: 'pipe' }
+    );
+    log('✅', 'Vehicles, listings, and dealers seeded');
+  } catch (e) {
+    log('⚠️  ', `Post-user seed had issues: ${e.message}`);
+  }
+} else {
+  log('⚠️  ', 'seed-after-users.sql not found, skipping.');
+}
+
+// =============================================
+// Step 7: Generate TypeScript Types
 // =============================================
 console.log('\n📝  Generating TypeScript types from local database...\n');
 
@@ -179,7 +208,7 @@ if (typesOutput) {
 }
 
 // =============================================
-// Step 7: Validate No Production Connections
+// Step 8: Validate No Production Connections
 // =============================================
 console.log('\n🔍  Validating no production connections...\n');
 
