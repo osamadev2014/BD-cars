@@ -171,7 +171,7 @@ export default function DealerDashboardDemo() {
               <button className="lg:hidden p-1.5 -mr-1.5 rounded-md hover:bg-gray-100" onClick={() => setSidebarOpen(!sidebarOpen)}>
                 {sidebarOpen ? <X className="w-5 h-5" /> : <Store className="w-5 h-5" />}
               </button>
-              <Link href={`/${locale}/second-landing/example/maxus-d60`} className="text-xs text-muted-foreground hover:text-primary flex items-center gap-1">
+              <Link href={`/${locale}`} className="text-xs text-muted-foreground hover:text-primary flex items-center gap-1">
                 ← العودة للموقع
               </Link>
             </div>
@@ -232,7 +232,7 @@ export default function DealerDashboardDemo() {
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h1 className="text-xl font-bold">لوحة التحكم</h1>
-                  <Link href={`/${locale}/second-landing/example/maxus-d60`} className="text-xs text-primary hover:underline flex items-center gap-1">
+                  <Link href={`/${locale}`} className="text-xs text-primary hover:underline flex items-center gap-1">
                     <Plus className="w-3.5 h-3.5" />
                     إضافة إعلان جديد
                   </Link>
@@ -357,7 +357,7 @@ export default function DealerDashboardDemo() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h1 className="text-xl font-bold">الإعلانات ({listings.length})</h1>
-                  <Link href={`/${locale}/second-landing/example/maxus-d60`} className="text-xs text-primary hover:underline flex items-center gap-1">
+                  <Link href={`/${locale}`} className="text-xs text-primary hover:underline flex items-center gap-1">
                     <Plus className="w-3.5 h-3.5" />
                     إضافة إعلان
                   </Link>

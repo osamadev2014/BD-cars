@@ -1,5 +1,12 @@
 import type { Metadata, Viewport } from "next"
+import { Noto_Sans_Arabic } from 'next/font/google'
 import "./globals.css"
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ['arabic'],
+  variable: '--font-geist-sans',
+  display: 'swap',
+})
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
 
@@ -36,5 +43,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return children
+  return (
+    <html suppressHydrationWarning>
+      <body className={`${notoSansArabic.variable} min-h-full flex flex-col bg-background text-foreground`}>
+        {children}
+      </body>
+    </html>
+  )
 }

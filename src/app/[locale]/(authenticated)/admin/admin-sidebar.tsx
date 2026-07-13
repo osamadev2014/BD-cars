@@ -7,6 +7,7 @@ import Link from 'next/link'
 const links = [
   { href: '/admin', key: 'dashboard', icon: '📊' },
   { href: '/admin/approvals', key: 'approvals', icon: '✅' },
+  { href: '/admin/organizations', key: 'organizations', icon: '🏢' },
   { href: '/admin/dealers', key: 'dealers', icon: '🏪' },
   { href: '/admin/plans', key: 'plans', icon: '📋' },
   { href: '/admin/crm', key: 'crm', icon: '👥' },

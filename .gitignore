@@ -39,7 +39,7 @@ yarn-error.log*
 
 # supabase
 supabase/.temp/
-NUL
+
 
 # playwright debug artifacts
 .playwright-mcp/

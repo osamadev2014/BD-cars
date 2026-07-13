@@ -1,5 +1,10 @@
-const SUPABASE_URL = 'https://uxgtgdmnmpehsejmrynt.supabase.co'
-const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4Z3RnZG1ubXBlaHNlam1yeW50Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MzUzNDc0MCwiZXhwIjoyMDk5MTEwNzQwfQ.zkGIDjKTWX27UEpyPtxE3d1QWBQp7i1W1cJqDR83yqg'
+const SUPABASE_URL = process.env.SUPABASE_URL
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+if (!SUPABASE_URL || !SERVICE_KEY) {
+  console.error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables')
+  process.exit(1)
+}
 
 const headers = { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' }
 

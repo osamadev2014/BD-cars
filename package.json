@@ -10,7 +10,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "migrate:entities": "node scripts/migrate-entities.mjs",
+    "migrate:check": "node scripts/migrate-check.mjs"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.10",

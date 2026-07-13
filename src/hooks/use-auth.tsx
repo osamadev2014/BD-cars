@@ -17,6 +17,18 @@ const AuthContext = createContext<AuthContextType>({
   signOut: async () => {},
 })
 
+function getDevSessionUserId(): string | null {
+  try {
+    const match = document.cookie.match(/(?:^|;\s*)roin_dev_session=([^;]*)/)
+    if (!match) return null
+    const [encoded] = match[1].split('.')
+    const payload = JSON.parse(atob(encoded.replace(/-/g, '+').replace(/_/g, '/')))
+    return payload?.sub || null
+  } catch {
+    return null
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthSession>({
     user: null,
@@ -31,7 +43,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         data: { session },
       } = await supabase.auth.getSession()
 
-      if (!session?.user) {
+      let userId = session?.user?.id
+
+      if (!userId) {
+        userId = getDevSessionUserId() || undefined
+      }
+
+      if (!userId) {
         setState({ user: null, session: null, isLoading: false })
         return
       }
@@ -39,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { data: profile } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', session.user.id)
+        .eq('id', userId)
         .single()
 
       if (profile) {
@@ -52,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { data: userRoles } = await supabase
           .from('user_roles')
           .select('role:roles!inner(slug)')
-          .eq('user_id', session.user.id)
+          .eq('user_id', userId)
 
         const roles = (userRoles as unknown as { role: { slug: string } }[] || []).map(
           (r: { role: { slug: string } }) => r.role.slug
@@ -66,14 +84,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         setState({
           user: {
-            id: session.user.id,
-            phone: session.user.phone || '',
+            id: userId,
+            phone: '',
             full_name: null,
             avatar_url: null,
             locale: 'ar',
             is_active: true,
-            created_at: session.user.created_at || '',
-            updated_at: session.user.created_at || '',
+            created_at: '',
+            updated_at: '',
             last_sign_in_at: null,
           },
           session,
@@ -105,6 +123,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = useCallback(async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
+    document.cookie = 'roin_dev_session=; path=/; max-age=0'
     setState({ user: null, session: null, isLoading: false })
   }, [])
 

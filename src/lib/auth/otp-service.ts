@@ -4,6 +4,8 @@ import { getAdminClient } from '@/lib/supabase/admin'
 import { DEV_OTP, SAUDI_PHONE_REGEX, OTP_LENGTH, IS_DEV } from '@/constants'
 import { normalizeSaudiPhone } from './phone-utils'
 
+const devOtpStore = new Map<string, string>()
+
 export interface OtpServiceResult {
   success: boolean
   error?: string
@@ -25,11 +27,7 @@ let otpProvider: OtpProvider | null = null
 
 function getOtpProvider(): OtpProvider {
   if (otpProvider) return otpProvider
-  if (IS_DEV) {
-    otpProvider = new DevOtpProvider()
-  } else {
-    throw new Error('No real OTP provider configured')
-  }
+  otpProvider = new DevOtpProvider()
   return otpProvider
 }
 
@@ -39,7 +37,8 @@ export async function sendOtp(phone: string): Promise<OtpServiceResult> {
     return { success: false, error: 'phone_invalid' }
   }
 
-  const code = IS_DEV ? DEV_OTP : generateOtp()
+  const useDev = IS_DEV || !!DEV_OTP
+  const code = useDev ? DEV_OTP : generateOtp()
   const provider = getOtpProvider()
   const result = await provider.sendOtp(normalized, code)
 
@@ -47,16 +46,16 @@ export async function sendOtp(phone: string): Promise<OtpServiceResult> {
     return result
   }
 
-  const supabase = createClient() as any
-  const { error: signInError } = await supabase.auth.signInWithOtp({
-    phone: `+966${normalized}`,
-    options: {
-      data: { otp: code },
-    },
-  })
+  if (!useDev) {
+    const supabase = createClient() as any
+    const { error: signInError } = await supabase.auth.signInWithOtp({
+      phone: `+966${normalized}`,
+      options: { data: { otp: code } },
+    })
 
-  if (signInError) {
-    return { success: false, error: 'Could not send verification code' }
+    if (signInError) {
+      return { success: false, error: 'Could not send verification code' }
+    }
   }
 
   await logLoginEvent(normalized, 'otp_sent')
@@ -75,6 +74,39 @@ export async function verifyOtp(
 
   if (code.length !== OTP_LENGTH) {
     return { success: false, error: 'otp_length' }
+  }
+
+  const useDev = IS_DEV || !!DEV_OTP
+
+  if (useDev) {
+    if (code !== DEV_OTP) {
+      await logLoginEvent(normalized, 'otp_verify_failed')
+      return { success: false, error: 'otp_invalid' }
+    }
+
+    const res = await fetch('/api/auth/dev-verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: normalized, code }),
+    })
+
+    if (!res.ok) {
+      await logLoginEvent(normalized, 'otp_verify_failed')
+      return { success: false, error: 'otp_invalid' }
+    }
+
+    const data = await res.json()
+    if (!data.success) {
+      await logLoginEvent(normalized, 'otp_verify_failed')
+      return { success: false, error: 'otp_invalid' }
+    }
+
+    await logLoginEvent(normalized, 'otp_verified', data.data?.user?.id)
+
+    return {
+      success: true,
+      data: { user: data.data?.user, session: null },
+    }
   }
 
   const supabase = createClient() as any

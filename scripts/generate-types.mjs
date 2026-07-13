@@ -115,6 +115,10 @@ const files = [
   '00008_spare_parts_delivery.sql',
   '00009_financial.sql',
   '00010_crm_support_notifications.sql',
+  '00025_org_enums.sql',
+  '00026_organizations.sql',
+  '00027_organization_members.sql',
+  '00028_org_id_columns.sql',
 ];
 
 let allTables = [];

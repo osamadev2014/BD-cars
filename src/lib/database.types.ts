@@ -840,6 +840,7 @@ export interface Database {
         has_accident_history: boolean
         has_service_history: boolean
         warranty_months: number
+        org_id: string | null
         created_at: string
         updated_at: string
         };
@@ -879,6 +880,7 @@ export interface Database {
         has_accident_history: boolean
         has_service_history: boolean
         warranty_months: number
+        org_id: string | null
         created_at: string
         updated_at: string
         }>;
@@ -918,6 +920,7 @@ export interface Database {
         has_accident_history: boolean
         has_service_history: boolean
         warranty_months: number
+        org_id: string | null
         created_at: string
         updated_at: string
         }>;
@@ -1064,6 +1067,7 @@ export interface Database {
         vehicle_id: string
         seller_id: string
         dealer_id: unknown
+        org_id: string | null
         title: string
         title_ar: string
         slug: string
@@ -1096,6 +1100,7 @@ export interface Database {
         vehicle_id: string
         seller_id: string
         dealer_id: unknown
+        org_id: string | null
         title: string
         title_ar: string
         slug: string
@@ -1128,6 +1133,7 @@ export interface Database {
         vehicle_id: string
         seller_id: string
         dealer_id: unknown
+        org_id: string | null
         title: string
         title_ar: string
         slug: string
@@ -2605,6 +2611,7 @@ export interface Database {
         rating: number
         review_count: number
         trust_badge: string
+        org_id: string | null
         created_at: string
         updated_at: string
         };
@@ -2631,6 +2638,7 @@ export interface Database {
         rating: number
         review_count: number
         trust_badge: string
+        org_id: string | null
         created_at: string
         updated_at: string
         }>;
@@ -2657,6 +2665,7 @@ export interface Database {
         rating: number
         review_count: number
         trust_badge: string
+        org_id: string | null
         created_at: string
         updated_at: string
         }>;
@@ -5608,9 +5617,140 @@ export interface Database {
         created_at: string
         }>;
       };
+      organizations: {
+        Row: {
+        id: string
+        org_type: string
+        name: string
+        name_ar: string | null
+        slug: string
+        description: string | null
+        description_ar: string | null
+        logo_url: string | null
+        cover_url: string | null
+        phone: string | null
+        email: string | null
+        website: string | null
+        city_id: string | null
+        address: string | null
+        address_ar: string | null
+        latitude: number | null
+        longitude: number | null
+        registration_number: string | null
+        tax_number: string | null
+        status: string
+        is_active: boolean
+        status_notes: string | null
+        created_at: string
+        updated_at: string
+        created_by: string | null
+        };
+        Insert: Partial<{
+        id: string
+        org_type: string
+        name: string
+        name_ar: string | null
+        slug: string
+        description: string | null
+        description_ar: string | null
+        logo_url: string | null
+        cover_url: string | null
+        phone: string | null
+        email: string | null
+        website: string | null
+        city_id: string | null
+        address: string | null
+        address_ar: string | null
+        latitude: number | null
+        longitude: number | null
+        registration_number: string | null
+        tax_number: string | null
+        status: string
+        is_active: boolean
+        status_notes: string | null
+        created_at: string
+        updated_at: string
+        created_by: string | null
+        }>;
+        Update: Partial<{
+        id: string
+        org_type: string
+        name: string
+        name_ar: string | null
+        slug: string
+        description: string | null
+        description_ar: string | null
+        logo_url: string | null
+        cover_url: string | null
+        phone: string | null
+        email: string | null
+        website: string | null
+        city_id: string | null
+        address: string | null
+        address_ar: string | null
+        latitude: number | null
+        longitude: number | null
+        registration_number: string | null
+        tax_number: string | null
+        status: string
+        is_active: boolean
+        status_notes: string | null
+        created_at: string
+        updated_at: string
+        created_by: string | null
+        }>;
+      };
+      organization_members: {
+        Row: {
+        id: string
+        organization_id: string
+        user_id: string
+        role: string
+        status: string
+        is_active: boolean
+        invited_by: string | null
+        invited_at: string | null
+        joined_at: string | null
+        created_at: string
+        updated_at: string
+        created_by: string | null
+        };
+        Insert: Partial<{
+        id: string
+        organization_id: string
+        user_id: string
+        role: string
+        status: string
+        is_active: boolean
+        invited_by: string | null
+        invited_at: string | null
+        joined_at: string | null
+        created_at: string
+        updated_at: string
+        created_by: string | null
+        }>;
+        Update: Partial<{
+        id: string
+        organization_id: string
+        user_id: string
+        role: string
+        status: string
+        is_active: boolean
+        invited_by: string | null
+        invited_at: string | null
+        joined_at: string | null
+        created_at: string
+        updated_at: string
+        created_by: string | null
+        }>;
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
-    Enums: Record<string, never>;
+    Enums: {
+      org_type: 'car_dealer' | 'inspection_center' | 'wholesale_vehicle_trader' | 'spare_parts_supplier' | 'finance_company' | 'insurance_company' | 'advertising_marketing_company' | 'car_rental_company' | 'product_shipping_company' | 'vehicle_transport_company';
+      org_status: 'pending_approval' | 'active' | 'suspended' | 'rejected' | 'closed';
+      org_member_status: 'active' | 'invited' | 'suspended' | 'left';
+    };
   };
 }
