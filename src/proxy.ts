@@ -44,6 +44,35 @@ const securityHeaders = {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  // API routes must bypass intlMiddleware entirely — it redirects
+  // /api/auth/dev-verify → /ar/api/auth/dev-verify (404)
+  if (isPathMatch(pathname, API_PATHS) && !pathname.startsWith('/api/webhooks/')) {
+    const ip = getClientIp(request)
+    const rateKey = `${ip}:${pathname}`
+    const rateResult = checkRateLimit(rateKey)
+
+    if (!rateResult.allowed) {
+      const headers = rateLimitHeaders(rateResult)
+      return NextResponse.json(
+        { success: false, error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { ...headers, ...securityHeaders } }
+      )
+    }
+
+    const response = NextResponse.next()
+
+    for (const [key, value] of Object.entries(securityHeaders)) {
+      response.headers.set(key, value)
+    }
+
+    const rateHeaders = rateLimitHeaders(rateResult)
+    for (const [key, value] of Object.entries(rateHeaders)) {
+      response.headers.set(key, value)
+    }
+
+    return response
+  }
+
   const response = intlMiddleware(request)
 
   for (const [key, value] of Object.entries(securityHeaders)) {
@@ -58,27 +87,6 @@ export async function proxy(request: NextRequest) {
   )
 
   if (pathname === '/') {
-    return response
-  }
-
-  if (isPathMatch(pathname, API_PATHS) && !pathname.startsWith('/api/webhooks/')) {
-    const ip = getClientIp(request)
-    const rateKey = `${ip}:${pathname}`
-    const rateResult = checkRateLimit(rateKey)
-
-    if (!rateResult.allowed) {
-      const headers = rateLimitHeaders(rateResult)
-      return NextResponse.json(
-        { success: false, error: 'Too many requests. Please try again later.' },
-        { status: 429, headers: { ...headers, ...securityHeaders } }
-      )
-    }
-
-    const rateHeaders = rateLimitHeaders(rateResult)
-    for (const [key, value] of Object.entries(rateHeaders)) {
-      response.headers.set(key, value)
-    }
-
     return response
   }
 

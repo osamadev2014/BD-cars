@@ -28,10 +28,11 @@ export async function POST(request: NextRequest) {
     }
 
     const phoneWithCode = `+966${normalized}`
+    const phoneNoPlus = `966${normalized}`
     const adminClient = getAdminClient()
 
     const { data: { users } } = await adminClient.auth.admin.listUsers()
-    let user = users?.find((u: any) => u.phone === phoneWithCode)
+    let user = users?.find((u: any) => u.phone === phoneWithCode || u.phone === phoneNoPlus)
 
     if (!user) {
       const { data, error } = await adminClient.auth.admin.createUser({
