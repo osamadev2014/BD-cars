@@ -3,13 +3,15 @@
 // Ryon - Create Demo Users
 // =============================================
 // Creates demo users for local development.
-// Requires Supabase to be running locally.
+// Auth users via Supabase Admin API.
+// Profiles + roles via direct SQL through Docker (bypasses RLS).
 //
 // Run: node scripts/create-demo-users.mjs
 // Or: npm run seed:users
 
 import { createClient } from '@supabase/supabase-js';
-import { readFileSync } from 'fs';
+import { execSync } from 'child_process';
+import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -25,15 +27,31 @@ function loadEnv() {
     if (!trimmed || trimmed.startsWith('#')) continue;
     const eqIdx = trimmed.indexOf('=');
     if (eqIdx === -1) continue;
-    const key = trimmed.slice(0, eqIdx).trim();
-    const val = trimmed.slice(eqIdx + 1).trim();
-    env[key] = val;
+    env[trimmed.slice(0, eqIdx).trim()] = trimmed.slice(eqIdx + 1).trim();
   }
   return env;
 }
 
 function log(emoji, msg) {
   console.log(`${emoji}  ${msg}`);
+}
+
+function dockerExec(cmd) {
+  return execSync(`docker exec supabase_db_ryon-local ${cmd}`, {
+    encoding: 'utf-8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+}
+
+function runSqlViaDocker(sql) {
+  const tmpFile = join(rootDir, '.tmp-seed.sql');
+  writeFileSync(tmpFile, sql, 'utf-8');
+  try {
+    execSync(`docker cp "${tmpFile}" supabase_db_ryon-local:/tmp/seed.sql`, { stdio: 'pipe' });
+    return dockerExec('psql -U postgres -d postgres -f /tmp/seed.sql');
+  } finally {
+    try { unlinkSync(tmpFile); } catch {}
+  }
 }
 
 async function main() {
@@ -54,127 +72,98 @@ async function main() {
   });
 
   const users = [
-    {
-      phone: '+966555000001',
-      full_name: 'Admin User',
-      role: 'super_admin',
-      description: 'Super Admin (full access)',
-    },
-    {
-      phone: '+966555000002',
-      full_name: 'Dealer User',
-      role: 'dealer_owner',
-      description: 'Dealer Owner (manage listings)',
-    },
-    {
-      phone: '+966555000003',
-      full_name: 'Customer User',
-      role: 'customer',
-      description: 'Regular Customer (browse & buy)',
-    },
-    {
-      phone: '+966555000004',
-      full_name: 'Inspection Manager',
-      role: 'inspection_manager',
-      description: 'Inspection Center Manager',
-    },
-    {
-      phone: '+966555000005',
-      full_name: 'Content Manager',
-      role: 'content_manager',
-      description: 'Content Manager',
-    },
+    { phone: '+966555000001', full_name: 'Admin User', role: 'super_admin' },
+    { phone: '+966555000002', full_name: 'Dealer User', role: 'dealer_owner' },
+    { phone: '+966555000003', full_name: 'Customer User', role: 'customer' },
+    { phone: '+966555000004', full_name: 'Inspection Manager', role: 'inspection_manager' },
+    { phone: '+966555000005', full_name: 'Content Manager', role: 'content_manager' },
   ];
 
-  const createdUsers = [];
+  const created = [];
 
   for (const userData of users) {
     try {
-      // Check if user already exists
       const { data: { users: existingUsers } } = await supabase.auth.admin.listUsers();
       const existing = existingUsers?.find((u) => u.phone === userData.phone);
 
-      let userId;
-
       if (existing) {
-        userId = existing.id;
-        log('ℹ️  ', `User ${userData.phone} already exists (${userId.slice(0, 8)}...)`);
-      } else {
-        // Create user via Auth Admin API
-        const { data, error } = await supabase.auth.admin.createUser({
-          phone: userData.phone,
-          phone_confirm: true,
-          user_metadata: { full_name: userData.full_name },
-        });
-
-        if (error) {
-          log('❌', `Failed to create ${userData.phone}: ${error.message}`);
-          continue;
-        }
-
-        userId = data.user.id;
-        log('✅', `Created user: ${userData.full_name} (${userData.phone})`);
+        created.push({ ...userData, userId: existing.id });
+        log('ℹ️  ', `User ${userData.phone} already exists (${existing.id.slice(0, 8)}...)`);
+        continue;
       }
 
-      // Ensure profile exists
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('id', userId)
-        .single();
+      const { data, error } = await supabase.auth.admin.createUser({
+        phone: userData.phone,
+        phone_confirm: true,
+        user_metadata: { full_name: userData.full_name },
+      });
 
-      if (!profile) {
-        const phoneClean = userData.phone.replace('+966', '');
-        await supabase.from('profiles').insert({
-          id: userId,
-          phone: phoneClean,
-          full_name: userData.full_name,
-          locale: 'ar',
-          is_active: true,
-        });
-        log('✅', `  → Profile created for ${userData.full_name}`);
+      if (error) {
+        log('❌', `Failed to create ${userData.phone}: ${error.message}`);
+        continue;
       }
 
-      // Assign role
-      const { data: role } = await supabase
-        .from('roles')
-        .select('id')
-        .eq('slug', userData.role)
-        .single();
-
-      if (role) {
-        // Check if role already assigned
-        const { data: existingRole } = await supabase
-          .from('user_roles')
-          .select('id')
-          .eq('user_id', userId)
-          .eq('role_id', role.id)
-          .single();
-
-        if (!existingRole) {
-          await supabase.from('user_roles').insert({
-            user_id: userId,
-            role_id: role.id,
-          });
-          log('✅', `  → Assigned role: ${userData.role}`);
-        } else {
-          log('ℹ️  ', `  → Role ${userData.role} already assigned`);
-        }
-      }
-
-      createdUsers.push({ ...userData, userId });
+      created.push({ ...userData, userId: data.user.id });
+      log('✅', `Created user: ${userData.full_name} (${userData.phone})`);
     } catch (e) {
-      log('❌', `Error with ${userData.phone}: ${e.message}`);
+      log('❌', `Error creating user ${userData.phone}: ${e.message}`);
     }
   }
 
-  // Summary
-  console.log('\n' + '='.repeat(60));
+  if (created.length === 0) {
+    console.error('\n❌  No users found or created. Aborting.\n');
+    process.exit(1);
+  }
+
+  console.log('\n🔧  Inserting profiles + roles via SQL (bypasses RLS)...\n');
+
+  const profileRows = created.map((u) => {
+    const phone = u.phone.replace('+966', '');
+    return `('${u.userId}', '${phone}', '${u.full_name.replace(/'/g, "''")}', 'ar', true)`;
+  }).join(', ');
+
+  const roleInserts = created.map((u) => {
+    return `INSERT INTO user_roles (user_id, role_id)
+SELECT '${u.userId}', id FROM roles WHERE slug = '${u.role}' LIMIT 1
+ON CONFLICT (user_id, role_id) DO NOTHING;`;
+  }).join('\n');
+
+  const sql = `
+INSERT INTO profiles (id, phone, full_name, locale, is_active)
+VALUES ${profileRows}
+ON CONFLICT (id) DO UPDATE SET
+  full_name = EXCLUDED.full_name,
+  locale = EXCLUDED.locale,
+  is_active = EXCLUDED.is_active;
+
+${roleInserts}
+
+SELECT 'profiles' as t, count(*) as cnt FROM profiles
+UNION ALL
+SELECT 'user_roles', count(*) FROM user_roles;
+`;
+
+  try {
+    runSqlViaDocker(sql);
+    log('✅', 'Profiles + roles inserted successfully');
+  } catch (e) {
+    log('❌', `SQL error: ${e.message}`);
+  }
+
+  // Verify
+  try {
+    const result = dockerExec(
+      `psql -U postgres -d postgres -c "SELECT p.full_name, au.phone, r.slug as role FROM profiles p JOIN auth.users au ON au.id = p.id JOIN user_roles ur ON ur.user_id = au.id JOIN roles r ON r.id = ur.role_id ORDER BY au.phone"`
+    );
+    console.log('\n' + result);
+  } catch {}
+
+  console.log('='.repeat(60));
   console.log('📋  Demo Users Summary');
   console.log('='.repeat(60));
   console.log('\n  Phone          Name                 Role\n  ' + '-'.repeat(55));
 
-  for (const u of createdUsers) {
+  for (const u of created) {
     const phone = u.phone.replace('+966', '0');
     console.log(`  ${phone.padEnd(15)} ${u.full_name.padEnd(20)} ${u.role}`);
   }
