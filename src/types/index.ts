@@ -37,6 +37,7 @@ export interface UserProfile {
   updated_at: string
   last_sign_in_at: string | null
   roles?: string[]
+  permissions?: string[]
 }
 
 export interface AuthSession {

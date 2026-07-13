@@ -1,5 +1,4 @@
 import { cache } from 'react'
-import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { getAdminClient } from '@/lib/supabase/admin'
 import { createAuditLog } from '@/lib/audit/audit-service'
 import type { RoleSlug } from '@/types'
@@ -11,7 +10,7 @@ type PermissionCheck = {
 
 export const getUserRoles = cache(async (userId: string): Promise<RoleSlug[]> => {
   try {
-    const supabase = (await createServerSupabaseClient()) as any
+    const supabase = getAdminClient() as any
     const { data } = await supabase
       .from('user_roles')
       .select('role:roles!inner(slug)')
@@ -27,7 +26,7 @@ export const getUserRoles = cache(async (userId: string): Promise<RoleSlug[]> =>
 export const getUserPermissions = cache(
   async (userId: string): Promise<string[]> => {
     try {
-      const supabase = (await createServerSupabaseClient()) as any
+      const supabase = getAdminClient() as any
       const { data } = await supabase
         .from('user_roles')
         .select(

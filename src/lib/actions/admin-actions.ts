@@ -154,7 +154,7 @@ export async function rejectListing(requestId: string, reviewNotes: string) {
 }
 
 export async function getAllListings(page = 1, pageSize = 20) {
-  const guard = await requirePermission('view_admin_dashboard')
+  const guard = await requirePermission('view_dashboard')
   if (!guard.allowed) return { data: [], count: 0 }
 
   const supabase = (await createServerSupabaseClient()) as any

@@ -156,7 +156,16 @@
     "no_organizations": "لا توجد منشآت بعد",
     "back_to_dashboard": "العودة إلى لوحة التحكم",
     "register_organization": "تسجيل منشأة جديدة",
-    "team": "فريق العمل"
+    "team": "فريق العمل",
+    "dashboard": "لوحة التحكم",
+    "general": "عام",
+    "appointments": "المواعيد",
+    "reports": "التقارير",
+    "parts": "قطع الغيار",
+    "campaigns": "الحملات",
+    "orders": "الطلبات",
+    "my_coupons": "كوبوناتي",
+    "settings": "الإعدادات"
   },
   "admin": {
     "title": "لوحة الإدارة",
@@ -355,7 +364,8 @@
     "unknown": "غير معروف",
     "no_phone": "لا يوجد رقم",
     "delete_coupon_confirm": "هل أنت متأكد من حذف هذا الكوبون؟",
-    "organizations": "المنشآت"
+    "organizations": "المنشآت",
+    "advertise": "الإعلانات"
   },
   "nav": {
     "home": "الرئيسية",

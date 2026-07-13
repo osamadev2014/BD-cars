@@ -10,6 +10,7 @@ import { useAuth } from '@/hooks/use-auth'
 import Link from 'next/link'
 import { useLocale } from 'next-intl'
 import { Building2, Car, ShieldCheck } from 'lucide-react'
+import { isPlatformAdmin } from '@/lib/permissions/platform-roles'
 
 export default function LoginPage() {
   const t = useTranslations('auth')
@@ -25,7 +26,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      router.replace('/business/select')
+      router.replace(isPlatformAdmin(user.roles) ? '/admin' : '/business/select')
     }
   }, [user, authLoading, router])
 

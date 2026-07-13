@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Building2, Store, Wrench, Car, Truck, ShieldCheck, Landmark, Megaphone, Package, Ship, Warehouse, ArrowLeft } from 'lucide-react'
 import { useAuth } from '@/hooks/use-auth'
+import { isPlatformAdmin } from '@/lib/permissions/platform-roles'
 
 const ORG_ICONS: Record<string, typeof Building2> = {
   car_dealer: Car,
@@ -52,6 +53,11 @@ export default function BusinessSelectPage() {
     if (authLoading) return
     if (!user) {
       router.replace(`/${locale}/login`)
+      return
+    }
+
+    if (isPlatformAdmin(user.roles)) {
+      router.replace(`/${locale}/admin`)
       return
     }
 

@@ -9,6 +9,7 @@ import { OTP_LENGTH, OTP_RESEND_COOLDOWN_SECONDS } from '@/constants'
 import { useAuth } from '@/hooks/use-auth'
 import { useLocale } from 'next-intl'
 import { Building2, Car, ShieldCheck } from 'lucide-react'
+import { isPlatformAdmin } from '@/lib/permissions/platform-roles'
 
 function VerifyForm() {
   const t = useTranslations('auth')
@@ -38,7 +39,7 @@ function VerifyForm() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      router.replace('/business/select')
+      router.replace(isPlatformAdmin(user.roles) ? '/admin' : '/business/select')
     }
   }, [user, authLoading, router])
 
@@ -75,8 +76,8 @@ function VerifyForm() {
     }
 
     // Refresh auth state so AuthProvider picks up the new dev session cookie
+    // The useEffect above will redirect based on platform role
     await refresh()
-    router.push('/business/select')
   }
 
   const handleResend = async () => {

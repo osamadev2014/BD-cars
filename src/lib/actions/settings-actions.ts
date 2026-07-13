@@ -34,7 +34,7 @@ export async function updateAppSetting(key: string, value: string) {
 }
 
 export async function getAdminMetrics() {
-  const guard = await requirePermission('view_admin_dashboard')
+  const guard = await requirePermission('view_dashboard')
   if (!guard.allowed) return null
 
   const supabase = (await createServerSupabaseClient()) as any

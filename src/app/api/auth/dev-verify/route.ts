@@ -78,11 +78,14 @@ async function ensureDevProfile(adminClient: any, userId: string, phone: string)
     .single()
 
   if (!existing) {
-    await adminClient.from('profiles').insert({
+    const { error } = await adminClient.from('profiles').insert({
       id: userId,
       phone,
       locale: 'ar',
       is_active: true,
     })
+    if (error) {
+      console.error('[dev-verify] Failed to create profile:', error.message)
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { getUserPermissions, getUserRoles, checkPermission, checkRole } from '@/lib/permissions/permission-service'
 import type { RoleSlug } from '@/types'
@@ -16,22 +17,49 @@ async function safeGuard<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   }
 }
 
-export async function requireAuth(): Promise<GuardResult & { userId?: string }> {
-  return safeGuard(async () => {
+function getDevSessionUserId(cookieStore: any): string | null {
+  try {
+    const devCookie = cookieStore.get('roin_dev_session')?.value
+    if (!devCookie) return null
+    const [encoded] = devCookie.split('.')
+    if (!encoded) return null
+    const payload = JSON.parse(Buffer.from(encoded, 'base64url').toString())
+    return payload?.sub || null
+  } catch {
+    return null
+  }
+}
+
+export async function resolveAuthenticatedUserId(): Promise<string | null> {
+  try {
     const supabase = (await createServerSupabaseClient()) as any
     const { data: { session } } = await supabase.auth.getSession()
+    if (session?.user?.id) return session.user.id
 
-    if (!session?.user) {
+    const cookieStore = await cookies()
+    return getDevSessionUserId(cookieStore)
+  } catch {
+    return null
+  }
+}
+
+export async function requireAuth(): Promise<GuardResult & { userId?: string; roles?: string[] }> {
+  return safeGuard(async () => {
+    const userId = await resolveAuthenticatedUserId()
+
+    if (!userId) {
       return { allowed: false, error: 'Authentication required', status: 401 }
     }
 
-    return { allowed: true, userId: session.user.id }
+    const roles = await getUserRoles(userId)
+
+    return { allowed: true, userId, roles }
   }, { allowed: false, error: 'Service unavailable', status: 503 })
 }
 
 export async function requirePermission(
   permission: string
-): Promise<GuardResult & { userId?: string }> {
+): Promise<GuardResult & { userId?: string; roles?: string[] }> {
   return safeGuard(async () => {
     const auth = await requireAuth()
     if (!auth.allowed) return auth
@@ -42,16 +70,17 @@ export async function requirePermission(
         allowed: false,
         error: result.reason || 'Permission denied',
         status: 403,
+        roles: auth.roles,
       }
     }
 
-    return { allowed: true, userId: auth.userId }
+    return { allowed: true, userId: auth.userId, roles: auth.roles }
   }, { allowed: false, error: 'Service unavailable', status: 503 })
 }
 
 export async function requireRole(
   role: RoleSlug
-): Promise<GuardResult & { userId?: string }> {
+): Promise<GuardResult & { userId?: string; roles?: string[] }> {
   return safeGuard(async () => {
     const auth = await requireAuth()
     if (!auth.allowed) return auth
@@ -62,10 +91,11 @@ export async function requireRole(
         allowed: false,
         error: result.reason || 'Role required',
         status: 403,
+        roles: auth.roles,
       }
     }
 
-    return { allowed: true, userId: auth.userId }
+    return { allowed: true, userId: auth.userId, roles: auth.roles }
   }, { allowed: false, error: 'Service unavailable', status: 503 })
 }
 

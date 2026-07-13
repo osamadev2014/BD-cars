@@ -122,15 +122,47 @@ export async function proxy(request: NextRequest) {
     }
 
     if (pathWithoutLocale.startsWith('/admin')) {
-      const { data: roles } = await supabase
-        .from('user_roles')
-        .select('role:roles(name)')
+      let isAdmin = false
 
-      const isAdmin = (roles || []).some((r: any) =>
-        ['admin', 'super_admin', 'system_owner'].includes(r.role?.name)
-      )
+      if (user) {
+        const { data: roles } = await supabase
+          .from('user_roles')
+          .select('role:roles(slug)')
 
-      if (!isAdmin && !devSession) {
+        isAdmin = (roles || []).some((r: any) =>
+          ['admin', 'super_admin', 'system_owner'].includes(r.role?.slug)
+        )
+      } else if (devSession) {
+        try {
+          const [encoded] = devSession.split('.')
+          if (encoded) {
+            const payload = JSON.parse(Buffer.from(encoded, 'base64url').toString())
+            const devUserId = payload?.sub
+            if (devUserId) {
+              const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+              const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+              const resp = await fetch(
+                `${baseUrl}/rest/v1/user_roles?user_id=eq.${devUserId}&select=role:roles(slug)`,
+                {
+                  headers: {
+                    apikey: serviceKey,
+                    Authorization: `Bearer ${serviceKey}`,
+                    Prefer: 'return=representation',
+                  },
+                }
+              )
+              const devRoles = await resp.json()
+              isAdmin = (devRoles || []).some((r: any) =>
+                ['admin', 'super_admin', 'system_owner'].includes(r.role?.slug)
+              )
+            }
+          }
+        } catch {
+          // invalid dev session token
+        }
+      }
+
+      if (!isAdmin) {
         const locale = pathname.startsWith('/en') ? 'en' : 'ar'
         return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url))
       }

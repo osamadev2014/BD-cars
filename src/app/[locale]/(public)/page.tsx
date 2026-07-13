@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { VehicleCard } from '@/components/vehicle/vehicle-card'
 import { EmptyState } from '@/components/ui/empty-state'
 import { Button } from '@/components/ui/button'
+import { BrandGrid } from '@/components/brand-grid'
 import { JsonLd } from '@/components/shared/json-ld'
 import { buildMetadata, buildWebSiteSchema } from '@/lib/seo'
 import { fetchSupabase } from '@/lib/supabase/fetch-client'
@@ -271,34 +272,7 @@ export default async function HomePage() {
       </section>
 
       {/* ===== 3. BROWSE BY MAKE ===== */}
-      <section className="mt-8 sm:mt-12 px-4">
-        <div className="max-w-[1320px] mx-auto">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[#154F9C] text-lg sm:text-xl font-bold">تصفح السيارات حسب الماركة</h2>
-            <Link href={`/${locale}/listings`} className="text-sm text-[#154F9C] font-medium underline underline-offset-2">شاهد جميع الماركات</Link>
-          </div>
-          <div className="flex flex-wrap gap-[12px]">
-            {brands.map((brand) => (
-              <Link
-                key={brand.name}
-                href={`/${locale}/listings`}
-                className="flex flex-col items-center gap-1 p-2 sm:p-3 rounded-2xl border border-gray-100 bg-white hover:border-[#f1cd31]/50 hover:shadow-md transition-all duration-200 flex-shrink-0"
-                style={{ width: '88px' }}
-              >
-                <div className="h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center">
-                  <img src={brand.img} alt={brand.name} className="h-full w-full object-contain" loading="lazy" />
-                </div>
-                <span className="text-[10px] font-medium text-gray-700 text-center leading-tight">{brand.name}</span>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Link href={`/${locale}/listings`} className="text-xs text-gray-500 hover:text-[#154F9C] px-3 py-1.5 rounded-full border border-gray-200 hover:border-[#154F9C]/30 transition-colors">جميع السيارات المستعملة</Link>
-            <Link href={`/${locale}/listings`} className="text-xs text-gray-500 hover:text-[#154F9C] px-3 py-1.5 rounded-full border border-gray-200 hover:border-[#154F9C]/30 transition-colors">جميع السيارات الجديدة</Link>
-            <Link href={`/${locale}/listings`} className="text-xs text-gray-500 hover:text-[#154F9C] px-3 py-1.5 rounded-full border border-gray-200 hover:border-[#154F9C]/30 transition-colors">جميع السيارات</Link>
-          </div>
-        </div>
-      </section>
+      <BrandGrid brands={brands} locale={locale} />
 
       {/* ===== 4. MONTHLY PAYMENT + BANKS MARQUEE + INSTALLMENT ===== */}
       <section className="mt-8 sm:mt-12">

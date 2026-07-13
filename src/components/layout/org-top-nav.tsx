@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { getMyOrganizations } from '@/lib/actions/org-actions'
 import { useAuth } from '@/hooks/use-auth'
 import { Building2, ChevronDown, LogOut, Settings, Users, Globe, Check, Plus } from 'lucide-react'
+import { isPlatformAdmin } from '@/lib/permissions/platform-roles'
 
 const ORG_TYPE_LABELS: Record<string, [string, string]> = {
   car_dealer: ['Car Dealer', 'معرض سيارات'],
@@ -39,7 +40,11 @@ export function OrgTopNav() {
     getMyOrganizations().then((data) => {
       setOrgs(data)
       if (data.length === 0) {
-        router.replace(`/${locale}/business/register`)
+        if (!isPlatformAdmin(user?.roles)) {
+          router.replace(`/${locale}/business/register`)
+          return
+        }
+        setLoading(false)
         return
       }
       const orgId = localStorage.getItem('selected_org_id')
