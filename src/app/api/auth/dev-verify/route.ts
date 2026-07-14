@@ -40,24 +40,28 @@ export async function POST(request: NextRequest) {
     }
 
     const phoneWithCode = `+966${normalized}`
-    const phoneNoPlus = `966${normalized}`
     const adminClient = getAdminClient()
 
-    let user = await findUserByPhone(adminClient, phoneWithCode, phoneNoPlus)
-
-    if (!user) {
-      const { data, error } = await adminClient.auth.admin.createUser({
-        phone: phoneWithCode,
-        phone_confirm: true,
-      })
-      if (error) {
-        if (error.message?.includes('already registered')) {
-          user = await findUserByPhone(adminClient, phoneWithCode, phoneNoPlus)
+    let user: any = null
+    const { data, error } = await adminClient.auth.admin.createUser({
+      phone: phoneWithCode,
+      phone_confirm: true,
+    })
+    if (error) {
+      if (error.message?.includes('already registered')) {
+        const { data: profile } = await adminClient
+          .from('profiles')
+          .select('id')
+          .eq('phone', normalized)
+          .maybeSingle()
+        if (profile && (profile as any).id) {
+          const { data: authUser } = await adminClient.auth.admin.getUserById((profile as any).id)
+          user = authUser?.user ?? null
         }
-        if (!user) throw error
-      } else {
-        user = data.user
       }
+      if (!user) throw error
+    } else {
+      user = data.user
     }
 
     await ensureDevProfile(adminClient, user.id, normalized)
@@ -90,30 +94,6 @@ export async function POST(request: NextRequest) {
     console.error('[dev-verify] Error:', error.message, error.stack)
     return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
-}
-
-async function findUserByPhone(adminClient: any, ...phones: string[]) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-  if (!supabaseUrl || !serviceKey) return null
-
-  for (let page = 1; page <= 20; page++) {
-    try {
-      const res = await fetch(`${supabaseUrl}/auth/v1/admin/users?page=${page}&per_page=50`, {
-        headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
-      })
-      if (!res.ok) break
-      const body = await res.json()
-      const users: any[] = body.users
-      if (!Array.isArray(users) || users.length === 0) break
-      const found = users.find((u: any) => phones.includes(u.phone))
-      if (found) return found
-      if (users.length < 50) break
-    } catch {
-      break
-    }
-  }
-  return null
 }
 
 async function ensureDevProfile(adminClient: any, userId: string, phone: string) {
