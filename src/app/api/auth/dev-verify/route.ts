@@ -103,7 +103,8 @@ async function findUserByPhone(adminClient: any, ...phones: string[]) {
         headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
       })
       if (!res.ok) break
-      const users = await res.json()
+      const body = await res.json()
+      const users: any[] = body.users
       if (!Array.isArray(users) || users.length === 0) break
       const found = users.find((u: any) => phones.includes(u.phone))
       if (found) return found
