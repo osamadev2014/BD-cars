@@ -44,9 +44,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `spare_part_suppliers` → `spare_parts_supplier` (users, parts, pricing)
 - `delivery_providers` → `product_shipping_company` (users, zones, pricing)
 
-## Route Protection (needs fixing)
-- `src/proxy.ts` checks `/dashboard` and `/admin` but NOT locale-prefixed routes (`/ar/dashboard`, `/en/dashboard`)
-- Future: need to add checks for business routes (`/ar/business/*`)
+## Route Protection
+- `src/proxy.ts` uses `stripLocale()` to handle locale-prefixed routes (`/ar/dashboard`, `/en/dashboard`)
+- `PROTECTED_PATHS` covers `/dashboard`, `/admin`, `/business`
 
 ## DB Conventions
 - All timestamps: `timestamptz`, default `now()`

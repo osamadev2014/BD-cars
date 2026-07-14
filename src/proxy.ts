@@ -10,7 +10,7 @@ const intlMiddleware = createIntlMiddleware(routing)
 const PROTECTED_PATHS = [
   '/dashboard',
   '/admin',
-  '/business/register',
+  '/business',
 ]
 
 function stripLocale(pathname: string): string {

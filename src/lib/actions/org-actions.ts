@@ -1,6 +1,7 @@
 'use server'
 
 import { createServerSupabaseClient } from '@/lib/supabase/server'
+import { getAdminClient } from '@/lib/supabase/admin'
 import { requireAuth, requirePermission } from '@/server/guards'
 import { revalidatePath } from 'next/cache'
 
@@ -60,7 +61,7 @@ export async function getMyOrganizations() {
   const auth = await requireAuth()
   if (!auth.allowed) return []
 
-  const supabase = (await createServerSupabaseClient()) as any
+  const supabase = getAdminClient() as any
 
   // Get orgs where user is a member
   const { data: memberships } = await supabase
