@@ -43,16 +43,21 @@ export async function POST(request: NextRequest) {
     const phoneNoPlus = `966${normalized}`
     const adminClient = getAdminClient()
 
-    const { data: { users } } = await adminClient.auth.admin.listUsers()
-    let user = users?.find((u: any) => u.phone === phoneWithCode || u.phone === phoneNoPlus)
+    let user = await findUserByPhone(adminClient, phoneWithCode, phoneNoPlus)
 
     if (!user) {
       const { data, error } = await adminClient.auth.admin.createUser({
         phone: phoneWithCode,
         phone_confirm: true,
       })
-      if (error) throw error
-      user = data.user
+      if (error) {
+        if (error.message?.includes('already registered')) {
+          user = await findUserByPhone(adminClient, phoneWithCode, phoneNoPlus)
+        }
+        if (!user) throw error
+      } else {
+        user = data.user
+      }
     }
 
     await ensureDevProfile(adminClient, user.id, normalized)
@@ -85,6 +90,18 @@ export async function POST(request: NextRequest) {
     console.error('[dev-verify] Error:', error.message, error.stack)
     return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
+}
+
+async function findUserByPhone(adminClient: any, ...phones: string[]) {
+  // listUsers is paginated — iterate pages to find the user
+  for (let page = 1; page <= 10; page++) {
+    const { data: { users } } = await adminClient.auth.admin.listUsers({ page, perPage: 50 })
+    if (!users || users.length === 0) break
+    const found = users.find((u: any) => phones.includes(u.phone))
+    if (found) return found
+    if (users.length < 50) break // last page
+  }
+  return null
 }
 
 async function ensureDevProfile(adminClient: any, userId: string, phone: string) {
