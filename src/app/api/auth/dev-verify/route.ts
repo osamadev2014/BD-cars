@@ -56,7 +56,9 @@ export async function POST(request: NextRequest) {
     }
 
     await ensureDevProfile(adminClient, user.id, normalized)
-    await ensureDevOrganizations(adminClient, user.id, normalized)
+    await ensureDevOrganizations(adminClient, user.id, normalized).catch((e: any) =>
+      console.error('[dev-verify] ensureDevOrganizations error:', e.message)
+    )
 
     // Always set dev session cookie — this is the auth mechanism in dev mode
     const sessionToken = signSession({
@@ -80,6 +82,7 @@ export async function POST(request: NextRequest) {
 
     return response
   } catch (error: any) {
+    console.error('[dev-verify] Error:', error.message, error.stack)
     return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
 }
@@ -105,7 +108,8 @@ async function ensureDevProfile(adminClient: any, userId: string, phone: string)
 }
 
 async function ensureDevOrganizations(adminClient: any, userId: string, phone: string) {
-  if (phone !== DEV_DEMO_PHONE) return
+  const demoPhone = normalizeSaudiPhone(DEV_DEMO_PHONE)
+  if (phone !== demoPhone) return
 
   const { data: existing } = await adminClient
     .from('organization_members')
