@@ -93,13 +93,24 @@ export async function POST(request: NextRequest) {
 }
 
 async function findUserByPhone(adminClient: any, ...phones: string[]) {
-  // listUsers is paginated — iterate pages to find the user
-  for (let page = 1; page <= 10; page++) {
-    const { data: { users } } = await adminClient.auth.admin.listUsers({ page, perPage: 50 })
-    if (!users || users.length === 0) break
-    const found = users.find((u: any) => phones.includes(u.phone))
-    if (found) return found
-    if (users.length < 50) break // last page
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!supabaseUrl || !serviceKey) return null
+
+  for (let page = 1; page <= 20; page++) {
+    try {
+      const res = await fetch(`${supabaseUrl}/auth/v1/admin/users?page=${page}&per_page=50`, {
+        headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+      })
+      if (!res.ok) break
+      const users = await res.json()
+      if (!Array.isArray(users) || users.length === 0) break
+      const found = users.find((u: any) => phones.includes(u.phone))
+      if (found) return found
+      if (users.length < 50) break
+    } catch {
+      break
+    }
   }
   return null
 }
