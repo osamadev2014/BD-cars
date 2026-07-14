@@ -51,3 +51,8 @@ supabase/.temp/
 next-env.d.ts
 
 .vercel
+
+NUL
+
+*.zip
+*.rar
