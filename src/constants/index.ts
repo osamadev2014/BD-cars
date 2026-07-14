@@ -3,6 +3,7 @@ export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000
 export const DEFAULT_LOCALE = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || 'ar'
 export const SUPPORTED_LOCALES = (process.env.NEXT_PUBLIC_SUPPORTED_LOCALES || 'ar,en').split(',')
 export const DEV_OTP = process.env.DEV_OTP || '1234'
+export const DEV_DEMO_PHONE = process.env.DEV_DEMO_PHONE || '0555000000'
 export const IS_DEV = process.env.NODE_ENV === 'development'
 
 export const SAUDI_PHONE_REGEX = /^0?5[0-9]{8}$/
