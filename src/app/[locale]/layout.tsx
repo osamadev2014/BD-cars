@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { AppProvidersWrapper } from './app-providers-wrapper'
 import { AuthProviderWrapper } from './auth-provider-wrapper'
-import { DevElementPicker } from '@/components/dev-element-picker'
+import AIInspectButton from '@/components/dev/AIInspectButton'
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -42,7 +42,7 @@ export default async function LocaleLayout({
           </AuthProviderWrapper>
         </AppProvidersWrapper>
       </NextIntlClientProvider>
-      <DevElementPicker />
+      <AIInspectButton />
     </>
   )
 }
