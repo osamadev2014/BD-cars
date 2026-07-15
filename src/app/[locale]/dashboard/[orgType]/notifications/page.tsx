@@ -1,18 +1,15 @@
 import { validateDashboardAccess } from '@/lib/dashboard/validate'
 import { DashboardPageHeader } from '@/components/dashboard/dashboard-page-header'
-import { DashboardEmptyState } from '@/components/dashboard/dashboard-empty-state'
-import { Bell, Settings } from 'lucide-react'
+import { NotificationsList } from './notifications-list'
 import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
+import { Settings } from 'lucide-react'
 
-interface Props {
-  params: Promise<{ locale: string; orgType: string }>
-}
+interface Props { params: Promise<{ locale: string; orgType: string }> }
 
 export default async function NotificationsPage({ params }: Props) {
   const { locale, orgType } = await params
   const isRtl = locale === 'ar'
-
   const validation = await validateDashboardAccess(locale, orgType)
   if (!validation.allowed) {
     if (validation.redirect) redirect(validation.redirect)
@@ -25,7 +22,6 @@ export default async function NotificationsPage({ params }: Props) {
         title={isRtl ? 'الإشعارات' : 'Notifications'}
         breadcrumbs={[
           { label: isRtl ? 'لوحة التحكم' : 'Dashboard', href: `/${locale}/dashboard/${orgType}/overview` },
-          { label: isRtl ? 'نظرة عامة' : 'Overview', href: `/${locale}/dashboard/${orgType}/overview` },
           { label: isRtl ? 'الإشعارات' : 'Notifications' },
         ]}
         locale={locale}
@@ -39,13 +35,7 @@ export default async function NotificationsPage({ params }: Props) {
           </Link>
         }
       />
-      <DashboardEmptyState
-        icon={<Bell className="h-12 w-12" />}
-        title={isRtl ? 'لا توجد إشعارات' : 'No Notifications'}
-        description={isRtl
-          ? 'ستظهر هنا إشعارات الشحنات والتحديثات الهامة'
-          : 'Shipment notifications and important updates will appear here'}
-      />
+      <NotificationsList locale={locale} />
     </div>
   )
 }
