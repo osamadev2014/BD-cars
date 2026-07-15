@@ -11,6 +11,7 @@ interface Props {
   children: React.ReactNode
   locale: string
   orgSlug: string
+  orgColor?: string
   orgName?: string
   orgNameAr?: string
   orgTypeLabel?: string
@@ -22,6 +23,7 @@ export function DashboardLayoutShell({
   children,
   locale,
   orgSlug,
+  orgColor,
   orgName,
   orgNameAr,
   orgTypeLabel,
@@ -71,6 +73,7 @@ export function DashboardLayoutShell({
       <DashboardSidebar
         locale={activeLocale}
         orgSlug={orgSlug}
+        orgColor={orgColor}
         collapsed={sidebarCollapsed}
         onToggle={handleToggleSidebar}
         sections={sections}

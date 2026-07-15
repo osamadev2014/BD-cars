@@ -1139,7 +1139,17 @@
                       "status_awarded":  "Awarded",
                       "dealer":  "Dealer",
                       "status":  "Status",
-                      "created":  "Created",
-                      "actions":  "Actions"
-                  }
+                       "created":  "Created",
+                       "actions":  "Actions"
+                   }
+               },
+    "dashboard":  {
+                    "my_profile":  "My Profile",
+                    "account_settings":  "Account Settings",
+                    "org_settings":  "Organization Settings",
+                    "switch_org":  "Switch Organization",
+                    "return_marketplace":  "Return to Marketplace",
+                    "sign_out":  "Sign Out",
+                    "member":  "Member"
+    }
 }

@@ -1141,5 +1141,14 @@
     "status": "الحالة",
     "created": "تاريخ الإنشاء",
     "actions": "الإجراءات"
+  },
+  "dashboard": {
+    "my_profile": "ملفي الشخصي",
+    "account_settings": "إعدادات الحساب",
+    "org_settings": "إعدادات المنشأة",
+    "switch_org": "تبديل المنشأة",
+    "return_marketplace": "العودة إلى السوق",
+    "sign_out": "تسجيل الخروج",
+    "member": "عضو"
   }
 }
