@@ -3,14 +3,8 @@
 import { usePathname } from '@/i18n/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import {
-  LayoutDashboard, Bell, BarChart3, Car, Users, ShoppingCart, ClipboardList,
-  FileSpreadsheet, CalendarCheck, Receipt, Wallet, SearchCheck, Truck, Ship,
-  Store, UsersRound, Shield, Settings, TrendingUp, Package, UserCheck, Building2,
-  Calendar, Clock, Activity, FileText, PlusCircle, UserPlus, BarChart4, CreditCard,
-  DollarSign, MapPin, Phone, Mail, Globe as GlobeIcon, HelpCircle, LogOut,
-  ChevronLeft, ChevronRight, Menu, X, Sun, Moon, PanelLeftClose, PanelLeftOpen,
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { DashboardIcon } from '@/components/icons/dashboard-icons'
 
 interface SidebarItem {
   id: string
@@ -42,19 +36,8 @@ interface DashboardSidebarProps {
   onMobileClose?: () => void
 }
 
-const iconMap: Record<string, typeof LayoutDashboard> = {
-  LayoutDashboard, Bell, BarChart3, Car, Users, ShoppingCart, ClipboardList,
-  FileSpreadsheet, CalendarCheck, Receipt, Wallet, SearchCheck, Truck, Ship,
-  Store, UsersRound, Shield, Settings, TrendingUp, Package, UserCheck, Building2,
-  Calendar, Clock, Activity, FileText, PlusCircle, UserPlus, BarChart4, CreditCard,
-  DollarSign, MapPin, Phone, Mail, GlobeIcon, HelpCircle, LogOut,
-  ChevronLeft, ChevronRight, Menu, X, Sun, Moon, PanelLeftClose, PanelLeftOpen,
-}
-
 function SidebarIcon({ name, className }: { name: string; className?: string }) {
-  const Icon = iconMap[name]
-  if (!Icon) return <LayoutDashboard className={className} />
-  return <Icon className={className} />
+  return <DashboardIcon name={name} className={className} />
 }
 
 export function DashboardSidebar({
@@ -235,7 +218,7 @@ export function DashboardSidebar({
                             : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                         )}
                       >
-                        <SidebarIcon name={item.icon} className={cn("h-5 w-5 shrink-0", active && activeColor)} />
+                  <SidebarIcon name={item.icon} className={cn("h-5 w-5 shrink-0", activeColor)} />
                         <span className={cn("truncate", active && "font-bold")}>{label}</span>
                         {item.badge && (
                           <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400">
