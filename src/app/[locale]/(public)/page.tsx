@@ -131,12 +131,7 @@ const faqItems = [
   { q: 'ما هي طرق الدفع المتاحة؟', a: 'نقبل الدفع النقدي، التحويل البنكي، والتقسيط عبر تمارا.' },
 ]
 
-const heroBanners = [
-  { bg: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)', title: 'اشتر سيارتك أونلاين', subtitle: 'مفحوصة ومضمونة مع توصيل مجاني', cta: 'تصفح السيارات' },
-  { bg: 'linear-gradient(135deg, #2d1b69 0%, #11998e 100%)', title: 'تمويل سيارتك', subtitle: 'خطط تقسيط مرنة تناسب ميزانيتك', cta: 'قدم الآن' },
-  { bg: 'linear-gradient(135deg, #e65c00 0%, #F9D423 100%)', title: 'بيع سيارتك', subtitle: 'نشتري سيارتك بأفضل سعر', cta: 'بيع الآن' },
-  { bg: 'linear-gradient(135deg, #1a1a2e 0%, #3c56d4 100%)', title: 'ضمان حتى 3 سنوات', subtitle: 'اشتري بثقة مع ضمان شامل', cta: 'تصفح السيارات' },
-]
+
 
 const offers = [
   { title: 'قسمها مع اموال', bg: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', emoji: '🛒', href: '/listings' },
@@ -203,40 +198,15 @@ export default async function HomePage() {
         .skeleton-anim { background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%); background-size: 200px 100%; animation: skeleton 1.5s ease-in-out infinite; }
       `}</style>
 
-      {/* ===== 1. HERO BANNER CAROUSEL ===== */}
+      {/* ===== 1. AD BANNER ===== */}
       <section className="relative overflow-hidden">
-        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none">
-          {heroBanners.map((banner, i) => (
-            <div key={i} className="hero-banner h-[200px] sm:h-[280px] md:h-[360px] lg:h-[420px]" style={{ background: banner.bg }}>
-              <div className="absolute inset-0 flex items-center">
-                <div className="relative z-10 max-w-[1320px] mx-auto px-4 sm:px-8 w-full">
-                  <div className="max-w-xl">
-                    <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3">{banner.title}</h2>
-                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-3 sm:mb-6">{banner.subtitle}</p>
-                    <Link href={`/${locale}/listings`}>
-                      <Button size="lg" className="bg-white text-gray-900 hover:bg-white/90 rounded-full px-5 sm:px-8 h-9 sm:h-12 text-xs sm:text-sm font-bold shadow-lg">
-                        {banner.cta}
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* Nav Arrows */}
-        <button className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white shadow flex items-center justify-center transition-colors">
-          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" />
-        </button>
-        <button className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white shadow flex items-center justify-center transition-colors">
-          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700" />
-        </button>
-        {/* Dots */}
-        <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-10">
-          {heroBanners.map((_, i) => (
-            <button key={i} className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white w-4 sm:w-5' : 'bg-white/50 hover:bg-white/80'}`} />
-          ))}
-        </div>
+        <Link href={`/${locale}/listings`} className="block">
+          <img
+            src="/images/hero-ad.png"
+            alt="إعلان"
+            className="w-full h-[200px] sm:h-[280px] md:h-[360px] lg:h-[420px] object-cover"
+          />
+        </Link>
       </section>
 
       {/* ===== 2. SEARCH + CATEGORY CARDS ===== */}
