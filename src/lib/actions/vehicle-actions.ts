@@ -138,19 +138,29 @@ function isValidUUID(str: string): boolean {
 }
 
 export async function createVehicleListing(formData: FormData) {
+  try {
   const auth = await requireAuth()
   if (!auth.allowed) throw new Error(auth.error || 'Authentication required')
   const supabase = await createServerSupabaseClient()
 
   let make = formData.get('make') as string
-  // Resolve make UUID if an integer ID was passed (old system)
+  // Resolve make UUID if an integer ID or non-UUID value was passed (old system)
   if (make && !isValidUUID(make)) {
-    const { data: makeRow } = await (supabase as any)
+    const { data: makeRow1 } = await (supabase as any)
       .from('car_makes')
       .select('id')
       .or(`slug.eq.${make.toLowerCase()},code.eq.${make}`)
       .maybeSingle()
-    if (makeRow) make = makeRow.id
+    if (makeRow1) {
+      make = makeRow1.id
+    } else if (/^\d+$/.test(make)) {
+      const { data: makeRow2 } = await (supabase as any)
+        .from('car_makes')
+        .select('id')
+        .filter('id', 'eq', make)
+        .maybeSingle()
+      if (makeRow2) make = makeRow2.id
+    }
   }
 
   const modelName = formData.get('model') as string
@@ -298,6 +308,10 @@ export async function createVehicleListing(formData: FormData) {
   revalidatePath('/listings')
   revalidatePath('/admin/approvals')
   return listing
+  } catch (err: any) {
+    console.error('[createVehicleListing] Error:', err)
+    throw new Error(err?.message || err?.toString() || 'Unknown error')
+  }
 }
 
 export async function toggleFavorite(listingId: string) {
