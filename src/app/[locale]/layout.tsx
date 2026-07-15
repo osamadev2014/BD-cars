@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { routing, locales, isRtl } from '@/i18n/config'
@@ -29,7 +30,8 @@ export default async function LocaleLayout({
 
   return (
     <>
-      <script
+      <Script
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `document.documentElement.lang="${locale}";document.documentElement.dir="${dir}"`,
         }}

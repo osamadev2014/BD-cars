@@ -1,6 +1,7 @@
 'use server'
 
 import { createServerSupabaseClient, createPublicClient } from '@/lib/supabase/server'
+import { createServiceRoleClient } from '@/lib/supabase/service-role'
 import { fetchSupabase } from '@/lib/supabase/fetch-client'
 import { requireAuth } from '@/server/guards'
 import { revalidatePath } from 'next/cache'
@@ -138,7 +139,7 @@ export async function createVehicleListing(formData: FormData) {
   const supabase = await createServerSupabaseClient()
 
   const make = formData.get('make') as string
-  const model = formData.get('model') as string
+  const modelName = formData.get('model') as string
   const year = parseInt(formData.get('year') as string)
   const mileage = formData.get('mileage') ? parseInt(formData.get('mileage') as string) : null
   const bodyType = formData.get('bodyType') as string
@@ -152,6 +153,7 @@ export async function createVehicleListing(formData: FormData) {
   const imageUrls = formData.getAll('imageUrls') as string[]
   const features = formData.getAll('features') as string[]
   const paymentOptions = formData.getAll('paymentOptions') as string[]
+  const category = formData.get('category') as string
 
   // Determine listing status based on dealer verification
   let initialStatus = 'active'
@@ -178,11 +180,35 @@ export async function createVehicleListing(formData: FormData) {
     }
   }
 
+  // Resolve model: look up existing or create new
+  let modelId: string | null = null
+  if (modelName && make) {
+    const { data: existing } = await (supabase as any)
+      .from('car_models')
+      .select('id')
+      .eq('make_id', make)
+      .ilike('name', modelName)
+      .maybeSingle()
+    if (existing) {
+      modelId = existing.id
+    } else {
+      // Use service role to bypass RLS for car_models insert
+      const adminClient = createServiceRoleClient()
+      const { data: newModel, error: modelError } = await (adminClient as any)
+        .from('car_models')
+        .insert({ make_id: make, name: modelName, name_ar: modelName })
+        .select('id')
+        .single()
+      if (modelError) throw new Error(modelError.message)
+      modelId = newModel.id
+    }
+  }
+
   const { data: vehicle, error: vehicleError } = await (supabase as any)
     .from('vehicles')
     .insert({
       make_id: make,
-      model_id: model,
+      model_id: modelId,
       year,
       mileage,
       body_type_id: bodyType || null,
@@ -190,6 +216,7 @@ export async function createVehicleListing(formData: FormData) {
       fuel_type_id: fuelType || null,
       color_id: color || null,
       description,
+      category: category || null,
       owner_id: auth.userId,
     })
     .select()

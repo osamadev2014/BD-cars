@@ -3,7 +3,10 @@
 import { useState, useEffect, useCallback } from 'react'
 
 export default function AIInspectButton() {
+  const [mounted, setMounted] = useState(false)
   const [active, setActive] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   const getElementInfo = useCallback((el) => {
     const tag = el.tagName.toLowerCase()
@@ -137,7 +140,7 @@ export default function AIInspectButton() {
     return cleanup
   }, [active, getElementInfo])
 
-  if (typeof window === 'undefined') return null
+  if (!mounted) return null
   if (process.env.NODE_ENV !== 'development') return null
 
   return (

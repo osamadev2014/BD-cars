@@ -43,7 +43,7 @@ export function OrganizationSelectorHeader({ onCreate }: OrgHeaderProps) {
           <div className="flex items-center gap-3" dir={isRtl ? 'rtl' : 'ltr'}>
             <a href={`/${locale}`} className="flex items-center gap-2.5 shrink-0">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <Image src="/logo.png" alt="Riyon" width={20} height={20} className="invert" />
+                <Image src="/logo.png" alt="Riyon" width={20} height={20} className="invert" style={{ width: 'auto', height: 'auto' }} />
               </div>
               <span className="font-bold text-lg text-foreground hidden sm:inline">ريون</span>
             </a>

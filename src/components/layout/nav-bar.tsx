@@ -38,7 +38,7 @@ export function NavBar() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link href={`/${locale}`} className="flex items-center gap-2">
-            <Image src="/logo.png" alt="BD" width={80} height={32} className="h-8 w-auto" />
+            <Image src="/logo.png" alt="BD" width={80} height={32} className="h-8 w-auto" style={{ width: 'auto', height: 'auto' }} />
           </Link>
           <div className="hidden md:flex items-center gap-1">
             {links.map((link) => (
