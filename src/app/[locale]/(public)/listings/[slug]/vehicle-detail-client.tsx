@@ -6,7 +6,7 @@ import { startConversation } from '@/lib/actions/message-actions'
 import { createFinanceRequest } from '@/lib/actions/finance-actions'
 import { createInsuranceRequest } from '@/lib/actions/insurance-actions'
 import { useEffect } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/hooks/use-auth'
@@ -17,6 +17,8 @@ export function VehicleDetailClient({ listing, financePartners, insurancePartner
   const t = useTranslations('common')
   const ft = useTranslations('finance')
   const it = useTranslations('insurance')
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
   const { user } = useAuth()
   const router = useRouter()
 
@@ -155,6 +157,20 @@ export function VehicleDetailClient({ listing, financePartners, insurancePartner
             {it('request_insurance')}
           </Button>
         )}
+      </div>
+
+      <div className="flex flex-wrap gap-3 p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+        <p className="w-full text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('payment_options')}</p>
+        {[
+          { id: 'tabby', label: isRtl ? 'تابي' : 'Tabby', icon: '💜' },
+          { id: 'tamara', label: isRtl ? 'تمارا' : 'Tamara', icon: '💚' },
+          { id: 'amwal', label: isRtl ? 'أموال' : 'Amwal', icon: '💙' },
+        ].map((opt) => (
+          <span key={opt.id} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-400">
+            <span>{opt.icon}</span>
+            <span>{opt.label}</span>
+          </span>
+        ))}
       </div>
 
       {showPurchaseForm && (
