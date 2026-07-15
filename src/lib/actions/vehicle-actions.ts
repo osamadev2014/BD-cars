@@ -133,12 +133,26 @@ export async function getVehicleDetail(slug: string) {
   }, null)
 }
 
+function isValidUUID(str: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str)
+}
+
 export async function createVehicleListing(formData: FormData) {
   const auth = await requireAuth()
   if (!auth.allowed) throw new Error(auth.error || 'Authentication required')
   const supabase = await createServerSupabaseClient()
 
-  const make = formData.get('make') as string
+  let make = formData.get('make') as string
+  // Resolve make UUID if an integer ID was passed (old system)
+  if (make && !isValidUUID(make)) {
+    const { data: makeRow } = await (supabase as any)
+      .from('car_makes')
+      .select('id')
+      .or(`slug.eq.${make.toLowerCase()},code.eq.${make}`)
+      .maybeSingle()
+    if (makeRow) make = makeRow.id
+  }
+
   const modelName = formData.get('model') as string
   const year = parseInt(formData.get('year') as string)
   const mileage = formData.get('mileage') ? parseInt(formData.get('mileage') as string) : null
@@ -205,6 +219,19 @@ export async function createVehicleListing(formData: FormData) {
     }
   }
 
+  // Resolve text values to UUIDs for lookup fields
+  const lookupTextToUuid = async (table: string, nameColumn: string, value: string): Promise<string | null> => {
+    if (!value) return null
+    if (isValidUUID(value)) return value
+    const { data } = await (supabase as any).from(table).select('id').or(`${nameColumn}.ilike.${value},name_ar.ilike.${value}`).maybeSingle()
+    return data?.id || null
+  }
+
+  const resolvedBodyType = await lookupTextToUuid('body_types', 'name', bodyType)
+  const resolvedTransmission = await lookupTextToUuid('transmission_types', 'name', transmission)
+  const resolvedFuelType = await lookupTextToUuid('fuel_types', 'name', fuelType)
+  const resolvedColor = await lookupTextToUuid('car_colors', 'name', color)
+
   const { data: vehicle, error: vehicleError } = await (supabase as any)
     .from('vehicles')
     .insert({
@@ -212,10 +239,10 @@ export async function createVehicleListing(formData: FormData) {
       model_id: modelId,
       year,
       mileage,
-      body_type_id: bodyType || null,
-      transmission_id: transmission || null,
-      fuel_type_id: fuelType || null,
-      color_id: color || null,
+      body_type_id: resolvedBodyType,
+      transmission_id: resolvedTransmission,
+      fuel_type_id: resolvedFuelType,
+      color_id: resolvedColor,
       description,
       category: category || null,
       owner_id: auth.userId,
