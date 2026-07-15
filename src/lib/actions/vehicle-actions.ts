@@ -145,13 +145,38 @@ export async function createVehicleListing(formData: FormData) {
   const transmission = formData.get('transmission') as string
   const fuelType = formData.get('fuelType') as string
   const color = formData.get('color') as string
+  const condition = formData.get('condition') as string
   const description = formData.get('description') as string
   const price = parseFloat(formData.get('price') as string)
   const negotiable = formData.get('negotiable') === 'on'
   const imageUrls = formData.getAll('imageUrls') as string[]
+  const features = formData.getAll('features') as string[]
+  const paymentOptions = formData.getAll('paymentOptions') as string[]
 
-  const requireApproval = await getSetting<boolean>('require_listing_approval', false)
-  const initialStatus = requireApproval ? 'pending' : 'active'
+  // Determine listing status based on dealer verification
+  let initialStatus = 'active'
+  let needsApproval = false
+
+  const { data: orgMembers } = await (supabase as any)
+    .from('organization_members')
+    .select('organization_id')
+    .eq('user_id', auth.userId)
+    .eq('role', 'owner')
+
+  if (orgMembers && orgMembers.length > 0) {
+    const { data: org } = await (supabase as any)
+      .from('organizations')
+      .select('org_type, verification_status')
+      .eq('id', orgMembers[0].organization_id)
+      .single()
+
+    if (org && org.org_type === 'car_dealer') {
+      if (org.verification_status !== 'verified') {
+        initialStatus = 'pending'
+        needsApproval = true
+      }
+    }
+  }
 
   const { data: vehicle, error: vehicleError } = await (supabase as any)
     .from('vehicles')
@@ -200,10 +225,10 @@ export async function createVehicleListing(formData: FormData) {
     listing_id: listing.id,
     status: initialStatus,
     changed_by: auth.userId,
-    notes: requireApproval ? 'Pending admin approval' : 'Auto-approved',
+    notes: needsApproval ? 'Pending admin approval' : 'Auto-approved',
   })
 
-  if (requireApproval) {
+  if (needsApproval) {
     const { error: reqError } = await (supabase as any)
       .from('listing_approval_requests')
       .insert({
