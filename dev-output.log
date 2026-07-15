@@ -1,0 +1,87 @@
+
+> bd@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.8.253:3000
+- Environments: .env.local
+✓ Ready in 894ms
+- Experiments (use with caution):
+  · serverActions
+
+ GET /ar/login 200 in 2.1s (next.js: 1218ms, proxy.ts: 391ms, generate-params: 914ms, application-code: 523ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9557:28)
+    at workLoopSync (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64) (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndMaybeFocusHandler cacheNode={{rsc:{...}, ...}}>
+      <InnerScrollAndFocusHandlerOld focusAndScrollRef={{scrollRef:null, ...}} cacheNode={{rsc:{...}, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={{...}} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/ar/login" notFound={{...}} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/ar/login" tree={[...]} params={{locale:"ar"}} cacheNode={{rsc:{...}, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="[locale]/l...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <script>
+                        <script>
+                        <LocaleLayout>
+                          <script>
+                          <NextIntlClientProvider>
+                          <AIInspectButton>
++                           <div
++                             style={{position:"fixed",bottom:20,right:20,zIndex:999999,display:"flex",alignItems:"center",gap:8,direction:"ltr"}}
++                           >
+-                           <script id="_R_">
+                    ...
+        ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3318:56)
+    at beginWork (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6758:918)
+    at runWithFiberInDEV (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopConcurrentByScheduler (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+    at div (<anonymous>)
+    at AIInspectButton (file://C:/Users/axxhy/Documents/!!WORKF2122S!!/Roin/.next/dev/static/chunks/src_20z-668._.js:563:214)
+    at LocaleLayout (src\app\[locale]\layout.tsx:45:7)
+  43 |         </AppProvidersWrapper>
+  44 |       </NextIntlClientProvider>
+> 45 |       <AIInspectButton />
+     |       ^
+  46 |     </>
+  47 |   )
+  48 | }
+ POST /ar/login 200 in 154ms (next.js: 56ms, proxy.ts: 43ms, generate-params: 15ms, application-code: 55ms)
+  └─ ƒ getCurrentUser() in 10ms src/lib/actions/auth-actions.ts
+ POST /ar/login 200 in 55ms (next.js: 14ms, proxy.ts: 9ms, generate-params: 37µs, application-code: 32ms)
+  └─ ƒ getCurrentUser() in 16ms src/lib/actions/auth-actions.ts
+[?25h

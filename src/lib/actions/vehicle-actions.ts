@@ -194,9 +194,10 @@ export async function createVehicleListing(formData: FormData) {
     } else {
       // Use service role to bypass RLS for car_models insert
       const adminClient = createServiceRoleClient()
+      const slug = modelName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
       const { data: newModel, error: modelError } = await (adminClient as any)
         .from('car_models')
-        .insert({ make_id: make, name: modelName, name_ar: modelName })
+        .insert({ make_id: make, name: modelName, name_ar: modelName, slug })
         .select('id')
         .single()
       if (modelError) throw new Error(modelError.message)

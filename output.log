@@ -1,0 +1,14 @@
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.8.253:3000
+- Environments: .env.local
+✓ Ready in 6.3s
+- Experiments (use with caution):
+  · serverActions
+
+ GET /ar/login 200 in 4.7s (next.js: 1556ms, proxy.ts: 593ms, generate-params: 1212ms, application-code: 2.6s)
+ POST /ar/login 200 in 373ms (next.js: 105ms, proxy.ts: 192ms, generate-params: 17ms, application-code: 76ms)
+  └─ ƒ getCurrentUser() in 18ms src/lib/actions/auth-actions.ts
+ POST /ar/login 200 in 44ms (next.js: 12ms, proxy.ts: 9ms, generate-params: 53µs, application-code: 22ms)
+  └─ ƒ getCurrentUser() in 8ms src/lib/actions/auth-actions.ts
+[?25h
